@@ -1,8 +1,9 @@
-package autogyn.persistencia;
+package autogyn.persistencia.explorer;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import autogyn.persistencia.entidades.Servico;
 import autogyn.persistencia.ferramentas.ConexaoBD;
 import autogyn.persistencia.ferramentas.EasyQuery;
 

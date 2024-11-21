@@ -1,4 +1,4 @@
-package autogyn.persistencia;
+package autogyn.persistencia.entidades;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
