@@ -1,4 +1,4 @@
-package autogyn.persistencia.explorer;
+package autogyn.persistencia.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import autogyn.persistencia.entidades.Servico;
 import autogyn.persistencia.ferramentas.ConexaoBD;
 import autogyn.persistencia.ferramentas.EasyQuery;
 
-public class AcessorioExplorer {
+public class AcessorioDao {
 	private static Connection conn = ConexaoBD.getInstance();
 	
 	public static List<Acessorio> getAll() throws SQLException {

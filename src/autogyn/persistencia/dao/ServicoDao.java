@@ -1,4 +1,4 @@
-package autogyn.persistencia.explorer;
+package autogyn.persistencia.dao;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ServicoExplorer {
+public class ServicoDao {
 	private static Connection conn = ConexaoBD.getInstance();
 	
 	public static List<Servico> getAll() throws SQLException {
