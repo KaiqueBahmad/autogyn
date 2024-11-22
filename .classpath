@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/kaique/Downloads/postgresql-42.7.4.jar"/>
+	<classpathentry kind="lib" path="libs"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
