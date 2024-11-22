@@ -13,10 +13,10 @@ public class Servico {
 		
 	}
 	
-	public Servico(ResultSet queryResponse) throws SQLException {
-		this.id = queryResponse.getLong("id_servico");
-		this.descricao = queryResponse.getString("descricao");
-		this.valor = queryResponse.getDouble("valor");
+	public Servico(ResultSet source) throws SQLException {
+		this.id = source.getLong("id_servico");
+		this.descricao = source.getString("descricao");
+		this.valor = source.getDouble("valor");
 	}
 
 	@Override
