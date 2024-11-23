@@ -10,4 +10,13 @@ public class EasyQuery {
 		Statement statement = conn.createStatement();
         return statement.executeQuery(query);
 	}
+	
+	public static boolean checkAttribute(ResultSet rs, String attribute_name) {
+	    try {
+	        return rs.getObject(attribute_name) != null;
+	    } catch (SQLException e) {
+	        return false;
+	    }
+	}
+	
 }
