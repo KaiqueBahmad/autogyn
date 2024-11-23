@@ -6,6 +6,8 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.pi.autogyn.persistencia.dao.ModeloDao;
+
 public class Marca {
 	private Long id;
 	private String nome;
@@ -45,6 +47,13 @@ public class Marca {
 	}
 
 	public List<Modelo> getModelos() {
+		if (this.modelos == null) {
+			try {
+				this.modelos = ModeloDao.getAllModeloOfMarca(this.id);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return modelos;
 	}
 

@@ -25,6 +25,16 @@ public class ModeloDao {
         return modelos;
 	}
 	
+	public static List<Modelo> getAllModeloOfMarca(Long idMarca) throws SQLException {
+		String sql = "select * from modelo where marca = "+idMarca+";";
+        List<Modelo> modelos = new LinkedList<>();
+        ResultSet rs = EasyQuery.exec(conn, sql);
+        while(rs.next()) {
+        	modelos.add(new Modelo(rs));
+        }
+        return modelos;
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}
