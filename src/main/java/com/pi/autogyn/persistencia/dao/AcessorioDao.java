@@ -16,7 +16,6 @@ public class AcessorioDao {
 	public static List<Acessorio> getAll() throws SQLException {
         String sql = "select * from acessorio;";
         List<Acessorio> acessorios = new LinkedList<>();
-        System.out.println(conn);
         ResultSet rs = EasyQuery.exec(conn, sql);
         while(rs.next()) {
             acessorios.add(new Acessorio(rs));
