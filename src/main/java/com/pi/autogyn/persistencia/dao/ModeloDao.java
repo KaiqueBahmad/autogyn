@@ -25,7 +25,7 @@ public class ModeloDao {
         return modelos;
 	}
 	
-	public static List<Modelo> getAllModeloOfMarca(Long idMarca) throws SQLException {
+	public static List<Modelo> getAllModelosOfMarca(Long idMarca) throws SQLException {
 		String sql = "select * from modelo where marca = "+idMarca+";";
         List<Modelo> modelos = new LinkedList<>();
         ResultSet rs = EasyQuery.exec(conn, sql);
@@ -33,6 +33,15 @@ public class ModeloDao {
         	modelos.add(new Modelo(rs));
         }
         return modelos;
+	}
+	
+	public static Modelo getById(Long idModelo) throws SQLException {
+		String sql = "select * from modelo where id_modelo = "+idModelo+";";
+        ResultSet rs = EasyQuery.exec(conn, sql);
+        while(rs.next()) {
+        	return new Modelo(rs);
+        }
+        return null;
 	}
 	
 	public static void main(String[] args) throws SQLException {

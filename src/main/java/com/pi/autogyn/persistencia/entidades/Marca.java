@@ -49,7 +49,7 @@ public class Marca {
 	public List<Modelo> getModelos() {
 		if (this.modelos == null) {
 			try {
-				this.modelos = ModeloDao.getAllModeloOfMarca(this.id);
+				this.modelos = ModeloDao.getAllModelosOfMarca(this.id);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

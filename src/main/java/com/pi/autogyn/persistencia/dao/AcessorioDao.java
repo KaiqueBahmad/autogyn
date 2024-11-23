@@ -1,6 +1,7 @@
 package com.pi.autogyn.persistencia.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -21,6 +22,29 @@ public class AcessorioDao {
             acessorios.add(new Acessorio(rs));
         }
         return acessorios;
+	}
+	
+	public static List<Acessorio> getAllAcessoriosOfVeiculo(String placa) throws SQLException {
+	   String sql =
+	       "SELECT "
+	       + "    a.* "
+	       + "FROM "
+	       + "    Acessorio a "
+	       + "    INNER JOIN acessorio_veiculo av ON a.id_acessorio = av.id_acessorio "
+	       + "WHERE "
+	       + "    av.placa = ?";
+	       
+	   List<Acessorio> acessorios = new LinkedList<>();
+	   PreparedStatement statment = conn.prepareStatement(sql);
+	   statment.setString(1, placa);
+       ResultSet rs = statment.executeQuery();
+       
+       while (rs.next()) {
+           acessorios.add(new Acessorio(rs));
+       }
+       
+       rs.close();
+       return acessorios;
 	}
 	
 	public static void main(String[] args) throws SQLException {
