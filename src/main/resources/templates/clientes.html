@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina AutoGyn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <aside>
+            <div>
+                <img src="/img/logo.png" alt="" width="80%">
+                <span class="linha"></span>
+            </div>
+            <nav>
+                <a class="menu abrirVeiculo" id="veiculos">Veiculos</a>
+                <ul class="abrirVeiculo">
+                    <li><a href="veiculoCadAt.html">Cadastrar | Atualizar</a></li>
+                    <li><a href="veiculoMarMo.html">Marca | Modelo</a></li>
+                    <li><a href="veiculoLista.html">Listar Veiculos</a></li>
+                </ul>
+                <a href="clientes.html" class="selecionado">Clientes</a>
+                <!-- <a class="menu abrirOs" id="os">Ordem de Serviço</a>
+                <ul class="abrirOs" hidden>
+                    <li><a href="gerencOs.html" class="subMenu gerencOs">Gerenciamento de OS</a></li>
+                    <li><a href="controleExOs.html" class="subMenu">Controle de execução da OS</a></li>
+                </ul>
+                <a href="estoque.html">Estoque</a>
+                <a href="controle.html">Controle</a> -->
+            </nav>
+        </aside>
+        
+        <section class="clientes">
+            <form action="/cliente" method="POST">
+                <div class="conteudoCli">
+                    <div>
+                        <div>
+                            <div>
+                                <h1>Cadastrar cliente</h1>
+                                <p>Preencha os dados do cliente para cadastro</p>
+                            </div>
+                            <div>
+                                <label for="nome">Nome</label>
+                                <input type="text" id="nome" placeholder="Cliente" required>
+                            </div>
+                            <div>
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" placeholder="cliente@gmail.com" required>
+                            </div>
+                            <div class="radios">
+                                <div>
+                                    <input type="radio" class="tipoPessoa" id="cpf" name="tipoPessoa" value="cpf" required>
+                                    <label for="cpf">Pessoa Física</label>
+                                </div>
+                                <div>
+                                    <input type="radio" class="tipoPessoa" id="cnpj" name="tipoPessoa" value="cnpj" required>
+                                    <label for="cnpj">Pessoa Jurídica</label>
+                                </div>
+                            </div>
+    
+                            <div class="pessoaFisica">
+                                <label for="valorCpf">Cpf</label>
+                                <input type="number" id="valorCpf" placeholder="56477765732">
+                            </div>
+    
+                            <div class="pessoaJuridica">
+                                <div>
+                                    <label for="valorCnpj">Cnpj</label>
+                                    <input type="number" id="valorCnpj" placeholder="00000000000100">
+                                </div>
+    
+                                <div>
+                                    <label for="numInscricao">Inscrição estadual</label>
+                                    <input type="number" id="numInscricao" placeholder="123456789101">
+                                </div>
+    
+                                <div>
+                                    <label for="contato">Nome do contato</label>
+                                    <input type="text" id="contato" placeholder="Responsável">
+                                </div>
+                            </div>
+                            
+                            <div class="telefones">
+                                <label for="tel">Telefone</label>
+                                <div>
+                                    <div>
+                                        <input type="number" id="tel" placeholder="(62)" required>
+                                        <input type="number" id="tel" placeholder="940028922" required>
+                                    </div>
+                                    <div>
+                                        <input type="number" id="tel" placeholder="(62)">
+                                        <input type="number" id="tel" placeholder="940028922">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="linha"></span>
+                        <div>
+                            <div class="endereco">
+                                <label for="endereco">Endereço</label>
+                                <input type="number" id="endereco" placeholder="CEP" required>
+                                <div style="display: flex; flex-direction: row; gap: 10px;">
+                                    <input type="text" id="endereco" placeholder="Cidade" required>
+                                    <input type="text" id="endereco" placeholder="UF" style="width: 30%;" required>
+                                    <input type="number" id="endereco" placeholder="Nº" style="width: 30%;" required>
+                                </div>
+                                <input type="text" id="endereco" placeholder="Logradouro" required>
+                                <input type="text" id="endereco" placeholder="Complemento" required>
+                            </div>
+                            <button>Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+    
+            </form>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
