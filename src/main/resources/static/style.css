@@ -70,8 +70,12 @@ h2, h3{
 
 ul{
     list-style: none;
-    margin-top: -10px;
+    margin-top: -15px;
     
+    & li{
+        margin-top: 5px;
+    }
+
     & a{
         display: flex;
     }
@@ -197,6 +201,60 @@ section.veiculoMarMo{
     }
 }
 
+section.veiculoLista{
+    &>div{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: 90vh;
+        overflow: auto;
+        border: 1px solid var(--borda);
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    & .listaVeiculos{
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        &>div{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        &>div>div:first-child{
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 5px;
+        }
+
+        & .responsaveis{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+
+
+            & h3{
+                padding: 10px;
+                border-radius: 8px;
+                text-align: center;
+                background-color: var(--meioBranco);
+            }
+        }
+    }
+
+    & h1{
+        text-align: center;
+    }
+
+    & p{
+        color: var(--cinza);
+    }
+}
+
 .conteudoCli>div{
     display: flex;
     flex-direction: row;
@@ -297,7 +355,7 @@ form{
     }
 }
 
-.listagem{
+/* .listagem{
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -312,10 +370,10 @@ form{
     &>div>div{
         color: white;
         background-color: #000000;
-        /* border-radius: 8px; */
+        border-radius: 8px;  //
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
-        /* MUDAR CONFORME ABERTO OU NAO */
+        MUDAR CONFORME ABERTO OU NAO //
         padding: 10px;
         display: flex;
         flex-direction: row;
@@ -328,7 +386,7 @@ form{
         border-bottom-right-radius: 8px;
         padding: 10px;
     }
-}
+} */
 
 .radios{
     display: flex;
@@ -406,200 +464,3 @@ button{
         background-color: var(--pretoHover);
     }
 }
-
-
-
-/*
-
-ul{
-    background-color: var(--azulClaro);
-    border-radius: 8px;
-    padding: 10px;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    &.esconde{
-        display: none;
-    }
-}
-
-
-section{
-    grid-area: conteudo;
-    min-height: 100vh;
-    padding: 30px 50px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 40px;
-
-    & h1{
-        text-align: center;
-    }
-
-    & select{
-        width: 40%;
-        border-radius: 5px;
-        border: none;
-        outline: none;
-        border: 1px solid var(--marrom);
-        padding: 0 10px;
-        height: 30px;
-    }
-
-    & form{
-        min-height: 80%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 60px;
-
-        &>div, &>div>div{
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        &>div>div div{
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: fit-content;
-        }
-
-        & button{
-            width: fit-content;
-            align-self: center;
-        }
-
-        & input{
-            border-radius: 5px;
-            border: none;
-            outline: none;
-            border: 1px solid var(--marrom);
-            padding: 0 10px;
-        }
-        & input[type="number"]{
-            width: 10%;
-        }
-
-    }
-}
-
-
-.telefones{
-    display: flex;
-    flex-direction: row;
-
-    &>div{
-        display: flex;
-        flex-direction: column;
-    }
-
-    & input:nth-child(1), & input:nth-child(3){
-        width: 15%;
-    }
-
-    & input:nth-child(2), & input:nth-child(4){
-        width: 40%;
-    }
-
-}
-
-.endereco{
-    & input:nth-child(5){
-        width: 6%;
-    }
-}
-
-.pessoaJuridica{
-    display: flex;
-    flex-direction: column;
-}
-
-.pessoaJuridica, .pessoaFisica{
-    display: none;
-
-    & input[type="number"]{
-        width: 50%;
-    }
-}
-
-section:has(.listagem){
-    justify-content: unset;
-}
-.listagem{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    & div{
-        cursor: pointer;
-        padding: 10px;
-        display: flex;
-        background-color: var(--azulClaro);
-        border-radius: 8px;
-        justify-content: space-between;
-    }
-}
-
-button{
-    cursor: pointer;
-    font-family: "Poppins", sans-serif;
-    color: var(--branco);
-    border: none;
-    outline: none;
-    background-color: var(--azul);
-    padding: 10px 15px;
-    border-radius: 8px;
-    
-    &:hover{
-        background-color: var(--azulClaro);
-    }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    appearance: none;
-    margin: 0;
-}
-
-input[type="radio"] {
-    appearance: none;
-    width: 15px;
-    height: 22px;
-    border-radius: 8px;
-    border: 2px solid var(--azul);
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-input[type="radio"]:checked {
-    background-color: var(--azul);
-    border-color: var(--azul);
-}
-
-input[type="radio"]:checked::before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: var(--branco);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-input[type="radio"]:hover {
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-}
-
-input[type='text'], input[type='number'], input[type='email']{
-    height: 30px;
-} */
