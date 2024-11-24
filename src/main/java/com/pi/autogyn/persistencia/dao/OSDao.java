@@ -24,6 +24,15 @@ public class OSDao {
         return oss;
 	}
 	
+	public static OS getById(Long idOs) throws SQLException {
+		String sql = "select * from ordem_servico where id_os = "+idOs+";";
+		ResultSet rs = EasyQuery.exec(conn, sql);
+		if (rs.next()) {
+			return new OS(rs);
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}

@@ -25,8 +25,18 @@ public class PecaDao {
         return pecas;
 	}
 	
+	public static Peca getById(Long idPeca) throws SQLException {
+		String sql = "select * from pecas where id_peca = "+idPeca+";";
+		ResultSet rs = EasyQuery.exec(conn, sql);
+		if (rs.next()) {
+			return new Peca(rs);
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) throws SQLException {
-		System.out.println(getAll());
+//		System.out.println(getAll());
+		System.out.println(getById(1L));
 	}
 	
 }

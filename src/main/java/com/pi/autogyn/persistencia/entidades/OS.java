@@ -3,8 +3,10 @@ package com.pi.autogyn.persistencia.entidades;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.ClienteDao;
+import com.pi.autogyn.persistencia.dao.ItemPecaDao;
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
 
 public class OS {
@@ -17,6 +19,7 @@ public class OS {
 	private Long idCliente;
 	private Veiculo veiculo;
 	private Cliente cliente;
+	private List<ItemPeca> itensPeca;
 	
 	public OS() {
 		
@@ -61,6 +64,16 @@ public class OS {
 		return this.veiculo;
 	}
 	
+	private List<ItemPeca> getItensPeca() {
+		if (this.itensPeca == null) {
+			try {
+				this.itensPeca = ItemPecaDao.getByIdOs(this.id);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.itensPeca;
+	}
 	
 	
 }
