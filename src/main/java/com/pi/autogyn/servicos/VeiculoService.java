@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
-import com.pi.autogyn.servicos.dto.VeiculoListaCadastroDto;
+import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 public class VeiculoService {
-	public static List<VeiculoListaCadastroDto> listarVeiculosCadastrados() throws SQLException {
-		List<VeiculoListaCadastroDto> lista = new LinkedList<>();
+	public static List<VeiculoListaCadastradosDto> listarVeiculosCadastrados() throws SQLException {
+		List<VeiculoListaCadastradosDto> lista = new LinkedList<>();
 		for (Veiculo veiculo: VeiculoDao.getAll()) {
-			lista.add(new VeiculoListaCadastroDto(veiculo));
+			lista.add(new VeiculoListaCadastradosDto(veiculo));
 		}
 		return lista;
 	}

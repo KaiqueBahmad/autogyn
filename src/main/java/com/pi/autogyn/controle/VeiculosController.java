@@ -8,13 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.pi.autogyn.servicos.VeiculoService;
-import com.pi.autogyn.servicos.dto.VeiculoListaCadastroDto;
+import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 @Controller
 public class VeiculosController {
 	
 	@GetMapping("/veiculo/lista-cadastro")
-	public ResponseEntity<List<VeiculoListaCadastroDto>> teste() throws SQLException {
+	public ResponseEntity<List<VeiculoListaCadastradosDto>> teste() throws SQLException {
 		return ResponseEntity.ok(VeiculoService.listarVeiculosCadastrados());
 	}
 }
