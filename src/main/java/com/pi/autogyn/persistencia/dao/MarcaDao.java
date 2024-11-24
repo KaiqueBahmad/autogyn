@@ -26,6 +26,15 @@ public class MarcaDao {
         return marcas;
 	}
 	
+	public static Marca getById(Long id) throws SQLException {
+		String sql = "select * from marca where id_marca = "+id+";";
+		ResultSet rs = EasyQuery.exec(conn, sql);
+		if (rs.next()) {
+			return new Marca(rs);
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}

@@ -28,7 +28,7 @@ public class PropriedadeDao {
 	}
 	
 	public static List<Propriedade> getAllByCliente(Long idCliente) throws SQLException {
-		String sql = "select * from propriedade where cliente_id = "+idCliente+";";
+		String sql = "select * from propriedade where id_cliente = "+idCliente+";";
 		List<Propriedade> propriedades = new LinkedList<>();
 		ResultSet rs = EasyQuery.exec(conn, sql);
 		while (rs.next()) {
