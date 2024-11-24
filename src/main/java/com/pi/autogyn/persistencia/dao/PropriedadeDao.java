@@ -38,7 +38,7 @@ public class PropriedadeDao {
 	}
 	
 	public static List<Propriedade> getAllByPlaca(String placa) throws SQLException {
-	    String sql = "SELECT * FROM propriedade WHERE placa like ?";
+	    String sql = "SELECT * FROM propriedade WHERE placa = ?";
     	PreparedStatement stmt = conn.prepareStatement(sql);
     	stmt.setString(1, placa);
         ResultSet rs = stmt.executeQuery();
