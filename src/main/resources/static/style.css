@@ -12,6 +12,8 @@
     --borda: #AAAAAA;
     --cinza: #969595;
     --meioBranco: #F2F1F1;
+
+    --teste: #141414;
 }
 
 aside{
@@ -47,9 +49,17 @@ aside nav{
     
     & a{
         padding: 8px 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
     }
     & a:hover, & .selecionado{
         background-color: var(--vermelho);
+    }
+
+    & ul{
+        background-color: var(--teste);
     }
 }
 
@@ -60,12 +70,16 @@ a{
     cursor: pointer;
 }
 
-h1, label, input, p, h2, h3{
+h1, label, input, p, h2, h3, select{
     font-family: "Poppins", sans-serif;
 }
 
 h2, h3{
     font-size: 18px;
+}
+
+select, .abrirMultiSelect{
+    font-size: 14px;
 }
 
 ul{
@@ -99,7 +113,7 @@ section{
     background-color: var(--borda);
 }
 
-section.veiculoCadAt, section.veiculoMarMo{
+section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess{
     display: flex;
     flex-direction: row;
     gap: 30px;
@@ -110,7 +124,7 @@ section.veiculoCadAt, section.veiculoMarMo{
     }
 }
 
-section.veiculoCadAt{
+section.veiculoCadAt, section.veiculoAcess{
     &>div{
         display: flex;
         flex-direction: column;
@@ -124,7 +138,93 @@ section.veiculoCadAt{
             display: flex;
             flex-direction: column;
         }
-    }    
+    }  
+
+    &.veiculoAcess>div>h1{
+        text-align: center;
+    }
+    
+    & .listaAcess{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 10px;
+        max-height: 80vh;
+        overflow: auto;
+
+        & h3{
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: var(--meioBranco);
+        }
+    }
+}
+
+.selecaoAcess{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+
+    & select {
+        display: none;
+    }
+
+    &>div{
+        position: relative;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--borda);
+        border-radius: 5px;
+
+        & label{
+            cursor: pointer;
+        }
+    }
+
+    .select-box ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border: 1px solid var(--borda);
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1;
+    }
+    
+    .select-box ul li {
+        padding: 4px 10px;
+        cursor: pointer;
+    }
+    
+    .select-box ul li label{
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+    }
+    
+    .select-box ul li:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .select-box ul li input {
+        margin-right: 10px;
+    }
+    
+    .select-box.open ul {
+        display: block;
+    }
+
+    & p{
+        font-size: 14px;
+        margin-top: 5px;
+    }
 }
 
 section.veiculoMarMo{
@@ -145,7 +245,7 @@ section.veiculoMarMo{
     }
 
     & .listaCarros{
-        height: 80vh;
+        max-height: 80vh;
         overflow: auto;
         margin: -20px;
         border: none;
@@ -201,7 +301,7 @@ section.veiculoMarMo{
     }
 }
 
-section.veiculoLista{
+section.veiculoLista, section.osLista{
     &>div{
         display: flex;
         flex-direction: column;
@@ -213,7 +313,7 @@ section.veiculoLista{
         padding: 20px;
     }
 
-    & .listaVeiculos{
+    & .listaVeiculos, .listaOs{
         display: flex;
         flex-direction: column;
         gap: 40px;
@@ -222,6 +322,16 @@ section.veiculoLista{
             display: flex;
             flex-direction: column;
             gap: 5px;
+        }
+
+        &.listaOs>div{
+            padding: 5px;
+        }
+
+        &.listaOs>div:hover{
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: var(--meioBranco);
         }
 
         &>div>div:first-child{
@@ -243,6 +353,53 @@ section.veiculoLista{
                 text-align: center;
                 background-color: var(--meioBranco);
             }
+        }
+
+        & .ordemServico{
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 10px;
+
+            & h3{
+                padding: 10px;
+                border-radius: 8px;
+                text-align: center;
+                background-color: var(--meioBranco);
+            }
+        }
+
+    }
+
+    & .edicaoOs{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        border: 1px solid var(--borda);
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    & .edicaoOs>div{
+        display: flex;
+        flex-direction: column;
+        /* gap: 30px; */
+    }
+    & .edicaoOs>div:last-child{
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+
+        & button:first-child{
+            background-color: var(--meioBranco);
+            color: var(--preto);
+            width: 50%;
+        }
+        & button:first-child:hover{
+            color: var(--branco);
+            background-color: var(--pretoHover);
+        }
+        & button{
+            width: 50%;
         }
     }
 
@@ -354,39 +511,6 @@ form{
         }
     }
 }
-
-/* .listagem{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-
-    &>div{
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-    
-    &>div>div{
-        color: white;
-        background-color: #000000;
-        border-radius: 8px;  //
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        MUDAR CONFORME ABERTO OU NAO //
-        padding: 10px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    &>div form{
-        border: 1px solid var(--borda);
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        padding: 10px;
-    }
-} */
 
 .radios{
     display: flex;

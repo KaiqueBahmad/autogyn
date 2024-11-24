@@ -17,19 +17,22 @@
                 <span class="linha"></span>
             </div>
             <nav>
-                <a class="menu abrirVeiculo" id="veiculos">Veiculos</a>
+                <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
                 <ul class="abrirVeiculo">
                     <li><a href="veiculoCadAt.html" class="selecionado">Cadastrar | Atualizar</a></li>
                     <li><a href="veiculoMarMo.html">Marca | Modelo</a></li>
+                    <li><a href="acessorios.html">Acessórios</a></li>
                     <li><a href="veiculoLista.html">Listar Veiculos</a></li>
                 </ul>
-                <a href="clientes.html">Clientes</a>
-                <!-- <a class="menu abrirOs" id="os">Ordem de Serviço</a>
+                <a href="clientes.html"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
+                <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
-                    <li><a href="gerencOs.html" class="subMenu gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs.html" class="subMenu">Controle de execução da OS</a></li>
+                    <li><a href="cadastroServico.html">Serviços</a></li>
+                    <li><a href="cadastroPeca.html">Peças</a></li>
+                    <li><a href="gerencOs.html">Gerenciamento de OS</a></li>
+                    <li><a href="controleExOs.html">Controle de execução da OS</a></li>
                 </ul>
-                <a href="estoque.html">Estoque</a>
+                <!-- <a href="estoque.html">Estoque</a>
                 <a href="controle.html">Controle</a> -->
             </nav>
         </aside>
@@ -69,6 +72,37 @@
                                 </div>
                             </div>
                             <div>
+                                <select name="marca" id="marca" required>
+                                    <option value="" disabled selected hidden>Selecione a Marca</option>
+                                    <option value="fiat">Fiat</option>
+                                    <option value="ford">Ford</option>
+                                    <option value="chevrolet">Chevrolet</option>
+                                    <option value="volkswagen">Volkswagen</option>
+                                    <option value="toyota">Toyota</option>
+                                    <option value="honda">Honda</option>
+                                    <option value="nissan">Nissan</option>
+                                    <option value="bmw">BMW</option>
+                                    <option value="mercedes_benz">Mercedes-Benz</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+        
+                            <div>
+                                <select name="modelo" id="modelo" required>
+                                    <option value="" disabled selected hidden>Selecione o Modelo</option>
+                                    <option value="fiat">Fiat</option>
+                                    <option value="ford">Ford</option>
+                                    <option value="chevrolet">Chevrolet</option>
+                                    <option value="volkswagen">Volkswagen</option>
+                                    <option value="toyota">Toyota</option>
+                                    <option value="honda">Honda</option>
+                                    <option value="nissan">Nissan</option>
+                                    <option value="bmw">BMW</option>
+                                    <option value="mercedes_benz">Mercedes-Benz</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                            <div>
                                 <label for="km">Quilometragem</label>
                                 <input type="number" id="km" placeholder="50000" required>
                             </div>
@@ -81,8 +115,21 @@
                                 <input type="number" id="numPatrimonio" placeholder="1568" required>
                             </div>
                         </div>
+
+                        <div class="selecaoAcess">
+                            <div class="select-box">
+                                <label for="" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
+                                <ul>
+                                <li><label><input type="checkbox" value="1"> Opção 1</label></li>
+                                <li><label><input type="checkbox" value="2"> Opção 2</label></li>
+                                <li><label><input type="checkbox" value="3"> Opção 3</label></li>
+                                <li><label><input type="checkbox" value="4"> Opção 4</label></li>
+                                <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                                </ul>
+                            </div>
+                            <p class="selected-options">Acessórios:</p>
+                        </div>
                     </div>
-                    
                     <button>Cadastrar</button>
                 </form>
             </div>
@@ -115,6 +162,21 @@
                             <option value="lucas_ferreira">Lucas Ferreira</option>
                             <option value="paula_martins">Paula Martins</option>
                         </select>
+
+                        <!-- fazer com q tenha os ja selecionados pelo banco e tal -->
+                        <div class="selecaoAcess">
+                            <div class="select-box">
+                                <label for="" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
+                                <ul>
+                                <li><label><input type="checkbox" value="1"> Opção 1</label></li>
+                                <li><label><input type="checkbox" value="2"> Opção 2</label></li>
+                                <li><label><input type="checkbox" value="3"> Opção 3</label></li>
+                                <li><label><input type="checkbox" value="4"> Opção 4</label></li>
+                                <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                                </ul>
+                            </div>
+                            <p class="selected-options">Acessórios:</p>
+                        </div>
                     </div>
         
                     <button>Atualizar</button>
