@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.AcessorioDao;
 import com.pi.autogyn.persistencia.dao.ModeloDao;
+import com.pi.autogyn.persistencia.dao.PropriedadeDao;
 
 public class Veiculo {
 	private String placa;
@@ -17,6 +18,7 @@ public class Veiculo {
 	private Modelo modelo;
 	private Long modelo_id;
 	private List<Acessorio> acessorios;
+	private List<Propriedade> propriedades;
 	
 	public Veiculo(ResultSet rs) throws SQLException {
 		this.placa = rs.getString("placa");
@@ -25,8 +27,18 @@ public class Veiculo {
 		this.km = rs.getInt("km");
 		this.numPatrimonio = rs.getInt("num_patrimonio");
 		this.anoModelo = rs.getInt("ano_modelo");
-		this.modelo = null;
 		this.modelo_id = rs.getLong("id_modelo");
+	}
+	
+	public List<Propriedade> getPropriedades() {
+		if (this.propriedades == null) {
+			try {
+				this.propriedades = PropriedadeDao.getAllByPlaca(this.placa);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.propriedades;
 	}
 	
 	public Modelo getModelo() {
@@ -51,14 +63,78 @@ public class Veiculo {
 		return this.acessorios;
 	}
 
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Veiculo [placa=" + placa + ", km=" + km + ", anoFabricacao=" + anoFabricacao + ", numPatrimonio="
-				+ numPatrimonio + ", numChassi=" + numChassi + ", anoModelo=" + anoModelo + ", modelo=" + getModelo()
-				+ ", modelo_id=" + modelo_id + ", acessorios=" + getAcessorios() + "]";
+				+ numPatrimonio + ", numChassi=" + numChassi + ", anoModelo=" + anoModelo + ", modelo=" + modelo
+				+ ", modelo_id=" + modelo_id + ", acessorios=" + acessorios + ", propriedades=" + getPropriedades() + "]";
 	}
+
 	
 	
+	public int getKm() {
+		return km;
+	}
+
+	public void setKm(int km) {
+		this.km = km;
+	}
+
+	public int getAnoFabricacao() {
+		return anoFabricacao;
+	}
+
+	public void setAnoFabricacao(int anoFabricacao) {
+		this.anoFabricacao = anoFabricacao;
+	}
+
+	public int getNumPatrimonio() {
+		return numPatrimonio;
+	}
+
+	public void setNumPatrimonio(int numPatrimonio) {
+		this.numPatrimonio = numPatrimonio;
+	}
+
+	public int getNumChassi() {
+		return numChassi;
+	}
+
+	public void setNumChassi(int numChassi) {
+		this.numChassi = numChassi;
+	}
+
+	public int getAnoModelo() {
+		return anoModelo;
+	}
+
+	public void setAnoModelo(int anoModelo) {
+		this.anoModelo = anoModelo;
+	}
+
+	public Long getModelo_id() {
+		return modelo_id;
+	}
+
+	public void setModelo_id(Long modelo_id) {
+		this.modelo_id = modelo_id;
+	}
+
+	public void setModelo(Modelo modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
 
 	
 }

@@ -27,6 +27,15 @@ public class ClienteDao {
         return clientes;
 	}
 	
+	public static Cliente getById(Long id) throws SQLException {
+		String sql = "select * from cliente where cliente_id = "+id+";";
+		ResultSet rs = EasyQuery.exec(conn, sql);
+		while(rs.next()) {
+			return new Cliente(rs);
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}
