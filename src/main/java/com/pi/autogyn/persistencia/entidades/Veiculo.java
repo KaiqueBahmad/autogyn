@@ -2,6 +2,8 @@ package com.pi.autogyn.persistencia.entidades;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.AcessorioDao;
@@ -135,6 +137,24 @@ public class Veiculo {
 		this.placa = placa;
 	}
 
+	public Cliente getProprietarioMaisRecente() {
+	    Cliente proprietarioMaisRecente = null;
+	    Date dataMaisRecente = null;
+	    if (this.getPropriedades() == null) {
+	    	return null;
+	    }
+	    for (Propriedade propriedade : this.getPropriedades()) {
+	        Date dataInicio = propriedade.getDataInicio();
+	        if (dataInicio == null) {
+	        	continue;
+	        }
+	        if (dataMaisRecente == null || dataInicio.after(dataMaisRecente)) {
+	            dataMaisRecente = dataInicio;
+	            proprietarioMaisRecente = propriedade.getCliente();
+	        }
+	    }
+	    return proprietarioMaisRecente;
+	}
 
 	
 }

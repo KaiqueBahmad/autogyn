@@ -40,11 +40,115 @@ public class Cliente {
 		return this.propriedades;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", endereco=" + endereco + ", telefone="
 				+ telefone + ", telefone2=" + telefone2 + ", pessoaJuridica=" + pessoaJuridica + ", pessoaFisica="
 				+ pessoaFisica + ", propriedades=" + getPropriedades() + "]";
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
+
+	public Telefone getTelefone() {
+		return telefone;
+	}
+
+
+
+	public void setTelefone(Telefone telefone) {
+		this.telefone = telefone;
+	}
+
+
+
+	public Optional<Telefone> getTelefone2() {
+		return telefone2;
+	}
+
+
+
+	public void setTelefone2(Optional<Telefone> telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+
+
+	public Optional<PJ> getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+
+
+	public void setPessoaJuridica(Optional<PJ> pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
+	}
+
+
+
+	public Optional<PF> getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+
+
+	public void setPessoaFisica(Optional<PF> pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
+
+
+
+	public void setPropriedades(List<Propriedade> propriedades) {
+		this.propriedades = propriedades;
 	}
 	
 	
