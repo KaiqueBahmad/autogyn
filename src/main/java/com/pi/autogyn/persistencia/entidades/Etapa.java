@@ -2,9 +2,9 @@ package com.pi.autogyn.persistencia.entidades;
 
 public enum Etapa {
 //	'Orcamento', 'Aprovado', 'Execucao', 'Finalizado', 'Pago'
-	ORCAMENTO("Orcamento"),
+	ORCAMENTO("Orçamento"),
 	APROVADO("Aprovado"),
-	EXECUCAO("Execucao"),
+	EXECUCAO("Execucão"),
 	FINALIZADO("Finalizado"),
 	PAGO("Pago");
 
