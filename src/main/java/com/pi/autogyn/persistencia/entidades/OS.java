@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.ClienteDao;
 import com.pi.autogyn.persistencia.dao.ItemPecaDao;
+import com.pi.autogyn.persistencia.dao.ItemServicoDao;
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
 
 public class OS {
@@ -20,7 +21,7 @@ public class OS {
 	private Veiculo veiculo;
 	private Cliente cliente;
 	private List<ItemPeca> itensPeca;
-	
+	private List<ItemServico> itensServico;
 	public OS() {
 		
 	}
@@ -73,6 +74,17 @@ public class OS {
 			}
 		}
 		return this.itensPeca;
+	}
+	
+	private List<ItemServico> getItensServico() {
+		if (this.itensServico == null) {
+			try {
+				this.itensServico = ItemServicoDao.getByIdOs(this.id);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.itensServico;
 	}
 	
 	

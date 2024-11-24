@@ -25,6 +25,15 @@ public class ServicoDao {
         return servicos;
 	}
 	
+	public static Servico getById(Long idServico) throws SQLException {
+		String sql = "select * from servico where id_servico = "+idServico+";";
+		ResultSet rs = EasyQuery.exec(conn, sql);
+		if (rs.next()) {
+			return new Servico(rs);
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}

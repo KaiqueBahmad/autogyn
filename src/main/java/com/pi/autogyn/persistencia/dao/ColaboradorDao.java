@@ -9,6 +9,7 @@ import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,6 +26,17 @@ public class ColaboradorDao {
         }
         return colaboradores;
 	}
+	
+	public static Colaborador getById(String cpfColaborador) throws SQLException {
+		   String sql = "SELECT * FROM colaborador WHERE cpf = ?";
+		   PreparedStatement statment = conn.prepareStatement(sql);
+		   statment.setString(1, cpfColaborador);
+	       ResultSet rs = statment.executeQuery();
+	       if (rs.next()) {
+	           return new Colaborador(rs);
+	       }
+	       return null;
+		}
 	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
