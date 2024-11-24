@@ -6,7 +6,7 @@ import java.util.List;
 import com.pi.autogyn.persistencia.entidades.Cliente;
 import com.pi.autogyn.persistencia.entidades.Marca;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class ClienteDao {
 	public static List<Cliente> getAll() throws SQLException {
         String sql = "select * from cliente;";
         List<Cliente> clientes = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	Cliente cliente = new Cliente(rs);
         	clientes.add(cliente);
@@ -29,7 +29,7 @@ public class ClienteDao {
 	
 	public static Cliente getById(Long id) throws SQLException {
 		String sql = "select * from cliente where id_cliente = "+id+";";
-		ResultSet rs = EasyQuery.exec(conn, sql);
+		ResultSet rs = QueryUtils.exec(conn, sql);
 		while(rs.next()) {
 			return new Cliente(rs);
 		}

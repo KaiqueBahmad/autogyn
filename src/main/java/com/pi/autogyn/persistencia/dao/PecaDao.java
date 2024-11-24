@@ -6,7 +6,7 @@ import java.util.List;
 import com.pi.autogyn.persistencia.entidades.Peca;
 import com.pi.autogyn.persistencia.entidades.Servico;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class PecaDao {
 	public static List<Peca> getAll() throws SQLException {
         String sql = "select * from pecas;";
         List<Peca> pecas = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	pecas.add(new Peca(rs));
         }
@@ -27,7 +27,7 @@ public class PecaDao {
 	
 	public static Peca getById(Long idPeca) throws SQLException {
 		String sql = "select * from pecas where id_peca = "+idPeca+";";
-		ResultSet rs = EasyQuery.exec(conn, sql);
+		ResultSet rs = QueryUtils.exec(conn, sql);
 		if (rs.next()) {
 			return new Peca(rs);
 		}

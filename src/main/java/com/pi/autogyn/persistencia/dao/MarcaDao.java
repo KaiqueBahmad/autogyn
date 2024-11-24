@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.entidades.Marca;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class MarcaDao {
 	public static List<Marca> getAll() throws SQLException {
         String sql = "select * from marca;";
         List<Marca> marcas = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	Marca marca = new Marca(rs);
         	marcas.add(marca);
@@ -28,7 +28,7 @@ public class MarcaDao {
 	
 	public static Marca getById(Long id) throws SQLException {
 		String sql = "select * from marca where id_marca = "+id+";";
-		ResultSet rs = EasyQuery.exec(conn, sql);
+		ResultSet rs = QueryUtils.exec(conn, sql);
 		if (rs.next()) {
 			return new Marca(rs);
 		}

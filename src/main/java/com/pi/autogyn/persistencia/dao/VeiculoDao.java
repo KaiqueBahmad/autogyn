@@ -7,7 +7,7 @@ import com.pi.autogyn.persistencia.entidades.Marca;
 import com.pi.autogyn.persistencia.entidades.Propriedade;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class VeiculoDao {
 	public static List<Veiculo> getAll() throws SQLException {
         String sql = "select * from veiculo;";
         List<Veiculo> marcas = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	Veiculo veiculo = new Veiculo(rs);
         	marcas.add(veiculo);

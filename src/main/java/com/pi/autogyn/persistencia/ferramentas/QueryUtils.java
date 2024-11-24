@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class EasyQuery {
+public class QueryUtils {
 	public static ResultSet exec(Connection conn,String query) throws SQLException {
 		Statement statement = conn.createStatement();
         return statement.executeQuery(query);

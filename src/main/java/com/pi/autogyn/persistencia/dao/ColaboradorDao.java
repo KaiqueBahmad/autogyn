@@ -6,7 +6,7 @@ import java.util.List;
 import com.pi.autogyn.persistencia.entidades.Colaborador;
 import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class ColaboradorDao {
 	public static List<Colaborador> getAll() throws SQLException {
         String sql = "select * from colaborador;";
         List<Colaborador> colaboradores = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	colaboradores.add(new Colaborador(rs));
         }

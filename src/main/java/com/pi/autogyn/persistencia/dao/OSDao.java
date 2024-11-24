@@ -9,7 +9,7 @@ import java.util.List;
 import com.pi.autogyn.persistencia.entidades.OS;
 import com.pi.autogyn.persistencia.entidades.Propriedade;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 public class OSDao {
 	private static Connection conn = ConexaoBD.getInstance();
@@ -17,7 +17,7 @@ public class OSDao {
 	public static List<OS> getAll() throws SQLException {
         String sql = "select * from ordem_servico;";
         List<OS> oss = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	oss.add(new OS(rs));
         }
@@ -26,7 +26,7 @@ public class OSDao {
 	
 	public static OS getById(Long idOs) throws SQLException {
 		String sql = "select * from ordem_servico where id_os = "+idOs+";";
-		ResultSet rs = EasyQuery.exec(conn, sql);
+		ResultSet rs = QueryUtils.exec(conn, sql);
 		if (rs.next()) {
 			return new OS(rs);
 		}

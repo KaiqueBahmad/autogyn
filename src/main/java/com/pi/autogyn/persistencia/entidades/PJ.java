@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 public class PJ {
 	private String inscricaoEstadual;
@@ -16,7 +16,7 @@ public class PJ {
 	}
 	
 	public static Optional<PJ> create(ResultSet rs) throws SQLException {
-		if (!EasyQuery.checkAttribute(rs, "cnpj")) {
+		if (!QueryUtils.checkAttribute(rs, "cnpj")) {
 			return Optional.empty();
 		}
 		PJ pj = new PJ();

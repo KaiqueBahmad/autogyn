@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.entidades.Acessorio;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 public class AcessorioDao {
 	private static Connection conn = ConexaoBD.getInstance();
@@ -17,7 +17,7 @@ public class AcessorioDao {
 	public static List<Acessorio> getAll() throws SQLException {
         String sql = "select * from acessorio;";
         List<Acessorio> acessorios = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
             acessorios.add(new Acessorio(rs));
         }

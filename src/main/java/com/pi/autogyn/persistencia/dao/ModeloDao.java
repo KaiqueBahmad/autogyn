@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class ModeloDao {
 	public static List<Modelo> getAll() throws SQLException {
         String sql = "select * from modelo;";
         List<Modelo> modelos = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	modelos.add(new Modelo(rs));
         }
@@ -28,7 +28,7 @@ public class ModeloDao {
 	public static List<Modelo> getAllModelosOfMarca(Long idMarca) throws SQLException {
 		String sql = "select * from modelo where marca = "+idMarca+";";
         List<Modelo> modelos = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	modelos.add(new Modelo(rs));
         }
@@ -37,7 +37,7 @@ public class ModeloDao {
 	
 	public static Modelo getById(Long idModelo) throws SQLException {
 		String sql = "select * from modelo where id_modelo = "+idModelo+";";
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	return new Modelo(rs);
         }

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 public class PF {
 	private String cpf;
@@ -14,7 +14,7 @@ public class PF {
 	}
 	
 	public static Optional<PF> create(ResultSet rs) throws SQLException {
-		if (!EasyQuery.checkAttribute(rs, "cpf")) {
+		if (!QueryUtils.checkAttribute(rs, "cpf")) {
 			return Optional.empty();
 		}
 		PF pf = new PF();

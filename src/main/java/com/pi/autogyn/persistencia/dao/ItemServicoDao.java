@@ -6,7 +6,7 @@ import java.util.List;
 import com.pi.autogyn.persistencia.entidades.Colaborador;
 import com.pi.autogyn.persistencia.entidades.ItemServico;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
-import com.pi.autogyn.persistencia.ferramentas.EasyQuery;
+import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class ItemServicoDao {
 	public static List<ItemServico> getAll() throws SQLException {
         String sql = "select * from item_servico;";
         List<ItemServico> servicos = new LinkedList<>();
-        ResultSet rs = EasyQuery.exec(conn, sql);
+        ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
         	servicos.add(new ItemServico(rs));
         }
@@ -29,7 +29,7 @@ public class ItemServicoDao {
 	public static List<ItemServico> getByIdOs(Long idOs) throws SQLException {
 		String sql = "SELECT * FROM item_servico WHERE id_os = "+idOs+";";
 		List<ItemServico> servicos = new LinkedList<>();
-		ResultSet rs = EasyQuery.exec(conn, sql);
+		ResultSet rs = QueryUtils.exec(conn, sql);
 		while(rs.next()) {
 			servicos.add(new ItemServico(rs));
 		}
