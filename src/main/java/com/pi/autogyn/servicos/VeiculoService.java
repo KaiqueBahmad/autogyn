@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.pi.autogyn.persistencia.dao.MarcaDao;
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
@@ -15,5 +16,9 @@ public class VeiculoService {
 			lista.add(new VeiculoListaCadastradosDto(veiculo));
 		}
 		return lista;
+	}
+	
+	public static boolean insertMarca(String nome) throws SQLException {
+		return MarcaDao.insert(nome);
 	}
 }

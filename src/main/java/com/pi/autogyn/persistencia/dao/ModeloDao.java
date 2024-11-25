@@ -26,7 +26,7 @@ public class ModeloDao {
 	}
 	
 	public static List<Modelo> getAllModelosOfMarca(Long idMarca) throws SQLException {
-		String sql = "select * from modelo where marca = "+idMarca+";";
+		String sql = "select * from modelo where id_marca = "+idMarca+";";
         List<Modelo> modelos = new LinkedList<>();
         ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
