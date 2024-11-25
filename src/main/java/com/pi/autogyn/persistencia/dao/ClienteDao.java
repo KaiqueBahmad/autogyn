@@ -100,7 +100,7 @@ public class ClienteDao {
 		CadastrarClienteDTO dtoPF = new CadastrarClienteDTO();
 	    dtoPF.setNome("João Silva");
 	    dtoPF.setEmail("joao.silva@email.com");
-	    dtoPF.setPF(true);
+	    dtoPF.setPJ(false);
 	    dtoPF.setCpf("12345678900");
 	    dtoPF.setDdd(11);
 	    dtoPF.setTelefone(999887766);
