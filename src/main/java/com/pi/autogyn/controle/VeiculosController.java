@@ -23,11 +23,21 @@ public class VeiculosController {
 	@PostMapping("/veiculo/marca")
 	public ResponseEntity<String> cadastrarMarca(@RequestBody String nome) {
 	   try {
-	       // Assuming marca has a 'nome' field that gets populated from request body
+		   VeiculoService.insertMarca(nome);
 	       return ResponseEntity.ok("Marca cadastrada com sucesso");
 	   } catch (Exception e) {
 	       return ResponseEntity.badRequest().body("Erro ao cadastrar marca: " + e.getMessage());
 	   }
+	}
+	
+	@PostMapping("/veiculo/marca/modelo")
+	public ResponseEntity<String> cadastrarModelo(@RequestBody Long idMarca, @RequestBody String nomeModelo) {
+		try {
+				VeiculoService.insertModelo(idMarca, nomeModelo);
+		       return ResponseEntity.ok("Modelo cadastrado com sucesso");
+		   } catch (Exception e) {
+		       return ResponseEntity.badRequest().body("Erro ao cadastrar modelo: " + e.getMessage());
+		   }
 	}
 	
 }

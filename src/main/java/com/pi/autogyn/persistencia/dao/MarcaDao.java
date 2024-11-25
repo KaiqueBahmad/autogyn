@@ -37,33 +37,29 @@ public class MarcaDao {
 	}
 	
 	public static boolean insert(String marca) throws SQLException {
-	       String sql = "INSERT INTO marca (nome) VALUES (?)";
-	       
-	       try {
-	           PreparedStatement stmt = conn.prepareStatement(sql);
-	           stmt.setString(1, marca);
-	           
-	           int rowsAffected = stmt.executeUpdate();
-	           return rowsAffected > 0;
-	           
-	       } catch (SQLException e) {
-	           e.printStackTrace();
-	           return false;
-	       }
-	   }
+		String sql = "INSERT INTO marca (nome) VALUES (?)";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, marca);
+			
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-	   public static boolean existsByNome(String nome) throws SQLException {
-	       String sql = "SELECT COUNT(*) as count FROM marca WHERE nome = ?";
-	       
-	       PreparedStatement stmt = conn.prepareStatement(sql);
-	       stmt.setString(1, nome);
-	       ResultSet rs = stmt.executeQuery();
-	       
-	       if (rs.next()) {
-	           return rs.getInt("count") > 0;
-	       }
-	       return false;
-	   }
+	public static boolean existsByNome(String nome) throws SQLException {
+		String sql = "SELECT COUNT(*) as count FROM marca WHERE nome = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, nome);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			return rs.getInt("count") > 0;
+		}
+		return false;
+	}
 	
 	
 	public static void main(String[] args) throws SQLException {

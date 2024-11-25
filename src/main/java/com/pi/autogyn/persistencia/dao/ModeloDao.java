@@ -8,6 +8,7 @@ import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,6 +43,20 @@ public class ModeloDao {
         	return new Modelo(rs);
         }
         return null;
+	}
+	
+	public static boolean insert(Long idMarca, String nomeModelo) {
+		String sql = "INSERT INTO modelo (id_marca, nome) VALUES (?, ?)";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setLong(1, idMarca);
+			stmt.setString(2, nomeModelo);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public static void main(String[] args) throws SQLException {
