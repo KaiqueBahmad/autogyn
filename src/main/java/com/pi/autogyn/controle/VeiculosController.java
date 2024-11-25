@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pi.autogyn.servicos.VeiculoService;
+import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 @Controller
@@ -18,6 +19,11 @@ public class VeiculosController {
 	@GetMapping("/veiculo/lista-cadastro")
 	public ResponseEntity<List<VeiculoListaCadastradosDto>> veiculosCadastrados() throws SQLException {
 		return ResponseEntity.ok(VeiculoService.listarVeiculosCadastrados());
+	}
+	
+	@GetMapping("/veiculo/marca/lista-cadastro")
+	public ResponseEntity<List<MarcaListaCadastroDTO>> marcasCadastradas() throws SQLException {
+		return ResponseEntity.ok(VeiculoService.listarMarcasCadastradas());
 	}
 	
 	@PostMapping("/veiculo/marca")
