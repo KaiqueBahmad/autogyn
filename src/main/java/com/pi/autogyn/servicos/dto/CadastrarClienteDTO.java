@@ -4,11 +4,11 @@ public class CadastrarClienteDTO {
 	private String nome;
 	private String email;
 	
-	private boolean isPF;
-	private String cpf;
-	
 	private boolean isPJ;
+
+	private String cpf;	
 	private String cnpj;
+
 	private String inscricao_estadual;
 	private String nomeContato;
 	
@@ -35,12 +35,7 @@ public class CadastrarClienteDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public boolean isPF() {
-		return isPF;
-	}
-	public void setPF(boolean isPF) {
-		this.isPF = isPF;
-	}
+
 	public boolean isPJ() {
 		return isPJ;
 	}
