@@ -18,17 +18,17 @@
             </div>
             <nav>
                 <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
-                <ul class="abrirVeiculo">
+                <ul class="abrirVeiculo" hidden>
                     <li><a href="veiculoCadAt">Cadastrar | Atualizar</a></li>
                     <li><a href="veiculoMarMo">Marca | Modelo</a></li>
-                    <li><a href="acessorios" class="selecionado">Acessórios</a></li>
+                    <li><a href="acessorios">Acessórios</a></li>
                     <li><a href="veiculoLista">Listar Veiculos</a></li>
                 </ul>
                 <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
-                <ul class="abrirOs" hidden>
+                <ul class="abrirOs">
                     <li><a href="cadastroServico">Serviços</a></li>
-                    <li><a href="cadastroPeca">Peças</a></li>
+                    <li><a href="cadastroPeca" class="selecionado">Peças</a></li>
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
                     <li><a href="controleExOs">Controle de execução da OS</a></li>
                 </ul>
@@ -40,8 +40,8 @@
         <section class="veiculoAcess">
             <div>
                 <div>
-                    <h1>Cadastro de acessórios</h1>
-                    <p>Preencha os dados do acessorio para cadastro</p>
+                    <h1>Cadastro de peça</h1>
+                    <p>Preencha os dados da peça para cadastro</p>
                 </div>
                 <form action="/acessorio" method="POST">
                     <div class="conteudo">
