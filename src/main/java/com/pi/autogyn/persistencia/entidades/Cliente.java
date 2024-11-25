@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.pi.autogyn.persistencia.dao.PropriedadeDao;
+import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
 
 public class Cliente {
 	public Cliente(ResultSet rs) throws SQLException {
@@ -34,6 +35,54 @@ public class Cliente {
 	private Optional<PJ> pessoaJuridica;
 	private Optional<PF> pessoaFisica;
 	private List<Propriedade> propriedades;
+
+	
+	public Cliente(CadastrarClienteDTO dto) {
+	    this.nome = dto.getNome();
+	    this.email = dto.getEmail();
+	    this.lazyload = false;
+	    
+	    this.endereco = new Endereco();
+	    this.endereco.setLogradouro(dto.getLogradouro());
+	    this.endereco.setComplemento(dto.getComplemento());
+	    this.endereco.setNumero(dto.getNumero());
+	    this.endereco.setCep(dto.getCep());
+	    this.endereco.setCidade(dto.getCidade());
+	    this.endereco.setUf(dto.getUf());
+	    
+	    this.telefone = new Telefone();
+	    this.telefone.setDdd(dto.getDdd());
+	    this.telefone.setTelefone(dto.getTelefone());
+	    
+	    if (dto.getDdd2() != 0 && dto.getTelefone2() != 0) {
+	        Telefone tel2 = new Telefone();
+	        tel2.setDdd(dto.getDdd2());
+	        tel2.setTelefone(dto.getTelefone2());
+	        this.telefone2 = Optional.of(tel2);
+	    } else {
+	        this.telefone2 = Optional.empty();
+	    }
+	    
+	    if (dto.isPJ()) {
+	        PJ pj = new PJ();
+	        pj.setCnpj(dto.getCnpj());
+	        pj.setContato(dto.getNomeContato());
+	        pj.setInscricaoEstadual(dto.getInscricao_estadual());
+	        this.pessoaJuridica = Optional.of(pj);
+	        this.pessoaFisica = Optional.empty();
+	    } else if (dto.isPF()) {
+	        PF pf = new PF();
+	        pf.setCpf(dto.getCpf());
+	        this.pessoaFisica = Optional.of(pf);
+	        this.pessoaJuridica = Optional.empty();
+	    } else {
+	        this.pessoaJuridica = Optional.empty();
+	        this.pessoaFisica = Optional.empty();
+	    }
+	    
+	    this.propriedades = null;
+	}
+	
 	
 	public List<Propriedade> getPropriedades() {
 		if (this.propriedades == null && lazyload) {

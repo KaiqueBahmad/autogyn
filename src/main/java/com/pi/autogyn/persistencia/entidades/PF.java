@@ -21,5 +21,15 @@ public class PF {
 		pf.cpf = rs.getString("cpf");
 		return Optional.of(pf);
 	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
+	
 	
 }
