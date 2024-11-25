@@ -17,110 +17,27 @@
                 <span class="linha"></span>
             </div>
             <nav>
-                <a class="menu abrirVeiculo" id="veiculos">Veiculos</a>
-                <ul class="abrirVeiculo">
-                    <li><a href="veiculoCadAt.html" class="selecionado">Cadastrar | Atualizar</a></li>
-                    <li><a href="veiculoMarMo.html">Marca | Modelo</a></li>
-                    <li><a href="veiculoLista.html">Listar Veiculos</a></li>
+                <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
+                <ul class="abrirVeiculo" hidden>
+                    <li><a href="veiculoCadAt">Cadastrar | Atualizar</a></li>
+                    <li><a href="veiculoMarca">Marca</a></li>
+                    <li><a href="veiculoModelo">Modelo</a></li>
+                    <li><a href="acessorios">Acessórios</a></li>
+                    <li><a href="veiculoLista">Listar Veiculos</a></li>
                 </ul>
-                <a href="clientes.html">Clientes</a>
-                <!-- <a class="menu abrirOs" id="os">Ordem de Serviço</a>
+                <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
+                <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
-                    <li><a href="gerencOs.html" class="subMenu gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs.html" class="subMenu">Controle de execução da OS</a></li>
+                    <li><a href="cadasSerPe">Serviço | Peça</a></li>
+                    <li><a href="gerencOs">Gerenciamento de OS</a></li>
+                    <li><a href="controleExOs">Controle de execução da OS</a></li>
                 </ul>
-                <a href="estoque.html">Estoque</a>
-                <a href="controle.html">Controle</a> -->
+                <!-- <a href="estoque">Estoque</a>
+                <a href="controle">Controle</a> -->
             </nav>
         </aside>
         
         <!-- botar required em tudo! -->
-    
-        <!-- cadastro de cliente -->
-        <section class="clientes">
-            <form action="/cliente" method="POST">
-                <div class="conteudoCli">
-                    <div>
-                        <div>
-                            <div>
-                                <h1>Cadastrar cliente</h1>
-                                <p>Preencha os dados do cliente para cadastro</p>
-                            </div>
-                            <div>
-                                <label for="nome">Nome</label>
-                                <input type="text" id="nome" placeholder="Cliente">
-                            </div>
-                            <div>
-                                <label for="email">E-mail</label>
-                                <input type="email" id="email" placeholder="cliente@gmail.com">
-                            </div>
-                            <div class="radios">
-                                <div>
-                                    <input type="radio" class="tipoPessoa" id="cpf" name="tipoPessoa" value="cpf">
-                                    <label for="cpf">Pessoa Física</label>
-                                </div>
-                                <div>
-                                    <input type="radio" class="tipoPessoa" id="cnpj" name="tipoPessoa" value="cnpj">
-                                    <label for="cnpj">Pessoa Jurídica</label>
-                                </div>
-                            </div>
-    
-                            <div class="pessoaFisica">
-                                <label for="valorCpf">Cpf</label>
-                                <input type="number" id="valorCpf" placeholder="56477765732">
-                            </div>
-    
-                            <div class="pessoaJuridica">
-                                <div>
-                                    <label for="valorCnpj">Cnpj</label>
-                                    <input type="number" id="valorCnpj" placeholder="00000000000100">
-                                </div>
-    
-                                <div>
-                                    <label for="numInscricao">Inscrição estadual</label>
-                                    <input type="number" id="numInscricao" placeholder="123456789101">
-                                </div>
-    
-                                <div>
-                                    <label for="contato">Nome do contato</label>
-                                    <input type="text" id="contato" placeholder="Responsável">
-                                </div>
-                            </div>
-                            
-                            <div class="telefones">
-                                <label for="tel">Telefone</label>
-                                <div>
-                                    <div>
-                                        <input type="number" id="tel" placeholder="(62)">
-                                        <input type="number" id="tel" placeholder="940028922">
-                                    </div>
-                                    <div>
-                                        <input type="number" id="tel" placeholder="(62)">
-                                        <input type="number" id="tel" placeholder="940028922">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="linha"></span>
-                        <div>
-                            <div class="endereco">
-                                <label for="endereco">Endereço</label>
-                                <input type="number" id="endereco" placeholder="CEP">
-                                <div style="display: flex; flex-direction: row; gap: 10px;">
-                                    <input type="text" id="endereco" placeholder="Cidade">
-                                    <input type="text" id="endereco" placeholder="UF" style="width: 30%;">
-                                    <input type="number" id="endereco" placeholder="Nº" style="width: 30%;">
-                                </div>
-                                <input type="text" id="endereco" placeholder="Logradouro">
-                                <input type="text" id="endereco" placeholder="Complemento">
-                            </div>
-                            <button>Cadastrar</button>
-                        </div>
-                    </div>
-                </div>
-    
-            </form>
-        </section>
 
         <section class="gerencOs" style="display: none;">
             <h1>Gerenciamento de OS</h1>
