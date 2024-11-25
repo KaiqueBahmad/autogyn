@@ -33,11 +33,16 @@ public class OS {
 		this.valor_pago = source.getDouble("valor_pago");
 		this.etapa = Etapa.valueOf(source.getString("etapa").toUpperCase());
 		this.veiculoPlaca = source.getString("placa");
-		this.idCliente = source.getLong("id_cliente");
+		this.idCliente = source.getLong("id_cliente");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	public Cliente getCliente() {
-		if (this.cliente == null) {
+		if (this.cliente == null && lazyload) {
 			try {
 				this.cliente = ClienteDao.getById(this.idCliente);
 			} catch (SQLException e) {
@@ -55,7 +60,7 @@ public class OS {
 	}
 
 	public Veiculo getVeiculo() {
-		if (this.veiculo == null) {
+		if (this.veiculo == null && lazyload) {
 			try {
 				this.veiculo = VeiculoDao.getByPlaca(veiculoPlaca);
 			} catch (SQLException e) {
@@ -66,7 +71,7 @@ public class OS {
 	}
 	
 	public List<ItemPeca> getItensPeca() {
-		if (this.itensPeca == null) {
+		if (this.itensPeca == null && lazyload) {
 			try {
 				this.itensPeca = ItemPecaDao.getByIdOs(this.id);
 			} catch (SQLException e) {
@@ -77,7 +82,7 @@ public class OS {
 	}
 	
 	public List<ItemServico> getItensServico() {
-		if (this.itensServico == null) {
+		if (this.itensServico == null && lazyload) {
 			try {
 				this.itensServico = ItemServicoDao.getByIdOs(this.id);
 			} catch (SQLException e) {

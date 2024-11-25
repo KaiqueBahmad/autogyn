@@ -26,11 +26,16 @@ public class ItemPeca {
 		this.valor_total = source.getDouble("valor_total");
 		this.valor_unitario = source.getDouble("valor_unitario");
 		this.idOs = source.getLong("id_os");
-		this.idPeca = source.getLong("id_peca");
+		this.idPeca = source.getLong("id_peca");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 	
 	public OS getOs() {
-		if (this.os == null) {
+		if (this.os == null && lazyload) {
 			try {
 				this.os = OSDao.getById(this.idOs);
 			} catch (SQLException e) {
@@ -41,7 +46,7 @@ public class ItemPeca {
 	}
 	
 	public Peca getPeca() {
-		if (this.peca == null) {
+		if (this.peca == null && lazyload) {
 			try {
 				this.peca = PecaDao.getById(this.idPeca);
 			} catch (SQLException e) {

@@ -21,7 +21,12 @@ public class Peca {
 		this.descricao = source.getString("descricao");
 		this.sku = source.getString("sku");
 		this.quantidadeEstoque = source.getInt("quantidade_estoque");
-		this.valorUnitario = source.getDouble("valor_unitario");
+		this.valorUnitario = source.getDouble("valor_unitario");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	@Override

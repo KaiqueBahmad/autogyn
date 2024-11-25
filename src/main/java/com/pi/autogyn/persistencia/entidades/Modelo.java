@@ -18,11 +18,16 @@ public class Modelo {
 	public Modelo(ResultSet rs) throws SQLException {
 		this.id = rs.getLong("id_modelo");
 		this.nome = rs.getString("nome");
-		this.idMarca = rs.getLong("id_marca");
+		this.idMarca = rs.getLong("id_marca");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	public Marca getMarca() {
-		if (this.marca == null) {
+		if (this.marca == null && lazyload) {
 			try {
 				this.marca = MarcaDao.getById(this.idMarca);
 			} catch (SQLException e) {

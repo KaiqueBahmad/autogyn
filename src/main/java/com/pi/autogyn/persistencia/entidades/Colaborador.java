@@ -10,6 +10,12 @@ public class Colaborador {
 	public Colaborador(ResultSet rs) throws SQLException {
 		this.cpf = rs.getString("cpf");
 		this.nome = rs.getString("nome");
+		this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	@Override

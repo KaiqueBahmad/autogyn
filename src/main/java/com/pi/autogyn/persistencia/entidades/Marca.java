@@ -16,7 +16,12 @@ public class Marca {
 	
 	public Marca(ResultSet rs) throws SQLException {
 		this.id = rs.getLong("id_marca");
-		this.nome = rs.getString("nome");
+		this.nome = rs.getString("nome");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	public Marca() {
@@ -47,7 +52,7 @@ public class Marca {
 	}
 
 	public List<Modelo> getModelos() {
-		if (this.modelos == null) {
+		if (this.modelos == null && lazyload) {
 			try {
 				this.modelos = ModeloDao.getAllModelosOfMarca(this.id);
 			} catch (SQLException e) {

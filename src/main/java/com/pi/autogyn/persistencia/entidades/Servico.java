@@ -16,7 +16,12 @@ public class Servico {
 	public Servico(ResultSet source) throws SQLException {
 		this.id = source.getLong("id_servico");
 		this.descricao = source.getString("descricao");
-		this.valor = source.getDouble("valor");
+		this.valor = source.getDouble("valor");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	@Override

@@ -33,11 +33,16 @@ public class ItemServico {
 		this.quantidade = source.getInt("quantidade");
 		this.valorUnitario = source.getDouble("valor_unitario");
 		this.idServico = source.getLong("id_servico");
-		this.cpfColaborador = source.getString("cpf_colaborador");
+		this.cpfColaborador = source.getString("cpf_colaborador");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 	
 	public Servico getServico() {
-		if (this.servico == null) {
+		if (this.servico == null && lazyload) {
 			try {
 				this.servico = ServicoDao.getById(this.idServico);
 			} catch (SQLException e) {
@@ -48,7 +53,7 @@ public class ItemServico {
 	}
 	
 	public Colaborador getColaborador() {
-		if (this.colaborador == null) {
+		if (this.colaborador == null && lazyload) {
 			try {
 				this.colaborador = ColaboradorDao.getById(this.cpfColaborador);
 			} catch (SQLException e) {

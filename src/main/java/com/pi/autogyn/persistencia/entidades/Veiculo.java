@@ -29,11 +29,16 @@ public class Veiculo {
 		this.km = rs.getInt("km");
 		this.numPatrimonio = rs.getInt("num_patrimonio");
 		this.anoModelo = rs.getInt("ano_modelo");
-		this.modelo_id = rs.getLong("id_modelo");
+		this.modelo_id = rs.getLong("id_modelo");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 	
 	public List<Propriedade> getPropriedades() {
-		if (this.propriedades == null) {
+		if (this.propriedades == null && lazyload) {
 			try {
 				this.propriedades = PropriedadeDao.getAllByPlaca(this.placa);
 			} catch (SQLException e) {
@@ -44,7 +49,7 @@ public class Veiculo {
 	}
 	
 	public Modelo getModelo() {
-		if (modelo == null) {
+		if (modelo == null && lazyload) {
 			try {
 				this.modelo = ModeloDao.getById(this.modelo_id);
 			} catch (SQLException e) {
@@ -55,7 +60,7 @@ public class Veiculo {
 	}
 	
 	public List<Acessorio> getAcessorios() {
-		if (acessorios == null) {
+		if (acessorios == null && lazyload) {
 			try {
 				this.acessorios = AcessorioDao.getAllAcessoriosOfVeiculo(this.placa);
 			} catch (SQLException e) {

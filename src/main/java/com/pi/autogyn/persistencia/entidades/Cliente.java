@@ -17,6 +17,12 @@ public class Cliente {
 		this.telefone2 = Telefone.createSecondary(rs);
 		this.pessoaJuridica = PJ.create(rs);
 		this.pessoaFisica = PF.create(rs);
+		this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 	
 	private Long id;
@@ -30,7 +36,7 @@ public class Cliente {
 	private List<Propriedade> propriedades;
 	
 	public List<Propriedade> getPropriedades() {
-		if (this.propriedades == null) {
+		if (this.propriedades == null && lazyload) {
 			try {
 				this.propriedades = PropriedadeDao.getAllByCliente(this.id);
 			} catch (SQLException e) {

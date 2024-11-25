@@ -27,11 +27,16 @@ public class Propriedade {
 		this.dataInicio = source.getDate("data_inicio");
 		this.dataFim = source.getDate("data_fim");
 		this.placa = source.getString("placa");
-		this.idCliente = source.getLong("id_cliente");
+		this.idCliente = source.getLong("id_cliente");	this.lazyload = true;
+	}
+	
+	private boolean lazyload = false;
+	public void setLazyload(boolean ligado) {
+		this.lazyload = ligado;
 	}
 
 	public Veiculo getVeiculo() {
-		if (this.veiculo == null) {
+		if (this.veiculo == null && lazyload) {
 			try {
 				this.veiculo = VeiculoDao.getByPlaca(placa);
 			} catch (SQLException e) {
@@ -42,7 +47,7 @@ public class Propriedade {
 	}
 
 	public Cliente getCliente() {
-		if (this.cliente == null) {
+		if (this.cliente == null && lazyload) {
 			try {
 				this.cliente = ClienteDao.getById(idCliente);
 			} catch (SQLException e) {
