@@ -54,7 +54,7 @@ public class OS {
 				+ getVeiculo()+ ", cliente=" + getCliente() + "]";
 	}
 
-	private Veiculo getVeiculo() {
+	public Veiculo getVeiculo() {
 		if (this.veiculo == null) {
 			try {
 				this.veiculo = VeiculoDao.getByPlaca(veiculoPlaca);
@@ -65,7 +65,7 @@ public class OS {
 		return this.veiculo;
 	}
 	
-	private List<ItemPeca> getItensPeca() {
+	public List<ItemPeca> getItensPeca() {
 		if (this.itensPeca == null) {
 			try {
 				this.itensPeca = ItemPecaDao.getByIdOs(this.id);
@@ -76,7 +76,7 @@ public class OS {
 		return this.itensPeca;
 	}
 	
-	private List<ItemServico> getItensServico() {
+	public List<ItemServico> getItensServico() {
 		if (this.itensServico == null) {
 			try {
 				this.itensServico = ItemServicoDao.getByIdOs(this.id);
@@ -85,6 +85,78 @@ public class OS {
 			}
 		}
 		return this.itensServico;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public double getValor_total() {
+		return valor_total;
+	}
+
+	public void setValor_total(double valor_total) {
+		this.valor_total = valor_total;
+	}
+
+	public double getValor_pago() {
+		return valor_pago;
+	}
+
+	public void setValor_pago(double valor_pago) {
+		this.valor_pago = valor_pago;
+	}
+
+	public Etapa getEtapa() {
+		return etapa;
+	}
+
+	public void setEtapa(Etapa etapa) {
+		this.etapa = etapa;
+	}
+
+	public String getVeiculoPlaca() {
+		return veiculoPlaca;
+	}
+
+	public void setVeiculoPlaca(String veiculoPlaca) {
+		this.veiculoPlaca = veiculoPlaca;
+	}
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public void setItensPeca(List<ItemPeca> itensPeca) {
+		this.itensPeca = itensPeca;
+	}
+
+	public void setItensServico(List<ItemServico> itensServico) {
+		this.itensServico = itensServico;
 	}
 	
 	

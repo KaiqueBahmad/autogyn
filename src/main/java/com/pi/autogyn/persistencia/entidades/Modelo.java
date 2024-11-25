@@ -2,6 +2,8 @@ package com.pi.autogyn.persistencia.entidades;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.MarcaDao;
 
@@ -34,9 +36,9 @@ public class Modelo {
 
 	@Override
 	public String toString() {
-		return "Modelo [id=" + id + ", nome=" + nome + ", idMarca=" + idMarca + ", marca=" + getMarca() + "]";
+		return "Modelo [id=" + id + ", nome=" + nome + ", idMarca=" + idMarca + ", marca=" + getMarca().getNome() + "]";
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

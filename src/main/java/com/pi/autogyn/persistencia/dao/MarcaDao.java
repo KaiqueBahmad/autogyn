@@ -8,6 +8,7 @@ import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,6 +35,32 @@ public class MarcaDao {
 		}
 		return null;
 	}
+	
+	public static boolean insert(String marca) throws SQLException {
+		String sql = "INSERT INTO marca (nome) VALUES (?)";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, marca);
+			
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean existsByNome(String nome) throws SQLException {
+		String sql = "SELECT COUNT(*) as count FROM marca WHERE nome = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, nome);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			return rs.getInt("count") > 0;
+		}
+		return false;
+	}
+	
 	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
