@@ -38,7 +38,7 @@
         </aside>
         
         <section class="clientes">
-            <form action="/cliente" method="POST" enctype="multipart/form-data">
+            <form id="cliente-form">
                 <div class="conteudoCli">
                     <div>
                         <div>
@@ -114,7 +114,7 @@
                                 <input type="text" id="endereco" name="logradouro" placeholder="Logradouro" required>
                                 <input type="text" id="endereco" name="complemento" placeholder="Complemento" required>
                             </div>
-                            <button>Cadastrar</button>
+                            <button type="submit" >Cadastrar</button>
                         </div>
                     </div>
                 </div>
@@ -124,5 +124,56 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        const tipoPessoa = document.querySelectorAll(".tipoPessoa")
+        const cpf = document.querySelector('.pessoaFisica')
+        const cnpj = document.querySelector('.pessoaJuridica')
+        tipoPessoa.forEach(tipo =>{
+                tipo.addEventListener('click', () =>{
+                    if(tipo.value == "false"){
+                        cpf.setAttribute("style", "display: flex;")
+                        cnpj.removeAttribute("style")
+                    }
+
+                    if(tipo.value == "true"){
+                        cnpj.setAttribute("style", "display: flex;")
+                        cpf.removeAttribute("style")
+                    }
+                })
+        })
+
+        document.getElementById('cliente-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        console.log("POSTANDO");
+
+        const formData = new FormData(this);
+
+        const formDataObj = {};
+        formData.forEach((value, key) => {
+            formDataObj[key] = value;
+        });
+
+        const jsonData = JSON.stringify(formDataObj);
+
+        fetch('/cliente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: jsonData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Formulário enviado com sucesso!');
+            } else {
+                alert('Houve um erro ao enviar o formulário.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao enviar o formulário:', error);
+            alert('Erro de rede. Tente novamente mais tarde.');
+        });
+    });
+    </script>
 </body>
 </html>

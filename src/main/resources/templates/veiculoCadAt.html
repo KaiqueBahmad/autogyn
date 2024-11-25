@@ -186,5 +186,28 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        // dps ajustar
+        const selectBox = document.querySelector('.abrirMultiSelect');
+        const optionsList = document.querySelector('.select-box ul');
+        const selectedOptionsDiv = document.querySelector('.selected-options');
+
+        selectBox.addEventListener('click', function() {
+            selectBox.parentNode.classList.toggle('open')
+        });
+
+        const checkboxes = document.querySelectorAll('.select-box input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+            const selected = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                selected.push(cb.parentElement.textContent.trim());
+                }
+            });
+            selectedOptionsDiv.textContent = `Acessórios: ${selected.join(', ')}`;
+            });
+        });
+    </script>
 </body>
 </html>
