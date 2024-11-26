@@ -35,14 +35,9 @@ public class TelasController {
         return "acessorios";
     }
 
-    @GetMapping("/cadastroServico")
-    public String cadastroServico() {
-        return "cadastroServico";
-    }
-
-    @GetMapping("/cadastroPeca")
-    public String cadastroPeca() {
-        return "cadastroPeca";
+    @GetMapping("/cadastroSerPe")
+    public String cadastroServicoPecas() {
+        return "cadastroSerPe";
     }
 
     @GetMapping("/gerencOs")
@@ -53,5 +48,10 @@ public class TelasController {
     @GetMapping("/controleExOs")
     public String execucaoOs() {
         return "controleExOs";
+    }
+
+    @GetMapping("/estoque")
+    public String verEstoque() {
+        return "estoque";
     }
 }

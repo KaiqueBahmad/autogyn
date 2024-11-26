@@ -27,13 +27,10 @@
                 <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
-                    <li><a href="cadastroServico">Serviços</a></li>
-                    <li><a href="cadastroPeca">Peças</a></li>
+                    <li><a href="cadastroSerPe">Serviços | Peças</a></li>
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs">Controle de execução da OS</a></li>
                 </ul>
-                <!-- <a href="estoque">Estoque</a>
-                <a href="controle">Controle</a> -->
+                <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
     
@@ -44,7 +41,7 @@
                         <h1>Cadastro de marca</h1>
                         <p>Preencha os dados da marca para cadastro</p>
                     </div>
-                    <form action="/marca" method="POST">
+                    <form id="marca-form">
                         <div class="conteudo">
                             <div>
                                 <div>
@@ -62,7 +59,7 @@
                         <h1>Cadastro de modelo</h1>
                         <p>Preencha os dados do modelo para cadastro</p>
                     </div>
-                    <form action="/modelo" method="POST">
+                    <form id="modelo-form">
                         <div class="conteudo">
                             <select name="marca" id="marca" required>
                                 <option value="" disabled selected hidden>Selecione a Marca</option>
@@ -175,5 +172,70 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('marca-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('marca cadastrada com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+
+        document.getElementById('modelo-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            fetch('/veiculo/marca/modelo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('modelo cadastrado com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+    </script>
 </body>
 </html>

@@ -27,18 +27,15 @@
                 <a href="clientes" class="selecionado"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
-                    <li><a href="cadastroServico">Serviços</a></li>
-                    <li><a href="cadastroPeca">Peças</a></li>
+                    <li><a href="cadastroSerPe">Serviços | Peças</a></li>
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs">Controle de execução da OS</a></li>
                 </ul>
-                <!-- <a href="estoque">Estoque</a>
-                <a href="controle">Controle</a> -->
+                <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
         
         <section class="clientes">
-            <form action="/cliente" method="POST">
+            <form id="cliente-form">
                 <div class="conteudoCli">
                     <div>
                         <div>
@@ -48,42 +45,42 @@
                             </div>
                             <div>
                                 <label for="nome">Nome</label>
-                                <input type="text" id="nome" placeholder="Cliente" required>
+                                <input type="text" id="nome" name="nome" placeholder="Cliente" required>
                             </div>
                             <div>
                                 <label for="email">E-mail</label>
-                                <input type="email" id="email" placeholder="cliente@gmail.com" required>
+                                <input type="email" id="email" name="email" placeholder="cliente@gmail.com" required>
                             </div>
                             <div class="radios">
                                 <div>
-                                    <input type="radio" class="tipoPessoa" id="cpf" name="tipoPessoa" value="cpf" required>
+                                    <input type="radio" class="tipoPessoa" id="PF" name="isPJ" value="false" required>
                                     <label for="cpf">Pessoa Física</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="tipoPessoa" id="cnpj" name="tipoPessoa" value="cnpj" required>
+                                    <input type="radio" class="tipoPessoa" id="PJ" name="isPJ" value="true" required>
                                     <label for="cnpj">Pessoa Jurídica</label>
                                 </div>
                             </div>
     
                             <div class="pessoaFisica">
                                 <label for="valorCpf">Cpf</label>
-                                <input type="number" id="valorCpf" placeholder="56477765732">
+                                <input type="number" id="valorCpf" name="cpf" placeholder="56477765732">
                             </div>
     
                             <div class="pessoaJuridica">
                                 <div>
                                     <label for="valorCnpj">Cnpj</label>
-                                    <input type="number" id="valorCnpj" placeholder="00000000000100">
+                                    <input type="number" id="valorCnpj" name="cnpj" placeholder="00000000000100">
                                 </div>
     
                                 <div>
                                     <label for="numInscricao">Inscrição estadual</label>
-                                    <input type="number" id="numInscricao" placeholder="123456789101">
+                                    <input type="number" id="numInscricao" name="inscricao_estadual" placeholder="123456789101">
                                 </div>
     
                                 <div>
                                     <label for="contato">Nome do contato</label>
-                                    <input type="text" id="contato" placeholder="Responsável">
+                                    <input type="text" id="contato" name="nomeContato" placeholder="Responsável">
                                 </div>
                             </div>
                             
@@ -91,12 +88,12 @@
                                 <label for="tel">Telefone</label>
                                 <div>
                                     <div>
-                                        <input type="number" id="tel" placeholder="(62)" required>
-                                        <input type="number" id="tel" placeholder="940028922" required>
+                                        <input type="number" id="tel" name="ddd" placeholder="(62)" required>
+                                        <input type="number" id="tel" name="telefone" placeholder="940028922" required>
                                     </div>
                                     <div>
-                                        <input type="number" id="tel" placeholder="(62)">
-                                        <input type="number" id="tel" placeholder="940028922">
+                                        <input type="number" id="tel" name="ddd2" placeholder="(62)">
+                                        <input type="number" id="tel" name="telefone2" placeholder="940028922">
                                     </div>
                                 </div>
                             </div>
@@ -105,16 +102,16 @@
                         <div>
                             <div class="endereco">
                                 <label for="endereco">Endereço</label>
-                                <input type="number" id="endereco" placeholder="CEP" required>
+                                <input type="number" id="endereco" name="cep" placeholder="CEP" required>
                                 <div style="display: flex; flex-direction: row; gap: 10px;">
-                                    <input type="text" id="endereco" placeholder="Cidade" required>
-                                    <input type="text" id="endereco" placeholder="UF" style="width: 30%;" required>
-                                    <input type="number" id="endereco" placeholder="Nº" style="width: 30%;" required>
+                                    <input type="text" id="endereco" name="cidade" placeholder="Cidade" required>
+                                    <input type="text" id="endereco" name="uf" placeholder="UF" style="width: 30%;" required>
+                                    <input type="number" id="endereco" name="numero" placeholder="Nº" style="width: 30%;" required>
                                 </div>
-                                <input type="text" id="endereco" placeholder="Logradouro" required>
-                                <input type="text" id="endereco" placeholder="Complemento" required>
+                                <input type="text" id="endereco" name="logradouro" placeholder="Logradouro" required>
+                                <input type="text" id="endereco" name="complemento" placeholder="Complemento" required>
                             </div>
-                            <button>Cadastrar</button>
+                            <button type="submit" >Cadastrar</button>
                         </div>
                     </div>
                 </div>
@@ -124,5 +121,56 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        const tipoPessoa = document.querySelectorAll(".tipoPessoa")
+        const cpf = document.querySelector('.pessoaFisica')
+        const cnpj = document.querySelector('.pessoaJuridica')
+        tipoPessoa.forEach(tipo =>{
+                tipo.addEventListener('click', () =>{
+                    if(tipo.value == "false"){
+                        cpf.setAttribute("style", "display: flex;")
+                        cnpj.removeAttribute("style")
+                    }
+
+                    if(tipo.value == "true"){
+                        cnpj.setAttribute("style", "display: flex;")
+                        cpf.removeAttribute("style")
+                    }
+                })
+        })
+
+        document.getElementById('cliente-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        console.log("POSTANDO");
+
+        const formData = new FormData(this);
+
+        const formDataObj = {};
+        formData.forEach((value, key) => {
+            formDataObj[key] = value;
+        });
+
+        const jsonData = JSON.stringify(formDataObj);
+
+        fetch('/cliente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: jsonData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Formulário enviado com sucesso!');
+            } else {
+                alert('Houve um erro ao enviar o formulário.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao enviar o formulário:', error);
+            alert('Erro de rede. Tente novamente mais tarde.');
+        });
+    });
+    </script>
 </body>
 </html>
