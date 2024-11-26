@@ -70,15 +70,13 @@ public class Cliente {
 	        pj.setInscricaoEstadual(dto.getInscricao_estadual());
 	        this.pessoaJuridica = Optional.of(pj);
 	        this.pessoaFisica = Optional.empty();
-	    } else if (dto.isPF()) {
+	    } else {
 	        PF pf = new PF();
 	        pf.setCpf(dto.getCpf());
 	        this.pessoaFisica = Optional.of(pf);
 	        this.pessoaJuridica = Optional.empty();
-	    } else {
-	        this.pessoaJuridica = Optional.empty();
-	        this.pessoaFisica = Optional.empty();
 	    }
+
 	    
 	    this.propriedades = null;
 	}
