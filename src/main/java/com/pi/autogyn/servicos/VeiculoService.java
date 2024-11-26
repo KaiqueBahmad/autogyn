@@ -10,6 +10,7 @@ import com.pi.autogyn.persistencia.dao.VeiculoDao;
 import com.pi.autogyn.persistencia.entidades.Marca;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
+import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 public class VeiculoService {
@@ -28,6 +29,15 @@ public class VeiculoService {
 		}
 		return lista;
 	}
+	
+	public static List<MinimalMarcaDTO> listarMinimalMarcas() throws SQLException {
+		List<MinimalMarcaDTO> lista = new LinkedList<>();
+		for (Marca marca: MarcaDao.getAll()) {
+			lista.add(new MinimalMarcaDTO(marca));
+		}
+		return lista;
+	}
+	
 	
 	public static boolean insertMarca(String nomeModelo) throws SQLException {
 		return MarcaDao.insert(nomeModelo);
