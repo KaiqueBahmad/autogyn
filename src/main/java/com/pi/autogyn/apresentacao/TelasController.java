@@ -49,4 +49,9 @@ public class TelasController {
     public String execucaoOs() {
         return "controleExOs";
     }
+
+    @GetMapping("/estoque")
+    public String verEstoque() {
+        return "estoque";
+    }
 }
