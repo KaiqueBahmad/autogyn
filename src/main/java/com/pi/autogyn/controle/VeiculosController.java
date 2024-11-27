@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pi.autogyn.servicos.VeiculoService;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
+import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
@@ -31,6 +32,11 @@ public class VeiculosController {
 	@GetMapping("/veiculo/marca")
 	public ResponseEntity<List<MinimalMarcaDTO>> getMarcas() throws SQLException {
 		return ResponseEntity.ok(VeiculoService.listarMinimalMarcas());
+	}
+	
+	@GetMapping("/veiculo/acessorio")
+	public ResponseEntity<List<MinimalAcessorioDTO>> getAcessorios() throws SQLException {
+		return ResponseEntity.ok(VeiculoService.listarMinimalAcessorios());
 	}
 	
 	@PostMapping("/veiculo/marca")
