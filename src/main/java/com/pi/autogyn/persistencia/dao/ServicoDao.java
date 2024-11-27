@@ -8,6 +8,7 @@ import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,8 +35,23 @@ public class ServicoDao {
 		return null;
 	}
 	
+	public static boolean insert(String descricao, Double valor) throws SQLException {
+		String sql = "INSERT INTO servico (descricao, valor) VALUES (?, ?)";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, descricao);
+			stmt.setDouble(2, valor);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
+		System.out.println(insert("Troca de óleo", 52.2));
 	}
 	
 }
