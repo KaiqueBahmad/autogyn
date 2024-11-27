@@ -60,6 +60,9 @@
                     return response.json();
                 })
                 .then(data => {
+                    if(!data.length){
+                        container.innerHTML = '<p>Nenhum veículo cadastrado ainda.</p>'
+                    }    
                     data.forEach(item => {
                         const marcaObj = JSON.parse(item.marca);
                         const veiculosHtml = `

@@ -116,19 +116,17 @@
                             </div>
                         </div>
 
+                        <!-- todos os do banco com nada selecionado -->
                         <div class="selecaoAcess">
                             <div class="select-box">
-                                <label for="" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
-                                <ul>
-                                <li><label><input type="checkbox" value="1"> Opção 1</label></li>
-                                <li><label><input type="checkbox" value="2"> Opção 2</label></li>
-                                <li><label><input type="checkbox" value="3"> Opção 3</label></li>
-                                <li><label><input type="checkbox" value="4"> Opção 4</label></li>
-                                <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                                <label for="acessorios" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
+                                <ul id="acessorios">
+                                    <!-- populado pelo back -->
                                 </ul>
                             </div>
                             <p class="selected-options">Acessórios:</p>
                         </div>
+
                     </div>
                     <button>Cadastrar</button>
                 </form>
@@ -164,19 +162,16 @@
                         </select>
 
                         <!-- fazer com q tenha os ja selecionados pelo banco e tal -->
-                        <div class="selecaoAcess">
+                        <!-- <div class="selecaoAcess">
                             <div class="select-box">
-                                <label for="" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
-                                <ul>
-                                <li><label><input type="checkbox" value="1"> Opção 1</label></li>
-                                <li><label><input type="checkbox" value="2"> Opção 2</label></li>
-                                <li><label><input type="checkbox" value="3"> Opção 3</label></li>
-                                <li><label><input type="checkbox" value="4"> Opção 4</label></li>
-                                <li><label><input type="checkbox" value="5"> Opção 5</label></li>
-                                </ul>
+                                <label for="acessorios" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
+                                <ul id="acessorios"> -->
+                                    <!-- fazer ser populado com todos do back + checked os ja selecionados com o veiculo de tal placa -->
+                                <!-- </ul>
                             </div>
                             <p class="selected-options">Acessórios:</p>
-                        </div>
+                        </div> -->
+                        
                     </div>
         
                     <button>Atualizar</button>
@@ -187,7 +182,10 @@
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', getMarcas());
+        document.addEventListener('DOMContentLoaded', () =>{
+            getMarcas()
+            getAcessorios()
+        });
 
         document.getElementById('cadastro-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -403,6 +401,66 @@
                     console.error('Erro ao buscar a lista de modelos:', error);
                     document.querySelector('.modeloSelect').innerHTML = '<p>Erro ao carregar a lista de modelos.</p>';
                 });
+        }
+
+        function getAcessorios(){
+            const container = document.querySelector('#acessorios');
+            container.innerHTML = '';
+
+            fetch('/veiculo/acessorio')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.parentNode.parentNode = ''
+                        container.parentNode.parentNode.innerHTML = '<p>Nenhum acessório cadastrado ainda.</p>';
+                        return;
+                    }
+                    
+                    data.forEach(acessorio => {
+                        const acessorioHtml = `
+                            <li>
+                                <label>
+                                    <input type="checkbox" value="${acessorio.id}" class="acessorio-checkbox"> ${acessorio.nome}
+                                </label>
+                            </li>
+                        `;
+                        container.innerHTML += acessorioHtml;
+                    });
+
+                    // Adiciona evento para atualizar os acessórios selecionados
+                    const checkboxes = document.querySelectorAll('.acessorio-checkbox');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.addEventListener('change', updateSelectedAcessorios);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de acessórios:', error);
+                    document.querySelector('.listaAcess').innerHTML = '<p>Erro ao carregar a lista de acessórios.</p>';
+                });
+        }
+
+        function updateSelectedAcessorios() {
+            const selectedOptions = document.querySelector('.selected-options');
+            const selectedCheckboxes = document.querySelectorAll('.acessorio-checkbox:checked');
+            const selectedAcessorios = [];
+
+            selectedCheckboxes.forEach(checkbox => {
+                selectedAcessorios.push(checkbox.parentElement.textContent.trim());
+            });
+
+            console.log(selectedAcessorios)
+
+            if (selectedAcessorios.length > 0) {
+                selectedOptions.innerHTML = 'Acessórios: ' + selectedAcessorios.join(', ');
+            }
+            else{
+                selectedOptions.innerHTML = 'Acessórios: '
+            }
         }
     </script>
 </body>

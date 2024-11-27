@@ -113,7 +113,9 @@
                     return response.json();
                 })
                 .then(data => {
-
+                    if(!data.length){
+                        container.innerHTML = '<p>Nenhum acessório cadastrado ainda.</p>'
+                    }    
                     data.forEach(acessorio => {
                         const acessorioHtml = `
                             <h3>${acessorio.nome}</h3>

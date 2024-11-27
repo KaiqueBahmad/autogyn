@@ -183,7 +183,9 @@
                     return response.json();
                 })
                 .then(data => {
-                                        
+                    if(!data.length){
+                        container.innerHTML = '<p>Nenhum modelo ou marca cadastrado ainda.</p>'
+                    }             
                     data.forEach(item => {
                         const marcaObj = JSON.parse(item.nomeMarca);
                         const marcaHtml = `
@@ -222,7 +224,11 @@
                 .then(data => {
                     const defaultOption = document.createElement('option');
                     defaultOption.value = "";
-                    defaultOption.textContent = "Selecione a Marca";
+                    if (!data.length) {
+                        defaultOption.textContent = "Sem marca registrada";
+                    } else {
+                        defaultOption.textContent = "Selecione a Marca";
+                    }
                     defaultOption.disabled = true;
                     defaultOption.selected = true;
                     defaultOption.hidden = true;
