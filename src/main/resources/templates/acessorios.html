@@ -146,6 +146,31 @@
                 alert('Erro de rede. Tente novamente mais tarde.');
             });
         });
+
+        function getAcessorios(){
+            // mudar endpoint
+            fetch('/veiculo/marca/lista-cadastro')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const container = document.querySelector('.listaAcess');
+                    
+                    data.forEach(acessorio => {
+                        const acessorioHtml = `
+                            <h3>${acessorio.nome}</h3>
+                        `;
+                        container.innerHTML += acessorioHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de veículos:', error);
+                    document.querySelector('.listaAcess').innerHTML = '<p>Erro ao carregar a lista de acessórios.</p>';
+                });
+        }
     </script>
 </body>
 </html>
