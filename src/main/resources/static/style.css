@@ -113,11 +113,16 @@ section{
     background-color: var(--borda);
 }
 
-section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess{
+section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess, section.cadastroServico{
     display: flex;
     flex-direction: row;
     gap: 30px;
-    justify-content: space-around;
+    justify-content: space-between;
+    
+    &>div{
+        width: 100%;
+    }
+    /* justify-content: space-around; */
 
     & p{
         color: var(--cinza);
@@ -157,6 +162,58 @@ section.veiculoCadAt, section.veiculoAcess{
             text-align: center;
             background-color: var(--meioBranco);
         }
+    }
+}
+
+section.cadastroServico{
+    &>div:first-child{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        &>div{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            height: fit-content;
+        }
+    } 
+
+    &>div:last-child{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        border: 1px solid var(--borda);
+        border-radius: 8px;
+        height: fit-content;
+
+        & h1{
+            text-align: center;
+        }
+    }
+
+    & .listaServico{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 10px;
+        max-height: 80vh;
+        overflow: auto;
+
+        & h3{
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: var(--meioBranco);
+        }
+    }
+
+    & .listaServico{
+        padding: 0 5px;
+        grid-template-columns: repeat(2, auto);
     }
 }
 

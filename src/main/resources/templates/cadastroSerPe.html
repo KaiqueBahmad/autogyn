@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina AutoGyn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <aside>
+            <div>
+                <img src="/img/logo.png" alt="" width="80%">
+                <span class="linha"></span>
+            </div>
+            <nav>
+                <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
+                <ul class="abrirVeiculo" hidden>
+                    <li><a href="veiculoCadAt">Cadastrar | Atualizar</a></li>
+                    <li><a href="veiculoMarMo">Marca | Modelo</a></li>
+                    <li><a href="acessorios">Acessórios</a></li>
+                    <li><a href="veiculoLista">Listar Veiculos</a></li>
+                </ul>
+                <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
+                <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
+                <ul class="abrirOs">
+                    <li><a href="cadastroSerPe" class="selecionado">Serviços | Peças</a></li>
+                    <li><a href="gerencOs">Gerenciamento de OS</a></li>
+                </ul>
+                <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
+            </nav>
+        </aside>
+    
+        <!-- fazer fetch do form -->
+        <section class="cadastroServico">
+            <div>
+                <div>
+                    <div>
+                        <h1>Cadastro de serviço</h1>
+                        <p>Preencha os dados do serviço para cadastro</p>
+                    </div>
+                    <form id="servico-form">
+                        <div class="conteudo">
+                            <div>
+                                <div>
+                                    <label for="servico">Nome do serviço</label>
+                                    <input type="text" id="servico" placeholder="Trocar óleo" required>
+                                </div>
+                                <div>
+                                    <label for="servicoValor">Valor</label>
+                                    <input type="number" id="servicoValor" placeholder="120" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button>Cadastrar</button>
+                    </form>
+                </div>
+                <div>
+                    <div>
+                        <h1>Cadastro de peça</h1>
+                        <p>Preencha os dados da peça para cadastro</p>
+                    </div>
+                    <form id="peca-form">
+                        <div class="conteudo">
+                            <div>
+                                <div>
+                                    <label for="codigo">Código</label>
+                                    <input type="text" id="codigo" placeholder="12345" required>
+                                </div>
+                                <div>
+                                    <label for="nome">Nome da peça</label>
+                                    <input type="text" id="nome" placeholder="Disco de freio" required>
+                                </div>
+                                <div>
+                                    <label for="sku">Sku</label>
+                                    <input type="text" id="sku" placeholder="AB5789" required>
+                                </div>
+                                <div>
+                                    <label for="qntEstoque">Quantidade no estoque</label>
+                                    <input type="number" id="qntEstoque" placeholder="14" required>
+                                </div>
+                                <div>
+                                    <label for="valorUnitario">Valor unitário</label>
+                                    <input type="number" id="valorUnitario" placeholder="70" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button>Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+            <span class="linha"></span>
+            <div>
+                <h1>Serviços Cadastrados</h1>
+                <!-- popular com os serviços do banco -->
+                <div class="listaServico">
+                    <h3>Trocar óleo - R$120</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>Capa de volante</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                    <h3>A</h3>
+                    <h3>B</h3>
+                    <h3>C</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('servico-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            // mudar endpoint
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Serviço cadastrado com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+
+        document.getElementById('peca-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            // mudar endpoint
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Peça cadastrado com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+    </script>
+</body>
+</html>

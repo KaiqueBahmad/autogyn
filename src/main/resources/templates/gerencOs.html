@@ -27,13 +27,10 @@
                 <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs">
-                    <li><a href="cadastroServico">Serviços</a></li>
-                    <li><a href="cadastroPeca">Peças</a></li>
-                    <li><a href="gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs">Controle de execução da OS</a></li>
+                    <li><a href="cadastroSerPe">Serviços | Peças</a></li>
+                    <li><a href="gerencOs" class="selecionado">Gerenciamento de OS</a></li>
                 </ul>
-                <!-- <a href="estoque">Estoque</a>
-                <a href="controle">Controle</a> -->
+                <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
     
@@ -41,9 +38,9 @@
         <section class="osLista">
             <div>
                 <h1>Ordem de Serviço no sistema</h1>
-                <!-- popular com os veiculos do banco -->
+                <!-- verificar o get direitinho -->
                 <div class="listaOs">
-                    <div>
+                    <div class="osIndex">
                         <div>
                             <h2>Nome Cliente</h2>
                             <span class="linhaDois"></span>
@@ -67,158 +64,14 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="ordemServico">
-                            <div>
-                                <p>Veiculo</p>
-                                <h3>Modelo (Marca) YYYY</h3>
-                            </div>
-                            <div>
-                                <p>Data</p>
-                                <h3>24/11/2024</h3>
-                            </div>
-                            <div>
-                                <p>Valor Total</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                            <div>
-                                <p>Status</p>
-                                <h3>Aprovação</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="ordemServico">
-                            <div>
-                                <p>Veiculo</p>
-                                <h3>Modelo (Marca) YYYY</h3>
-                            </div>
-                            <div>
-                                <p>Data</p>
-                                <h3>24/11/2024</h3>
-                            </div>
-                            <div>
-                                <p>Valor Total</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                            <div>
-                                <p>Status</p>
-                                <h3>Aprovação</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="ordemServico">
-                            <div>
-                                <p>Veiculo</p>
-                                <h3>Modelo (Marca) YYYY</h3>
-                            </div>
-                            <div>
-                                <p>Data</p>
-                                <h3>24/11/2024</h3>
-                            </div>
-                            <div>
-                                <p>Valor Total</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                            <div>
-                                <p>Status</p>
-                                <h3>Aprovação</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="ordemServico">
-                            <div>
-                                <p>Veiculo</p>
-                                <h3>Modelo (Marca) YYYY</h3>
-                            </div>
-                            <div>
-                                <p>Data</p>
-                                <h3>24/11/2024</h3>
-                            </div>
-                            <div>
-                                <p>Valor Total</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                            <div>
-                                <p>Status</p>
-                                <h3>Aprovação</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="ordemServico">
-                            <div>
-                                <p>Veiculo</p>
-                                <h3>Modelo (Marca) YYYY</h3>
-                            </div>
-                            <div>
-                                <p>Data</p>
-                                <h3>24/11/2024</h3>
-                            </div>
-                            <div>
-                                <p>Valor Total</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                            <div>
-                                <p>Status</p>
-                                <h3>Aprovação</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="ordemServico">
-                            <div>
-                                <p>Veiculo</p>
-                                <h3>Modelo (Marca) YYYY</h3>
-                            </div>
-                            <div>
-                                <p>Data</p>
-                                <h3>24/11/2024</h3>
-                            </div>
-                            <div>
-                                <p>Valor Total</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                            <div>
-                                <p>Status</p>
-                                <h3>Aprovação</h3>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 
             <!-- em orçamento add peças e serviço -->
             <!-- o resto apenas o estado -->
             <!-- estado finalização -> paga | pago nao mexe em nd -->
-            <form class="edicaoOs" style="display: none;">
+            <!-- fzr o fetch do form -->
+            <form class="edicaoOs" style="display: none;" id="edicaoOs-form">
                 <h1>Ordem de Serviço: Cliente tal</h1>
                 <div class="selecaoAcess">
                     <div class="select-box">
@@ -273,5 +126,129 @@
     </main>
 
     <script src="script.js"></script>
+    <script>    
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // mudar endpoint
+        //     fetch('/ordem-servico')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             const container = document.querySelector('.listaOs');
+                    
+        //             data.forEach(ordem => {
+        //                 const ordemHtml = `
+        //                     <div>
+        //                         <div>
+        //                             <h2>${ordem.nomeCliente}</h2>
+        //                             <span class="linhaDois"></span>
+        //                         </div>
+        //                         <div class="ordemServico">
+        //                             <div>
+        //                                 <p>Veículo</p>
+        //                                 <h3>${ordem.veiculo}</h3>
+        //                             </div>
+        //                             <div>
+        //                                 <p>Data</p>
+        //                                 <h3>${ordem.data}</h3>
+        //                             </div>
+        //                             <div>
+        //                                 <p>Valor Total</p>
+        //                                 <h3>R$${ordem.valorTotal.toFixed(2)}</h3>
+        //                             </div>
+        //                             <div>
+        //                                 <p>Status</p>
+        //                                 <h3>${ordem.status}</h3>
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 container.innerHTML += ordemHtml;
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Erro ao buscar as ordens de serviço:', error);
+        //             document.querySelector('.listaOs').innerHTML = '<p>Erro ao carregar as ordens de serviço.</p>';
+        //         });
+        // });
+
+        // dps arrumar
+        const selectBoxes = document.querySelectorAll('.abrirMultiSelect');
+        const selectedOptionsDivs = document.querySelectorAll('.selected-options');
+
+        selectBoxes.forEach((selecionado, index) => {
+            selecionado.addEventListener('click', function() {
+                selecionado.parentNode.classList.toggle('open');
+            });
+        });
+
+        const checkboxGroups = document.querySelectorAll('.select-box');
+
+        checkboxGroups.forEach((checkboxGroup, index) => {
+            const checkboxes = checkboxGroup.querySelectorAll('input[type="checkbox"]');
+            const selectedOptionsDiv = selectedOptionsDivs[index];
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const selected = [];
+                    checkboxes.forEach(cb => {
+                        if (cb.checked) {
+                            selected.push(cb.parentElement.textContent.trim());
+                        }
+                    });
+
+                    selectedOptionsDiv.textContent = `Acessórios: ${selected.join(', ')}`;
+                });
+            });
+        });
+
+        // pegar uma informação de qual foi clicado para abrir um editar
+        const os = document.querySelectorAll('.osIndex')
+        const editorOs = document.querySelector('.edicaoOs')
+        os.forEach(aberta =>{
+            aberta.addEventListener('click', () =>{
+                editorOs.removeAttribute("style")
+                aberta.parentNode.parentNode.setAttribute('style', 'display: none')
+            })
+        })
+
+        editorOs.parentNode.children[1].children[5].children[0].addEventListener('click', () =>{
+            os.forEach(aberta =>{
+                aberta.parentNode.parentNode.removeAttribute('style')
+            })
+            editorOs.setAttribute('style', 'display: none')
+        })
+
+        document.getElementById('edicaoOs-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            // mudar endpoint
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Os editada com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+    </script>
 </body>
 </html>

@@ -27,13 +27,10 @@
                 <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
-                    <li><a href="cadastroServico">Serviços</a></li>
-                    <li><a href="cadastroPeca">Peças</a></li>
+                    <li><a href="cadastroSerPe">Serviços | Peças</a></li>
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs">Controle de execução da OS</a></li>
                 </ul>
-                <!-- <a href="estoque">Estoque</a>
-                <a href="controle">Controle</a> -->
+                <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
     
@@ -43,7 +40,7 @@
                     <h1>Cadastro de veiculo</h1>
                     <p>Preencha os dados do veículo para cadastro</p>
                 </div>
-                <form action="/veiculo" method="POST">
+                <form id="cadastro-form">
                     <div class="conteudo">
                         <!-- popular com clientes reais -->
                         <select name="proprietario" id="proprietario" required>
@@ -139,7 +136,7 @@
                     <h1>Atualizar veiculo</h1>
                     <p>Atualize os dados do veículo cadastrado</p>
                 </div>
-                <form action="/veiculo/upd" method="POST">
+                <form id="atualizar-form">
                     <div class="conteudo">
                         <div>
                             <div>
@@ -186,5 +183,101 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('cadastro-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            // mudar endpoint
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Veiculo cadastrado com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+
+        const selectBoxes = document.querySelectorAll('.abrirMultiSelect');
+        const selectedOptionsDivs = document.querySelectorAll('.selected-options');
+
+        selectBoxes.forEach((selecionado, index) => {
+            selecionado.addEventListener('click', function() {
+                selecionado.parentNode.classList.toggle('open');
+            });
+        });
+
+        const checkboxGroups = document.querySelectorAll('.select-box');
+
+        checkboxGroups.forEach((checkboxGroup, index) => {
+            const checkboxes = checkboxGroup.querySelectorAll('input[type="checkbox"]');
+            const selectedOptionsDiv = selectedOptionsDivs[index];
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const selected = [];
+                    checkboxes.forEach(cb => {
+                        if (cb.checked) {
+                            selected.push(cb.parentElement.textContent.trim());
+                        }
+                    });
+
+                    selectedOptionsDiv.textContent = `Acessórios: ${selected.join(', ')}`;
+                });
+            });
+        });
+
+        document.getElementById('atualizar-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            // atualizar endpoint e ver se um post serve pra att
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Veiculo atualizado com sucesso!');
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+    </script>
 </body>
 </html>
