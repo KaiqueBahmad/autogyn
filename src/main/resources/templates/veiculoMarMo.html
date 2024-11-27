@@ -63,7 +63,7 @@
                     <form id="modelo-form">
                         <div class="conteudo">
                             <div class="addSelect">
-                                <select name="idMarca" id="selectMarca"   required>
+                                <select name="idMarca" id="selectMarca" required>
                                     <!-- populado pelo back -->
                                 </select>
                             </div>
@@ -84,82 +84,8 @@
             <span class="linha"></span>
             <div>
                 <h1>Modelos e Marcas Cadastrados</h1>
-                <!-- popular com as marcas/modelos do banco -->
                 <div class="listaCarros">
-                    <!-- fazer o teste do get -->
-                    <!-- <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div> -->
-
+                    <!-- populado pelo back -->
                 </div>
             </div>
         </section>
@@ -167,6 +93,11 @@
 
     <script src="script.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            getMarcas();
+            getVeiculos();
+        });
+
         document.getElementById('marca-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -190,6 +121,8 @@
                 if (response.ok) {
                     alert('marca cadastrada com sucesso!');
                     getVeiculos()
+                    getMarcas()
+                    this.reset();
                 } else {
                     alert('Houve um erro ao enviar o formulário.');
                 }
@@ -223,6 +156,11 @@
                 if (response.ok) {
                     alert('Modelo cadastrado com sucesso!');
                     getVeiculos()
+                    this.reset();
+                    const selects = this.querySelectorAll('select');
+                    selects.forEach(select => {
+                        select.selectedIndex = 0;
+                    });
                 } else {
                     alert('Houve um erro ao enviar o formulário.');
                 }
@@ -233,13 +171,10 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            getMarcas();
-            getVeiculos();
-        });
+        function getVeiculos() {
+            const container = document.querySelector('.listaCarros');
+            container.innerHTML = ''
 
-        // arrumar certinha da form q virá do get
-        function getVeiculos(){
             fetch('/veiculo/marca/lista-cadastro')
                 .then(response => {
                     if (!response.ok) {
@@ -248,18 +183,18 @@
                     return response.json();
                 })
                 .then(data => {
-                    const container = document.querySelector('.listaCarros');
-                    
-                    data.forEach(marca => {
+                                        
+                    data.forEach(item => {
+                        const marcaObj = JSON.parse(item.nomeMarca);
                         const marcaHtml = `
                             <div>
-                                <h2>${marca.nome}</h2>
+                                <h2>${marcaObj.marca}</h2>
                                 <div>
                                     <p>Modelo:</p>
                                     <span class="linhaDois"></span>
                                 </div>
                                 <div class="modelos">
-                                    ${marca.modelos.map(modelo => `<h3>${modelo}</h3>`).join('')}
+                                    ${item.nomeModelos.map(modelo => `<h3>${modelo}</h3>`).join('')}
                                 </div>
                             </div>
                         `;
@@ -272,7 +207,11 @@
                 });
         }
 
+
         function getMarcas() {
+            const select = document.getElementById('selectMarca');
+            select.innerHTML = '';
+
             fetch('/veiculo/marca')
                 .then(response => {
                     if (!response.ok) {
@@ -281,8 +220,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    const select = document.getElementById('selectMarca');
-                    
                     const defaultOption = document.createElement('option');
                     defaultOption.value = "";
                     defaultOption.textContent = "Selecione a Marca";

@@ -34,7 +34,6 @@
             </nav>
         </aside>
     
-         <!-- fazer fetch do form -->
         <section class="veiculoAcess">
             <div>
                 <div>
@@ -42,6 +41,7 @@
                     <p>Preencha os dados do acessorio para cadastro</p>
                 </div>
                 <form id="acessorio-form">
+                    <!-- BOTAR OS NAME -->
                     <div class="conteudo">
                         <div>
                             <div>
@@ -57,56 +57,8 @@
             <span class="linha"></span>
             <div>
                 <h1>Acessórios Cadastrados</h1>
-                <!-- popular com os acessorios do banco -->
                 <div class="listaAcess">
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>Capa de volante</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
-                    <h3>A</h3>
-                    <h3>B</h3>
-                    <h3>C</h3>
+                    <!-- populado pelo back -->
                 </div>
             </div>
         </section>
@@ -114,6 +66,8 @@
 
     <script src="script.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', getAcessorios());
+
         document.getElementById('acessorio-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -137,6 +91,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Acessorio cadastrado com sucesso!');
+                    getAcessorios()
                 } else {
                     alert('Houve um erro ao enviar o formulário.');
                 }
@@ -148,8 +103,9 @@
         });
 
         function getAcessorios(){
-            // mudar endpoint
-            fetch('/veiculo/marca/lista-cadastro')
+            const container = document.querySelector('.listaAcess');
+            container.innerHTML = ''
+            fetch('/veiculo/acessorio')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erro na resposta da rede');
@@ -157,8 +113,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    const container = document.querySelector('.listaAcess');
-                    
+
                     data.forEach(acessorio => {
                         const acessorioHtml = `
                             <h3>${acessorio.nome}</h3>
@@ -167,7 +122,7 @@
                     });
                 })
                 .catch(error => {
-                    console.error('Erro ao buscar a lista de veículos:', error);
+                    console.error('Erro ao buscar a lista de acessórios:', error);
                     document.querySelector('.listaAcess').innerHTML = '<p>Erro ao carregar a lista de acessórios.</p>';
                 });
         }

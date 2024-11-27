@@ -34,8 +34,9 @@
             </nav>
         </aside>
     
-        <!-- fazer fetch do form -->
+        <!-- fazer os dois fetch do form -->
         <section class="cadastroServico">
+            <!-- BOTAR OS NAME -->
             <div>
                 <div>
                     <div>
@@ -154,6 +155,8 @@
 
     <script src="script.js"></script>
     <script>
+        // document.addEventListener('DOMContentLoaded', getServicos());
+
         document.getElementById('servico-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -219,6 +222,32 @@
                 alert('Erro de rede. Tente novamente mais tarde.');
             });
         });
+
+        // function getServicos(){
+        //     const container = document.querySelector('.listaServico');
+        //     container.innerHTML = ''
+        //     // mudar endpoint
+        //     fetch('/veiculo/acessorio')
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Erro na resposta da rede');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(data => {
+
+        //             data.forEach(servico => {
+        //                 const servicoHtml = `
+        //                     <h3>${servico.nome}</h3>
+        //                 `;
+        //                 container.innerHTML += servicoHtml;
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Erro ao buscar a lista de serviços:', error);
+        //             document.querySelector('.listaAcess').innerHTML = '<p>Erro ao carregar a lista de serviços.</p>';
+        //         });
+        // }
     </script>
 </body>
 </html>

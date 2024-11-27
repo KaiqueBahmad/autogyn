@@ -40,18 +40,21 @@
                     <h1>Cadastro de veiculo</h1>
                     <p>Preencha os dados do veículo para cadastro</p>
                 </div>
+                <!-- BOTAR OS NAME -->
                 <form id="cadastro-form">
                     <div class="conteudo">
                         <!-- popular com clientes reais -->
-                        <select name="proprietario" id="proprietario" required>
-                            <option value="" disabled selected hidden>Selecione um Proprietário</option>
-                            <option value="joao_silva">João Silva</option>
-                            <option value="ana_pereira">Ana Pereira</option>
-                            <option value="maria_souza">Maria Souza</option>
-                            <option value="carlos_oliveira">Carlos Oliveira</option>
-                            <option value="lucas_ferreira">Lucas Ferreira</option>
-                            <option value="paula_martins">Paula Martins</option>
-                        </select>
+                        <div class="clienteSelect">
+                            <select name="proprietario" id="proprietario" required>
+                                <option value="" disabled selected hidden>Selecione um Proprietário</option>
+                                <option value="joao_silva">João Silva</option>
+                                <option value="ana_pereira">Ana Pereira</option>
+                                <option value="maria_souza">Maria Souza</option>
+                                <option value="carlos_oliveira">Carlos Oliveira</option>
+                                <option value="lucas_ferreira">Lucas Ferreira</option>
+                                <option value="paula_martins">Paula Martins</option>
+                            </select>
+                        </div>
 
                         <div>
                             <div>
@@ -68,9 +71,9 @@
                                     <input type="number" id="anoModelo" placeholder="2023" required>
                                 </div>
                             </div>
-                            <div>
+                            <div class="marcaSelect">
                                 <select name="marca" id="marca" required>
-                                    <option value="" disabled selected hidden>Selecione a Marca</option>
+                                    <!-- <option value="" disabled selected hidden>Selecione a Marca</option>
                                     <option value="fiat">Fiat</option>
                                     <option value="ford">Ford</option>
                                     <option value="chevrolet">Chevrolet</option>
@@ -80,13 +83,13 @@
                                     <option value="nissan">Nissan</option>
                                     <option value="bmw">BMW</option>
                                     <option value="mercedes_benz">Mercedes-Benz</option>
-                                    <option value="audi">Audi</option>
+                                    <option value="audi">Audi</option> -->
                                 </select>
                             </div>
         
-                            <div>
+                            <div class="modeloSelect">
                                 <select name="modelo" id="modelo" required>
-                                    <option value="" disabled selected hidden>Selecione o Modelo</option>
+                                    <!-- <option value="" disabled selected hidden>Selecione o Modelo</option>
                                     <option value="fiat">Fiat</option>
                                     <option value="ford">Ford</option>
                                     <option value="chevrolet">Chevrolet</option>
@@ -96,7 +99,7 @@
                                     <option value="nissan">Nissan</option>
                                     <option value="bmw">BMW</option>
                                     <option value="mercedes_benz">Mercedes-Benz</option>
-                                    <option value="audi">Audi</option>
+                                    <option value="audi">Audi</option> -->
                                 </select>
                             </div>
                             <div>
@@ -184,6 +187,8 @@
 
     <script src="script.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', getMarcas());
+
         document.getElementById('cadastro-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -258,7 +263,7 @@
 
             const jsonData = JSON.stringify(formDataObj);
 
-            // atualizar endpoint e ver se um post serve pra att
+            // atualizar endpoint e ver sobre o patch
             fetch('/veiculo/marca', {
                 method: 'POST',
                 headers: {
@@ -278,6 +283,127 @@
                 alert('Erro de rede. Tente novamente mais tarde.');
             });
         });
+
+        // arrumar o get e fazer o da de atualizar
+        function getClientes() {
+            const select = document.getElementById('proprietario');
+            select.innerHTML = '';
+
+            // mudar endpoint
+            fetch('/veiculo/marca')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Selecione um Proprietário";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    defaultOption.hidden = true;
+                    select.appendChild(defaultOption);
+                    
+                    data.forEach(marca => {
+                        const option = document.createElement('option');
+                        option.value = marca.id;
+
+                        try {
+                            const cliente = JSON.parse(marca.nome);
+                            option.textContent = cliente.marca || "Marca Desconhecida";
+                        } catch (e) {
+                            option.textContent = marca.nome || "Marca Desconhecida";
+                        }
+                        
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de clientes:', error);
+                    document.querySelector('.clienteSelect').innerHTML = '<p>Erro ao carregar a lista de clientes.</p>';
+                });
+        }
+
+        function getMarcas() {
+            const selectMarca = document.getElementById('marca');
+            selectMarca.innerHTML = '';
+
+            fetch('/veiculo/marca')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Selecione a Marca";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    defaultOption.hidden = true;
+                    selectMarca.appendChild(defaultOption);
+                    
+                    data.forEach(marca => {
+                        const option = document.createElement('option');
+                        option.value = marca.id;
+
+                        try {
+                            const marcaData = JSON.parse(marca.nome);
+                            option.textContent = marcaData.marca || "Marca Desconhecida";
+                        } catch (e) {
+                            option.textContent = marca.nome || "Marca Desconhecida";
+                        }
+                        
+                        selectMarca.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de marcas:', error);
+                    document.querySelector('.marcaSelect').innerHTML = '<p>Erro ao carregar a lista de marcas.</p>';
+                });
+        }
+
+        // arrumar dps!!!!
+        function getModelos() {
+            const selectModelo = document.getElementById('modelo');
+            selectModelo.innerHTML = '';
+
+            const selectedMarcaId = document.getElementById('marca').value;
+            
+            if (!selectedMarcaId) return;
+
+            // mudar endpoint
+            fetch(`/veiculo/modelo/${selectedMarcaId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Selecione o Modelo";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    defaultOption.hidden = true;
+                    selectModelo.appendChild(defaultOption);
+
+                    data.forEach(modelo => {
+                        const option = document.createElement('option');
+                        option.value = modelo.id;
+                        option.textContent = modelo.nome;
+                        selectModelo.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de modelos:', error);
+                    document.querySelector('.modeloSelect').innerHTML = '<p>Erro ao carregar a lista de modelos.</p>';
+                });
+        }
     </script>
 </body>
 </html>

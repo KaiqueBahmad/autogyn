@@ -37,182 +37,69 @@
         <section class="veiculoLista">
             <div>
                 <h1>Veiculos Cadastrados</h1>
-                <!-- popular com os veiculos do banco -->
                 <div class="listaVeiculos">
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="responsaveis">
-                            <div>
-                                <p>Placa</p>
-                                <h3>DD45GFD</h3>
-                            </div>
-                            <div>
-                                <p>Marca</p>
-                                <h3>Nissan</h3>
-                            </div>
-                            <div>
-                                <p>Modelo</p>
-                                <h3>GTR</h3>
-                            </div>
-                            <div>
-                                <p>Ano do Modelo</p>
-                                <h3>2011</h3>
-                            </div>
-                            <div>
-                                <p>Ano da fabricação</p>
-                                <h3>2011</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="responsaveis">
-                            <div>
-                                <p>Placa</p>
-                                <h3>DD45GFD</h3>
-                            </div>
-                            <div>
-                                <p>Marca</p>
-                                <h3>Nissan</h3>
-                            </div>
-                            <div>
-                                <p>Modelo</p>
-                                <h3>GTR</h3>
-                            </div>
-                            <div>
-                                <p>Ano do Modelo</p>
-                                <h3>2011</h3>
-                            </div>
-                            <div>
-                                <p>Ano da fabricação</p>
-                                <h3>2011</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="responsaveis">
-                            <div>
-                                <p>Placa</p>
-                                <h3>DD45GFD</h3>
-                            </div>
-                            <div>
-                                <p>Marca</p>
-                                <h3>Nissan</h3>
-                            </div>
-                            <div>
-                                <p>Modelo</p>
-                                <h3>GTR</h3>
-                            </div>
-                            <div>
-                                <p>Ano do Modelo</p>
-                                <h3>2011</h3>
-                            </div>
-                            <div>
-                                <p>Ano da fabricação</p>
-                                <h3>2011</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="responsaveis">
-                            <div>
-                                <p>Placa</p>
-                                <h3>DD45GFD</h3>
-                            </div>
-                            <div>
-                                <p>Marca</p>
-                                <h3>Nissan</h3>
-                            </div>
-                            <div>
-                                <p>Modelo</p>
-                                <h3>GTR</h3>
-                            </div>
-                            <div>
-                                <p>Ano do Modelo</p>
-                                <h3>2011</h3>
-                            </div>
-                            <div>
-                                <p>Ano da fabricação</p>
-                                <h3>2011</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="responsaveis">
-                            <div>
-                                <p>Placa</p>
-                                <h3>DD45GFD</h3>
-                            </div>
-                            <div>
-                                <p>Marca</p>
-                                <h3>Nissan</h3>
-                            </div>
-                            <div>
-                                <p>Modelo</p>
-                                <h3>GTR</h3>
-                            </div>
-                            <div>
-                                <p>Ano do Modelo</p>
-                                <h3>2011</h3>
-                            </div>
-                            <div>
-                                <p>Ano da fabricação</p>
-                                <h3>2011</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h2>Nome Cliente</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="responsaveis">
-                            <div>
-                                <p>Placa</p>
-                                <h3>DD45GFD</h3>
-                            </div>
-                            <div>
-                                <p>Marca</p>
-                                <h3>Nissan</h3>
-                            </div>
-                            <div>
-                                <p>Modelo</p>
-                                <h3>GTR</h3>
-                            </div>
-                            <div>
-                                <p>Ano do Modelo</p>
-                                <h3>2011</h3>
-                            </div>
-                            <div>
-                                <p>Ano da fabricação</p>
-                                <h3>2011</h3>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- populado pelo back -->
                 </div>
             </div>
         </section>
     </main>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', getVeiculos());
+
+        function getVeiculos() {
+            const container = document.querySelector('.listaVeiculos');
+            container.innerHTML = '';
+
+            fetch('/veiculo/lista-cadastro')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(item => {
+                        const marcaObj = JSON.parse(item.marca);
+                        const veiculosHtml = `
+                            <div>
+                                <div>
+                                    <h2>${item.nomeCliente || 'Nome Cliente'}</h2>
+                                    <span class="linhaDois"></span>
+                                </div>
+                                <div class="responsaveis">
+                                    <div>
+                                        <p>Placa</p>
+                                        <h3>${item.placa || 'N/A'}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Marca</p>
+                                        <h3>${marcaObj.marca || 'N/A'}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Modelo</p>
+                                        <h3>${item.modelo || 'N/A'}</h3> <!-- Corrigido para usar item.modelo -->
+                                    </div>
+                                    <div>
+                                        <p>Ano do Modelo</p>
+                                        <h3>${item.anoModelo || 'N/A'}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Ano da Fabricação</p>
+                                        <h3>${item.anoFabricacao || 'N/A'}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += veiculosHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de veículos:', error);
+                    container.innerHTML = '<p>Erro ao carregar a lista de veículos.</p>';
+                });
+        }
+    </script>
 </body>
 </html>

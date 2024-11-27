@@ -54,11 +54,11 @@
                             <div class="radios">
                                 <div>
                                     <input type="radio" class="tipoPessoa" id="PF" name="isPJ" value="false" required>
-                                    <label for="cpf">Pessoa Física</label>
+                                    <label for="PF">Pessoa Física</label>
                                 </div>
                                 <div>
                                     <input type="radio" class="tipoPessoa" id="PJ" name="isPJ" value="true" required>
-                                    <label for="cnpj">Pessoa Jurídica</label>
+                                    <label for="PJ">Pessoa Jurídica</label>
                                 </div>
                             </div>
     
@@ -140,37 +140,39 @@
         })
 
         document.getElementById('cliente-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        console.log("POSTANDO");
+            event.preventDefault();
 
-        const formData = new FormData(this);
+            const formData = new FormData(this);
 
-        const formDataObj = {};
-        formData.forEach((value, key) => {
-            formDataObj[key] = value;
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value.trim();
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            fetch('/cliente', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Formulário enviado com sucesso!');
+                    this.reset()
+                    cpf.removeAttribute("style")
+                    cnpj.removeAttribute("style")
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
         });
-
-        const jsonData = JSON.stringify(formDataObj);
-
-        fetch('/cliente', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: jsonData
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Formulário enviado com sucesso!');
-            } else {
-                alert('Houve um erro ao enviar o formulário.');
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao enviar o formulário:', error);
-            alert('Erro de rede. Tente novamente mais tarde.');
-        });
-    });
     </script>
 </body>
 </html>
