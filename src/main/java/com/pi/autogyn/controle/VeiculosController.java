@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pi.autogyn.servicos.VeiculoService;
+import com.pi.autogyn.servicos.dto.CadastrarMarcaDTO;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
@@ -41,9 +42,9 @@ public class VeiculosController {
 	}
 	
 	@PostMapping("/veiculo/marca")
-	public ResponseEntity<String> cadastrarMarca(@RequestBody String nome) {
+	public ResponseEntity<String> cadastrarMarca(@RequestBody CadastrarMarcaDTO marca) {
 	   try {
-		   VeiculoService.insertMarca(nome);
+		   VeiculoService.insertMarca(marca.getMarca());
 	       return ResponseEntity.ok("Marca cadastrada com sucesso");
 	   } catch (Exception e) {
 	       return ResponseEntity.badRequest().body("Erro ao cadastrar marca: " + e.getMessage());
