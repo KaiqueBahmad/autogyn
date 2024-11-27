@@ -48,7 +48,7 @@ public class VeiculoService {
 	}
 	
 	public static boolean insertModelo(NovoModeloDTO novoModelo) throws SQLException {
-		return ModeloDao.insert(Long.parseLong(novoModelo.getIdMarca()), novoModelo.getIdMarca());
+		return ModeloDao.insert(Long.parseLong(novoModelo.getIdMarca()), novoModelo.getNomeModelo());
 	}
 
 	public static List<MinimalAcessorioDTO> listarMinimalAcessorios() throws SQLException {
