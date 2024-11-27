@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina AutoGyn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <aside>
+            <div>
+                <img src="/img/logo.png" alt="" width="80%">
+                <span class="linha"></span>
+            </div>
+            <nav>
+                <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
+                <ul class="abrirVeiculo" hidden>
+                    <li><a href="veiculoCadAt">Cadastrar | Atualizar</a></li>
+                    <li><a href="veiculoMarca">Marca</a></li>
+                    <li><a href="veiculoModelo">Modelo</a></li>
+                    <li><a href="acessorios">Acessórios</a></li>
+                    <li><a href="veiculoLista">Listar Veiculos</a></li>
+                </ul>
+                <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
+                <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
+                <ul class="abrirOs" hidden>
+                    <li><a href="cadasSerPe">Serviço | Peça</a></li>
+                    <li><a href="gerencOs">Gerenciamento de OS</a></li>
+                    <li><a href="controleExOs">Controle de execução da OS</a></li>
+                </ul>
+                <!-- <a href="estoque">Estoque</a>
+                <a href="controle">Controle</a> -->
+            </nav>
+        </aside>
+        
+        <!-- botar required em tudo! -->
+
+        <section class="gerencOs" style="display: none;">
+            <h1>Gerenciamento de OS</h1>
+            <div class="listagem">
+                <div>
+                    <div>
+                        <p>Cliente</p>
+                        <p>Carro(marca/modelo)</p>
+                        <p>Status</p>
+                        <p>Total</p>
+                    </div>
+                    <form>
+                        <p>dentro form</p>
+                    </form>
+                </div>
+
+                <div>
+                    <div>
+                        <p>Cliente</p>
+                        <p>Carro(marca/modelo)</p>
+                        <p>Status</p>
+                        <p>Total</p>
+                    </div>
+                    <form style="display: none;">
+                        <p>dentroFrom</p>
+                    </form>
+                </div>
+            </div>
+            <!-- <form>
+                <div class="conteudo">
+                    <div>
+                        <div class="radios">
+                            <div>
+                                <input type="radio" class="tipoPessoa" id="cpf" name="tipoPessoa" value="cpf">
+                                <label for="cpf">Pessoa Física</label>
+                            </div>
+                            <div>
+                                <input type="radio" class="tipoPessoa" id="cnpj" name="tipoPessoa" value="cnpj">
+                                <label for="cnpj">Pessoa Jurídica</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome">
+                        </div>
+                        <div class="telefones">
+                            <label for="tel">Telefone</label>
+                            <div>
+                                <div>
+                                    <input type="number" id="tel">
+                                    <input type="number" id="tel">
+                                </div>
+                                <div>
+                                    <input type="number" id="tel">
+                                    <input type="number" id="tel">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="endereco">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" placeholder="Logradouro">
+                            <input type="text" id="endereco" placeholder="Complemento">
+                            <input type="text" id="endereco" placeholder="Cidade">
+                            <input type="text" id="endereco" placeholder="UF">
+                            <input type="number" id="endereco" placeholder="CEP">
+                            <input type="number" id="endereco" placeholder="Número">
+                        </div>
+
+                        <div class="pessoaFisica">
+                            <label for="valorCpf">Cpf</label>
+                            <input type="number" id="valorCpf">
+                        </div>
+
+                        <div class="pessoaJuridica">
+                            <div>
+                                <label for="valorCnpj">Cnpj</label>
+                                <input type="number" id="valorCnpj">
+                            </div>
+
+                            <div>
+                                <label for="numInscricao">Inscrição estadual</label>
+                                <input type="number" id="numInscricao">
+                            </div>
+
+                            <div>
+                                <label for="contato">Nome do contato</label>
+                                <input type="text" id="contato">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <button>Cadastrar</button>
+            </form> -->
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

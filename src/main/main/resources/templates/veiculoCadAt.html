@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina AutoGyn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <aside>
+            <div>
+                <img src="/img/logo.png" alt="" width="80%">
+                <span class="linha"></span>
+            </div>
+            <nav>
+                <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
+                <ul class="abrirVeiculo">
+                    <li><a href="veiculoCadAt" class="selecionado">Cadastrar | Atualizar</a></li>
+                    <li><a href="veiculoMarMo">Marca | Modelo</a></li>
+                    <li><a href="acessorios">Acessórios</a></li>
+                    <li><a href="veiculoLista">Listar Veiculos</a></li>
+                </ul>
+                <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
+                <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
+                <ul class="abrirOs" hidden>
+                    <li><a href="cadastroServico">Serviços</a></li>
+                    <li><a href="cadastroPeca">Peças</a></li>
+                    <li><a href="gerencOs">Gerenciamento de OS</a></li>
+                    <li><a href="controleExOs">Controle de execução da OS</a></li>
+                </ul>
+                <!-- <a href="estoque">Estoque</a>
+                <a href="controle">Controle</a> -->
+            </nav>
+        </aside>
+    
+        <section class="veiculoCadAt">
+            <div>
+                <div>
+                    <h1>Cadastro de veiculo</h1>
+                    <p>Preencha os dados do veículo para cadastro</p>
+                </div>
+                <form action="/veiculo" method="POST">
+                    <div class="conteudo">
+                        <!-- popular com clientes reais -->
+                        <select name="proprietario" id="proprietario" required>
+                            <option value="" disabled selected hidden>Selecione um Proprietário</option>
+                            <option value="joao_silva">João Silva</option>
+                            <option value="ana_pereira">Ana Pereira</option>
+                            <option value="maria_souza">Maria Souza</option>
+                            <option value="carlos_oliveira">Carlos Oliveira</option>
+                            <option value="lucas_ferreira">Lucas Ferreira</option>
+                            <option value="paula_martins">Paula Martins</option>
+                        </select>
+
+                        <div>
+                            <div>
+                                <label for="placa">Placa</label>
+                                <input type="text" id="placa" placeholder="ABCD1234" required>
+                            </div>
+                            <div class="juntos">
+                                <div>
+                                    <label for="anoFabricado">Ano de fabricação</label>
+                                    <input type="number" id="anoFabricado" placeholder="2023" required>
+                                </div>
+                                <div>
+                                    <label for="anoModelo">Ano do modelo</label>
+                                    <input type="number" id="anoModelo" placeholder="2023" required>
+                                </div>
+                            </div>
+                            <div>
+                                <select name="marca" id="marca" required>
+                                    <option value="" disabled selected hidden>Selecione a Marca</option>
+                                    <option value="fiat">Fiat</option>
+                                    <option value="ford">Ford</option>
+                                    <option value="chevrolet">Chevrolet</option>
+                                    <option value="volkswagen">Volkswagen</option>
+                                    <option value="toyota">Toyota</option>
+                                    <option value="honda">Honda</option>
+                                    <option value="nissan">Nissan</option>
+                                    <option value="bmw">BMW</option>
+                                    <option value="mercedes_benz">Mercedes-Benz</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+        
+                            <div>
+                                <select name="modelo" id="modelo" required>
+                                    <option value="" disabled selected hidden>Selecione o Modelo</option>
+                                    <option value="fiat">Fiat</option>
+                                    <option value="ford">Ford</option>
+                                    <option value="chevrolet">Chevrolet</option>
+                                    <option value="volkswagen">Volkswagen</option>
+                                    <option value="toyota">Toyota</option>
+                                    <option value="honda">Honda</option>
+                                    <option value="nissan">Nissan</option>
+                                    <option value="bmw">BMW</option>
+                                    <option value="mercedes_benz">Mercedes-Benz</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="km">Quilometragem</label>
+                                <input type="number" id="km" placeholder="50000" required>
+                            </div>
+                            <div>
+                                <label for="chassi">Número do chassi</label>
+                                <input type="text" id="chassi" placeholder="4455QW456UUHG4" required>
+                            </div>
+                            <div>
+                                <label for="numPatrimonio">Número do patrimônio</label>
+                                <input type="number" id="numPatrimonio" placeholder="1568" required>
+                            </div>
+                        </div>
+
+                        <div class="selecaoAcess">
+                            <div class="select-box">
+                                <label for="" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
+                                <ul>
+                                <li><label><input type="checkbox" value="1"> Opção 1</label></li>
+                                <li><label><input type="checkbox" value="2"> Opção 2</label></li>
+                                <li><label><input type="checkbox" value="3"> Opção 3</label></li>
+                                <li><label><input type="checkbox" value="4"> Opção 4</label></li>
+                                <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                                </ul>
+                            </div>
+                            <p class="selected-options">Acessórios:</p>
+                        </div>
+                    </div>
+                    <button>Cadastrar</button>
+                </form>
+            </div>
+            <span class="linha"></span>
+            <div>
+                <div>
+                    <h1>Atualizar veiculo</h1>
+                    <p>Atualize os dados do veículo cadastrado</p>
+                </div>
+                <form action="/veiculo/upd" method="POST">
+                    <div class="conteudo">
+                        <div>
+                            <div>
+                                <label for="placaSearch">Placa do carro</label>
+                                <input type="text" id="placaSearch" placeholder="ABCD1234" required>
+                            </div>
+                            <div>
+                                <label for="novaKm">Nova quilometragem</label>
+                                <input type="number" id="novaKm" placeholder="564564">
+                            </div>
+                        </div>
+
+                        <!-- popular com clientes reais -->
+                        <select name="proprietario" id="proprietario">
+                            <option value="" disabled selected hidden>Selecione o novo Proprietário</option>
+                            <option value="joao_silva">João Silva</option>
+                            <option value="ana_pereira">Ana Pereira</option>
+                            <option value="maria_souza">Maria Souza</option>
+                            <option value="carlos_oliveira">Carlos Oliveira</option>
+                            <option value="lucas_ferreira">Lucas Ferreira</option>
+                            <option value="paula_martins">Paula Martins</option>
+                        </select>
+
+                        <!-- fazer com q tenha os ja selecionados pelo banco e tal -->
+                        <div class="selecaoAcess">
+                            <div class="select-box">
+                                <label for="" class="abrirMultiSelect">Selecione os acessórios do veículo</label>
+                                <ul>
+                                <li><label><input type="checkbox" value="1"> Opção 1</label></li>
+                                <li><label><input type="checkbox" value="2"> Opção 2</label></li>
+                                <li><label><input type="checkbox" value="3"> Opção 3</label></li>
+                                <li><label><input type="checkbox" value="4"> Opção 4</label></li>
+                                <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                                </ul>
+                            </div>
+                            <p class="selected-options">Acessórios:</p>
+                        </div>
+                    </div>
+        
+                    <button>Atualizar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
