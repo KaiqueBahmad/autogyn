@@ -14,6 +14,7 @@ import com.pi.autogyn.persistencia.entidades.Veiculo;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
+import com.pi.autogyn.servicos.dto.NovoModeloDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 public class VeiculoService {
@@ -46,8 +47,8 @@ public class VeiculoService {
 		return MarcaDao.insert(nomeModelo);
 	}
 	
-	public static boolean insertModelo(Long idMarca, String nomeModelo) throws SQLException {
-		return ModeloDao.insert(idMarca, nomeModelo);
+	public static boolean insertModelo(NovoModeloDTO novoModelo) throws SQLException {
+		return ModeloDao.insert(Long.parseLong(novoModelo.getIdMarca()), novoModelo.getIdMarca());
 	}
 
 	public static List<MinimalAcessorioDTO> listarMinimalAcessorios() throws SQLException {
