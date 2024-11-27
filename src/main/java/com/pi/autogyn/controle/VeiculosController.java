@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.pi.autogyn.servicos.VeiculoService;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
+import com.pi.autogyn.servicos.dto.NovoModeloDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 @Controller
@@ -44,9 +45,9 @@ public class VeiculosController {
 	}
 	
 	@PostMapping("/veiculo/marca/modelo")
-	public ResponseEntity<String> cadastrarModelo(@RequestBody Long idMarca, @RequestBody String nomeModelo) {
+	public ResponseEntity<String> cadastrarModelo(@RequestBody NovoModeloDTO novoModelo) {
 		try {
-				VeiculoService.insertModelo(idMarca, nomeModelo);
+				VeiculoService.insertModelo(novoModelo);
 		       return ResponseEntity.ok("Modelo cadastrado com sucesso");
 		   } catch (Exception e) {
 		       return ResponseEntity.badRequest().body("Erro ao cadastrar modelo: " + e.getMessage());
