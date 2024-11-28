@@ -47,6 +47,19 @@ public class AcessorioDao {
        return acessorios;
 	}
 	
+	public static boolean insert(String descricao) throws SQLException {
+		String sql = "INSERT INTO acessorio (descricao) VALUES (?)";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, descricao);
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}
