@@ -6,11 +6,18 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.servicos.VeiculoService;
+import com.pi.autogyn.servicos.dto.CadastrarMarcaDTO;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
+import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
+import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
+import com.pi.autogyn.servicos.dto.NovoModeloDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 @Controller
@@ -26,10 +33,31 @@ public class VeiculosController {
 		return ResponseEntity.ok(VeiculoService.listarMarcasCadastradas());
 	}
 	
+	
+	@GetMapping("/veiculo/marca")
+	public ResponseEntity<List<MinimalMarcaDTO>> getMarcas() throws SQLException {
+		return ResponseEntity.ok(VeiculoService.listarMinimalMarcas());
+	}
+	
+	@GetMapping("/veiculo/marca/{idMarca}")
+	public ResponseEntity<?> getModelosDaMarca(@PathVariable Long idMarca) throws SQLException {
+	    List<ModeloDTO> modelos = VeiculoService.listarModelosPorMarca(idMarca);
+	    if (modelos != null) {
+	    	return ResponseEntity.ok(modelos);
+	    } else {
+	    	return ResponseEntity.status(404).body("Marca nao cadastrada.");
+	    }
+	}	
+	
+	@GetMapping("/veiculo/acessorio")
+	public ResponseEntity<List<MinimalAcessorioDTO>> getAcessorios() throws SQLException {
+		return ResponseEntity.ok(VeiculoService.listarMinimalAcessorios());
+	}
+	
 	@PostMapping("/veiculo/marca")
-	public ResponseEntity<String> cadastrarMarca(@RequestBody String nome) {
+	public ResponseEntity<String> cadastrarMarca(@RequestBody CadastrarMarcaDTO marca) {
 	   try {
-		   VeiculoService.insertMarca(nome);
+		   VeiculoService.insertMarca(marca.getMarca());
 	       return ResponseEntity.ok("Marca cadastrada com sucesso");
 	   } catch (Exception e) {
 	       return ResponseEntity.badRequest().body("Erro ao cadastrar marca: " + e.getMessage());
@@ -37,9 +65,9 @@ public class VeiculosController {
 	}
 	
 	@PostMapping("/veiculo/marca/modelo")
-	public ResponseEntity<String> cadastrarModelo(@RequestBody Long idMarca, @RequestBody String nomeModelo) {
+	public ResponseEntity<String> cadastrarModelo(@RequestBody NovoModeloDTO novoModelo) {
 		try {
-				VeiculoService.insertModelo(idMarca, nomeModelo);
+				VeiculoService.insertModelo(novoModelo);
 		       return ResponseEntity.ok("Modelo cadastrado com sucesso");
 		   } catch (Exception e) {
 		       return ResponseEntity.badRequest().body("Erro ao cadastrar modelo: " + e.getMessage());

@@ -27,13 +27,11 @@
                 <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
-                    <li><a href="cadastroServico">Serviços</a></li>
-                    <li><a href="cadastroPeca">Peças</a></li>
+                    <li><a href="cadastroSerPe">Serviços | Peças</a></li>
+                    <li><a href="cadastroColab">Colaborador</a></li>
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
-                    <li><a href="controleExOs">Controle de execução da OS</a></li>
                 </ul>
-                <!-- <a href="estoque">Estoque</a>
-                <a href="controle">Controle</a> -->
+                <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
     
@@ -44,12 +42,12 @@
                         <h1>Cadastro de marca</h1>
                         <p>Preencha os dados da marca para cadastro</p>
                     </div>
-                    <form action="/marca" method="POST">
+                    <form id="marca-form">
                         <div class="conteudo">
                             <div>
                                 <div>
                                     <label for="marca">Nome da marca</label>
-                                    <input type="text" id="marca" placeholder="Fiat" required>
+                                    <input type="text" id="marca" name="marca" placeholder="Fiat" required>
                                 </div>
                             </div>
                         </div>
@@ -62,26 +60,19 @@
                         <h1>Cadastro de modelo</h1>
                         <p>Preencha os dados do modelo para cadastro</p>
                     </div>
-                    <form action="/modelo" method="POST">
+
+                    <form id="modelo-form">
                         <div class="conteudo">
-                            <select name="marca" id="marca" required>
-                                <option value="" disabled selected hidden>Selecione a Marca</option>
-                                <option value="fiat">Fiat</option>
-                                <option value="ford">Ford</option>
-                                <option value="chevrolet">Chevrolet</option>
-                                <option value="volkswagen">Volkswagen</option>
-                                <option value="toyota">Toyota</option>
-                                <option value="honda">Honda</option>
-                                <option value="nissan">Nissan</option>
-                                <option value="bmw">BMW</option>
-                                <option value="mercedes_benz">Mercedes-Benz</option>
-                                <option value="audi">Audi</option>
-                            </select>
+                            <div class="addSelect">
+                                <select name="idMarca" id="selectMarca" required>
+                                    <!-- populado pelo back -->
+                                </select>
+                            </div>
 
                             <div>
                                 <div>
                                     <label for="modelo">Nome do modelo</label>
-                                    <input type="text" id="modelo" placeholder="Fiat Argo" required>
+                                    <input type="text" id="modelo" name="nomeModelo" placeholder="Fiat Argo" required>
                                 </div>
                             </div>
             
@@ -94,86 +85,177 @@
             <span class="linha"></span>
             <div>
                 <h1>Modelos e Marcas Cadastrados</h1>
-                <!-- popular com as marcas/modelos do banco -->
                 <div class="listaCarros">
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-                    <div>
-                        <h2>Marca</h2>
-                        <div>
-                            <p>Modelo:</p>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="modelos">
-                            <h3>A</h3>
-                            <h3>B</h3>
-                            <h3>C</h3>
-                        </div>
-                    </div>
-
+                    <!-- populado pelo back -->
                 </div>
             </div>
         </section>
     </main>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            getMarcas();
+            getVeiculos();
+        });
+
+        document.getElementById('marca-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            fetch('/veiculo/marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('marca cadastrada com sucesso!');
+                    getVeiculos()
+                    getMarcas()
+                    this.reset();
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+
+        document.getElementById('modelo-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+            
+            const jsonData = JSON.stringify(formDataObj);
+
+            fetch('/veiculo/marca/modelo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Modelo cadastrado com sucesso!');
+                    getVeiculos()
+                    this.reset();
+                    const selects = this.querySelectorAll('select');
+                    selects.forEach(select => {
+                        select.selectedIndex = 0;
+                    });
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
+
+        function getVeiculos() {
+            const container = document.querySelector('.listaCarros');
+            container.innerHTML = '';
+
+            fetch('/veiculo/marca/lista-cadastro')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhum modelo ou marca cadastrado ainda.</p>';
+                    }
+                    data.forEach(item => {
+                        const marcaHtml = `
+                            <div>
+                                <h2>${item.nomeMarca}</h2>
+                                <div>
+                                    <p>Modelo:</p>
+                                    <span class="linhaDois"></span>
+                                </div>
+                                <div class="modelos">
+                                    ${item.nomeModelos.length === 0
+                                        ? '<p>Nenhum modelo disponível.</p>'
+                                        : item.nomeModelos.map(modelo => `<h3>${modelo}</h3>`).join('')
+                                    }
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += marcaHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de veículos:', error);
+                    container.innerHTML = '<p>Erro ao carregar a lista de veículos.</p>';
+                });
+        }
+
+
+        function getMarcas() {
+            const select = document.getElementById('selectMarca');
+            select.innerHTML = '';
+
+            fetch('/veiculo/marca')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    if (!data.length) {
+                        defaultOption.textContent = "Sem marca registrada";
+                    } else {
+                        defaultOption.textContent = "Selecione a Marca";
+                    }
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    defaultOption.hidden = true;
+                    select.appendChild(defaultOption);
+                    
+                    data.forEach(marca => {
+                        const option = document.createElement('option');
+                        option.value = marca.id;
+
+                        try {
+                            const marcaData = JSON.parse(marca.nome);
+                            option.textContent = marcaData.marca || "Marca Desconhecida";
+                        } catch (e) {
+                            option.textContent = marca.nome || "Marca Desconhecida";
+                        }
+                        
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de marcas:', error);
+                    document.querySelector('.addSelect').innerHTML = '<p>Erro ao carregar a lista de marcas.</p>';
+                });
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina AutoGyn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <aside>
+            <div>
+                <img src="/img/logo.png" alt="" width="80%">
+                <span class="linha"></span>
+            </div>
+            <nav>
+                <a class="menu abrirVeiculo" id="veiculos"><img src="/img/veiculo.svg" alt="" width="20"> Veiculos</a>
+                <ul class="abrirVeiculo" hidden>
+                    <li><a href="veiculoCadAt">Cadastrar | Atualizar</a></li>
+                    <li><a href="veiculoMarMo">Marca | Modelo</a></li>
+                    <li><a href="acessorios">Acessórios</a></li>
+                    <li><a href="veiculoLista">Listar Veiculos</a></li>
+                </ul>
+                <a href="clientes"><img src="/img/cliente.svg" alt="" width="20"> Clientes</a>
+                <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
+                <ul class="abrirOs" hidden>
+                    <li><a href="cadastroSerPe">Serviços | Peças</a></li>
+                    <li><a href="cadastroColab">Colaborador</a></li>
+                    <li><a href="gerencOs">Gerenciamento de OS</a></li>
+                </ul>
+                <a href="estoque" class="selecionado"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
+            </nav>
+        </aside>
+    
+        <section class="estoqueLista">
+            <div>
+                <h1>Peças no estoque</h1>
+                <!-- verificar o get direitinho -->
+                <!-- arrumar a listagem -->
+                <div class="listaEstoque">
+                    <div class="estoqueIndex">
+                        <div>
+                            <h2>Nome Peça</h2>
+                            <span class="linhaDois"></span>
+                        </div>
+                        <div class="estoquePeca">
+                            <div>
+                                <p>Codigo</p>
+                                <h3>123</h3>
+                            </div>
+                            <div>
+                                <p>Sku</p>
+                                <h3>456</h3>
+                            </div>
+                            <div>
+                                <p>Quantidade no estoque</p>
+                                <h3>10</h3>
+                            </div>
+                            <div>
+                                <p>Valor Unitário</p>
+                                <h3>R$100,00</h3>
+                            </div>
+                            <div>
+                                <img src="/img/editar.svg" alt="" width="20" class="edit">
+                                <img src="/img/excluir.svg" alt="" width="24" hidden>
+                                <img src="/img/check.svg" alt="" width="24" hidden>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="estoqueIndex">
+                        <div>
+                            <h2>Nome Peça</h2>
+                            <span class="linhaDois"></span>
+                        </div>
+                        <div class="estoquePeca">
+                            <div>
+                                <p>Codigo</p>
+                                <h3>123</h3>
+                            </div>
+                            <div>
+                                <p>Sku</p>
+                                <h3>456</h3>
+                            </div>
+                            <div>
+                                <p>Quantidade no estoque</p>
+                                <h3>10</h3>
+                            </div>
+                            <div>
+                                <p>Valor Unitário</p>
+                                <h3>R$100,00</h3>
+                            </div>
+                            <div>
+                                <img src="/img/editar.svg" alt="" width="20" class="edit">
+                                <img src="/img/excluir.svg" alt="" width="24" hidden>
+                                <img src="/img/check.svg" alt="" width="24" hidden>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="estoqueIndex">
+                        <div>
+                            <h2>Nome Peça</h2>
+                            <span class="linhaDois"></span>
+                        </div>
+                        <div class="estoquePeca">
+                            <div>
+                                <p>Codigo</p>
+                                <h3>123</h3>
+                            </div>
+                            <div>
+                                <p>Sku</p>
+                                <h3>456</h3>
+                            </div>
+                            <div>
+                                <p>Quantidade no estoque</p>
+                                <h3>
+                                    <input type="number" value="10" class="inputSecreto" disabled>
+                                </h3>
+                            </div>
+                            <div>
+                                <p>Valor Unitário</p>
+                                <h3>R$
+                                    <input type="number" value="100" class="inputSecreto" disabled>
+                                </h3>
+                            </div>
+                            <div>
+                                <img src="/img/editar.svg" alt="" width="20" class="edit">
+                                <img src="/img/excluir.svg" alt="" width="24" hidden class="cancelar">
+                                <img src="/img/check.svg" alt="" width="24" hidden class="salvar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>    
+        document.addEventListener('DOMContentLoaded', getPecas());
+
+        const edicao = document.querySelectorAll('.edit')
+        const cancelar = document.querySelectorAll('.cancelar')
+        const salvar = document.querySelectorAll('.salvar')
+        let valores = {
+            estoque : 0,
+            valor : 0
+        }
+        edicao.forEach(editar =>{
+            editar.addEventListener('click', () =>{
+                for(abrir of editar.parentNode.children){
+                    abrir.toggleAttribute('hidden')
+                }
+                valores.estoque = editar.parentNode.parentNode.children[2].children[1].children[0].value
+                valores.valor = editar.parentNode.parentNode.children[3].children[1].children[0].value
+                console.log(valores)
+                editar.parentNode.parentNode.children[2].children[1].children[0].toggleAttribute('disabled')
+                editar.parentNode.parentNode.children[3].children[1].children[0].toggleAttribute('disabled')
+            })
+        })
+
+        cancelar.forEach(cancel =>{
+            cancel.addEventListener('click', () =>{
+                for(fechar of cancel.parentNode.children){
+                    fechar.toggleAttribute('hidden')
+                }
+                cancel.parentNode.parentNode.children[2].children[1].children[0].value = valores.estoque
+                cancel.parentNode.parentNode.children[3].children[1].children[0].value = valores.valor
+                cancel.parentNode.parentNode.children[2].children[1].children[0].toggleAttribute('disabled')
+                cancel.parentNode.parentNode.children[3].children[1].children[0].toggleAttribute('disabled')
+            })
+        })
+
+        salvar.forEach(salvo =>{
+            salvo.addEventListener('click', () =>{
+                for(fechar of salvo.parentNode.children){
+                    fechar.toggleAttribute('hidden')
+                }
+                salvo.parentNode.parentNode.children[2].children[1].children[0].value = valores.estoque
+                salvo.parentNode.parentNode.children[3].children[1].children[0].value = valores.valor
+                salvo.parentNode.parentNode.children[2].children[1].children[0].toggleAttribute('disabled')
+                salvo.parentNode.parentNode.children[3].children[1].children[0].toggleAttribute('disabled')
+
+                // mandar o patch e dar get nas peças dnv
+            })
+        })
+
+        function getPecas() {
+            const container = document.querySelector('.listaEstoque');
+            container.innerHTML = '';
+            fetch('/peca')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhuma peça cadastrada ainda.</p>';
+                    }    
+                    data.forEach(peca => {
+                        const pecaHtml = `
+                            <div class="estoqueIndex">
+                                <div>
+                                    <h2>${peca.nome}</h2>
+                                    <span class="linhaDois"></span>
+                                </div>
+                                <div class="estoquePeca">
+                                    <div>
+                                        <p>Código</p>
+                                        <h3>${peca.codigo}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Sku</p>
+                                        <h3>${peca.sku}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Quantidade no estoque</p>
+                                        <h3>
+                                            <input type="number" value="${peca.quantidade}" class="inputSecreto" disabled>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <p>Valor Unitário</p>
+                                        <h3>R$ 
+                                            <input type="number" value="${peca.valorUnitario}" class="inputSecreto" disabled>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <img src="/img/editar.svg" alt="Editar" width="20" class="edit">
+                                        <img src="/img/excluir.svg" alt="Excluir" width="24" hidden class="cancelar">
+                                        <img src="/img/check.svg" alt="Salvar" width="24" hidden class="salvar">
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += pecaHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de peças:', error);
+                    document.querySelector('.listaEstoque').innerHTML = '<p>Erro ao carregar a lista de peças.</p>';
+                });
+        }
+    </script>
+</body>
+</html>
