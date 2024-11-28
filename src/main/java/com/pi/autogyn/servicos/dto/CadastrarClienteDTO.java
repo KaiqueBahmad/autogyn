@@ -126,6 +126,7 @@ public class CadastrarClienteDTO {
 	public void setNomeContato(String nomeContato) {
 		this.nomeContato = nomeContato;
 	}
+
 	
 	
 	
