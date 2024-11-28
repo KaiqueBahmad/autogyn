@@ -41,12 +41,11 @@
                     <p>Preencha os dados do acessorio para cadastro</p>
                 </div>
                 <form id="acessorio-form">
-                    <!-- BOTAR OS NAME -->
                     <div class="conteudo">
                         <div>
                             <div>
                                 <label for="acessorio">Nome do acessório</label>
-                                <input type="text" id="acessorio" placeholder="Capa de volante" required>
+                                <input type="text" id="acessorio" name="descricao" placeholder="Capa de volante" required>
                             </div>
                         </div>
                     </div>
@@ -81,14 +80,14 @@
             const jsonData = JSON.stringify(formDataObj);
 
             // mudar endpoint
-            fetch('/veiculo/marca', {
+            fetch('/acessorio', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: jsonData
             })
-            .then(response => {
+            .then(response => {''
                 if (response.ok) {
                     alert('Acessorio cadastrado com sucesso!');
                     getAcessorios()

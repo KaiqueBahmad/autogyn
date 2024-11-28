@@ -36,7 +36,6 @@
     
         <!-- fazer os dois fetch do form -->
         <section class="cadastroServico">
-            <!-- BOTAR OS NAME -->
             <div>
                 <div>
                     <div>
@@ -48,11 +47,11 @@
                             <div>
                                 <div>
                                     <label for="servico">Nome do serviço</label>
-                                    <input type="text" id="servico" placeholder="Trocar óleo" required>
+                                    <input type="text" id="servico" name="descricao" placeholder="Trocar óleo" required>
                                 </div>
                                 <div>
                                     <label for="servicoValor">Valor</label>
-                                    <input type="number" id="servicoValor" placeholder="120" required>
+                                    <input type="number" id="servicoValor" name="valor" placeholder="120" required>
                                 </div>
                             </div>
                         </div>
@@ -66,6 +65,7 @@
                         <p>Preencha os dados da peça para cadastro</p>
                     </div>
                     <form id="peca-form">
+                        <!-- BOTAR OS NAME -->
                         <div class="conteudo">
                             <div>
                                 <div>
@@ -155,31 +155,22 @@
 
     <script src="script.js"></script>
     <script>
-        // document.addEventListener('DOMContentLoaded', getServicos());
+        document.addEventListener('DOMContentLoaded', getServicos());
 
         document.getElementById('servico-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
             const formData = new FormData(this);
 
-            const formDataObj = {};
-            formData.forEach((value, key) => {
-                formDataObj[key] = value;
-            });
-
-            const jsonData = JSON.stringify(formDataObj);
-
-            // mudar endpoint
-            fetch('/veiculo/marca', {
+            fetch('/servico', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: jsonData
+                body: formData
             })
             .then(response => {
                 if (response.ok) {
                     alert('Serviço cadastrado com sucesso!');
+                    this.reset()
+                    getServicos()
                 } else {
                     alert('Houve um erro ao enviar o formulário.');
                 }
@@ -189,6 +180,7 @@
                 alert('Erro de rede. Tente novamente mais tarde.');
             });
         });
+
 
         document.getElementById('peca-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -223,31 +215,34 @@
             });
         });
 
-        // function getServicos(){
-        //     const container = document.querySelector('.listaServico');
-        //     container.innerHTML = ''
-        //     // mudar endpoint
-        //     fetch('/veiculo/acessorio')
-        //         .then(response => {
-        //             if (!response.ok) {
-        //                 throw new Error('Erro na resposta da rede');
-        //             }
-        //             return response.json();
-        //         })
-        //         .then(data => {
+        function getServicos(){
+            const container = document.querySelector('.listaServico');
+            container.innerHTML = '';
 
-        //             data.forEach(servico => {
-        //                 const servicoHtml = `
-        //                     <h3>${servico.nome}</h3>
-        //                 `;
-        //                 container.innerHTML += servicoHtml;
-        //             });
-        //         })
-        //         .catch(error => {
-        //             console.error('Erro ao buscar a lista de serviços:', error);
-        //             document.querySelector('.listaAcess').innerHTML = '<p>Erro ao carregar a lista de serviços.</p>';
-        //         });
-        // }
+            fetch('/servico/formatado')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if(!data.length){
+                        container.innerHTML = '<p>Nenhum serviço cadastrado ainda.</p>'
+                    }    
+                    data.forEach(servico => {
+                        const servicoHtml = `
+                            <h3>${servico.formatado}</h3>
+                        `;
+                        container.insertAdjacentHTML('beforeend', servicoHtml);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de serviços:', error);
+                    document.querySelector('.listaAcess').innerHTML = '<p>Erro ao carregar a lista de serviços.</p>';
+                });
+        }
+
     </script>
 </body>
 </html>
