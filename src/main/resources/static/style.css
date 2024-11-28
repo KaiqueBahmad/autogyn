@@ -113,7 +113,7 @@ section{
     background-color: var(--borda);
 }
 
-section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess, section.cadastroServico{
+section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess, section.cadastroServico, section.cadastroColab{
     display: flex;
     flex-direction: row;
     gap: 30px;
@@ -129,7 +129,7 @@ section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess, section.cadast
     }
 }
 
-section.veiculoCadAt, section.veiculoAcess{
+section.veiculoCadAt, section.veiculoAcess, section.cadastroColab{
     &>div{
         display: flex;
         flex-direction: column;
@@ -145,11 +145,11 @@ section.veiculoCadAt, section.veiculoAcess{
         }
     }  
 
-    &.veiculoAcess>div>h1{
+    &.veiculoAcess>div>h1, &.cadastroColab>div>h1{
         text-align: center;
     }
     
-    & .listaAcess{
+    & .listaAcess, .listaColab{
         display: grid;
         grid-template-columns: repeat(3, auto);
         gap: 10px;
@@ -358,7 +358,7 @@ section.veiculoMarMo{
     }
 }
 
-section.veiculoLista, section.osLista{
+section.veiculoLista, section.osLista, section.estoqueLista{
     &>div{
         display: flex;
         flex-direction: column;
@@ -370,7 +370,7 @@ section.veiculoLista, section.osLista{
         padding: 20px;
     }
 
-    & .listaVeiculos, .listaOs{
+    & .listaVeiculos, .listaOs, .listaEstoque{
         display: flex;
         flex-direction: column;
         gap: 40px;
@@ -398,9 +398,9 @@ section.veiculoLista, section.osLista{
             gap: 5px;
         }
 
-        & .responsaveis{
+        & .responsaveis, .estoquePeca{
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr) 0.5fr;
             gap: 10px;
 
 
@@ -422,6 +422,17 @@ section.veiculoLista, section.osLista{
                 border-radius: 8px;
                 text-align: center;
                 background-color: var(--meioBranco);
+            }
+        }
+
+        & .estoquePeca div:last-child{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+
+            & img{
+                cursor: pointer;
             }
         }
 
@@ -629,6 +640,30 @@ input[type="radio"]:checked::before {
 
 input[type="radio"]:hover {
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.inputSecreto:disabled{
+    border: 0;
+    outline: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0;
+    height: fit-content;
+    width: 20%;
+    text-align: center;
+    color: var(--preto);
+}
+.inputSecreto{
+    outline: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0;
+    height: fit-content;
+    width: 20%;
+    text-align: center;
+    color: var(--preto);
 }
 
 button{

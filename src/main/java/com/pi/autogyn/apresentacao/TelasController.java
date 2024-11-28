@@ -54,4 +54,9 @@ public class TelasController {
     public String verEstoque() {
         return "estoque";
     }
+
+    @GetMapping("/cadastroColab")
+    public String cadastroColababorador() {
+        return "cadastroColab";
+    }
 }
