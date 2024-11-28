@@ -72,24 +72,14 @@
 
             const formData = new FormData(this);
 
-            const formDataObj = {};
-            formData.forEach((value, key) => {
-                formDataObj[key] = value;
-            });
-
-            const jsonData = JSON.stringify(formDataObj);
-
-            // mudar endpoint
             fetch('/acessorio', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: jsonData
+                body: formData
             })
             .then(response => {''
                 if (response.ok) {
                     alert('Acessorio cadastrado com sucesso!');
+                    this.reset()
                     getAcessorios()
                 } else {
                     alert('Houve um erro ao enviar o formulário.');
