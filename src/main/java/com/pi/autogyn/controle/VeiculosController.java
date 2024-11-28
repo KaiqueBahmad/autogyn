@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.servicos.VeiculoService;
 import com.pi.autogyn.servicos.dto.CadastrarMarcaDTO;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
@@ -35,6 +38,16 @@ public class VeiculosController {
 	public ResponseEntity<List<MinimalMarcaDTO>> getMarcas() throws SQLException {
 		return ResponseEntity.ok(VeiculoService.listarMinimalMarcas());
 	}
+	
+	@GetMapping("/veiculo/marca/{idMarca}")
+	public ResponseEntity<?> getModelosDaMarca(@PathVariable Long idMarca) throws SQLException {
+	    List<ModeloDTO> modelos = VeiculoService.listarModelosPorMarca(idMarca);
+	    if (modelos != null) {
+	    	return ResponseEntity.ok(modelos);
+	    } else {
+	    	return ResponseEntity.status(404).body("Marca nao cadastrada.");
+	    }
+	}	
 	
 	@GetMapping("/veiculo/acessorio")
 	public ResponseEntity<List<MinimalAcessorioDTO>> getAcessorios() throws SQLException {
