@@ -8,7 +8,7 @@ import java.util.Properties;
 public class ConexaoBD {
 	private static String url = "jdbc:postgresql://localhost:5432/pi";
 	private static String user = "postgres";
-	private static String password = "aluno";
+	private static String password = "postgres";
 	private static Connection connection = null;
 	
 	public static Connection getInstance() {
