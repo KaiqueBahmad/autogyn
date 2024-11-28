@@ -173,7 +173,7 @@
 
         function getVeiculos() {
             const container = document.querySelector('.listaCarros');
-            container.innerHTML = ''
+            container.innerHTML = '';
 
             fetch('/veiculo/marca/lista-cadastro')
                 .then(response => {
@@ -183,20 +183,22 @@
                     return response.json();
                 })
                 .then(data => {
-                    if(!data.length){
-                        container.innerHTML = '<p>Nenhum modelo ou marca cadastrado ainda.</p>'
-                    }             
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhum modelo ou marca cadastrado ainda.</p>';
+                    }
                     data.forEach(item => {
-                        const marcaObj = JSON.parse(item.nomeMarca);
                         const marcaHtml = `
                             <div>
-                                <h2>${marcaObj.marca}</h2>
+                                <h2>${item.nomeMarca}</h2>
                                 <div>
                                     <p>Modelo:</p>
                                     <span class="linhaDois"></span>
                                 </div>
                                 <div class="modelos">
-                                    ${item.nomeModelos.map(modelo => `<h3>${modelo}</h3>`).join('')}
+                                    ${item.nomeModelos.length === 0
+                                        ? '<p>Nenhum modelo disponível.</p>'
+                                        : item.nomeModelos.map(modelo => `<h3>${modelo}</h3>`).join('')
+                                    }
                                 </div>
                             </div>
                         `;
@@ -205,7 +207,7 @@
                 })
                 .catch(error => {
                     console.error('Erro ao buscar a lista de veículos:', error);
-                    document.querySelector('.listaCarros').innerHTML = '<p>Erro ao carregar a lista de veículos.</p>';
+                    container.innerHTML = '<p>Erro ao carregar a lista de veículos.</p>';
                 });
         }
 

@@ -29,6 +29,7 @@ public class ServicoController {
 				return ResponseEntity.badRequest().body("Nome já foi utilizado anteriormente");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.internalServerError().build();
 		}
 	}

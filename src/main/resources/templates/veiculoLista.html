@@ -60,11 +60,10 @@
                     return response.json();
                 })
                 .then(data => {
-                    if(!data.length){
-                        container.innerHTML = '<p>Nenhum veículo cadastrado ainda.</p>'
-                    }    
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhum veículo cadastrado ainda.</p>';
+                    }
                     data.forEach(item => {
-                        const marcaObj = JSON.parse(item.marca);
                         const veiculosHtml = `
                             <div>
                                 <div>
@@ -78,11 +77,11 @@
                                     </div>
                                     <div>
                                         <p>Marca</p>
-                                        <h3>${marcaObj.marca || 'N/A'}</h3>
+                                        <h3>${item.marca || 'N/A'}</h3>
                                     </div>
                                     <div>
                                         <p>Modelo</p>
-                                        <h3>${item.modelo || 'N/A'}</h3> <!-- Corrigido para usar item.modelo -->
+                                        <h3>${item.modelo || 'N/A'}</h3>
                                     </div>
                                     <div>
                                         <p>Ano do Modelo</p>
@@ -103,6 +102,7 @@
                     container.innerHTML = '<p>Erro ao carregar a lista de veículos.</p>';
                 });
         }
+
     </script>
 </body>
 </html>
