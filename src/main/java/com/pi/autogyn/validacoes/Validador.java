@@ -1,24 +1,24 @@
-package com.pi.autogyn.persistencia.ferramentas;
+package com.pi.autogyn.validacoes;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validador {
+class Validador {
 
-	public static String validaCPF(String CPF) {
+	public StatusValidacao validaCPF(String CPF) {
 		CPF = CPF.replace("-", "");
 		CPF = CPF.replace(".", "");
 
 		if (CPF.length() != 11) {
-			return "CPF não contem 11 digitos";
+			return StatusValidacao.CPF_TAMANHO_ERRADO;
 		}
 		if (CPF.equals("00000000000") || CPF.equals("11111111111") || CPF.equals("22222222222")
 				|| CPF.equals("33333333333") || CPF.equals("44444444444") || CPF.equals("55555555555")
 				|| CPF.equals("66666666666") || CPF.equals("77777777777") || CPF.equals("88888888888")
 				|| CPF.equals("99999999999")) {
-			return "CPF inválido";
+			return StatusValidacao.CPF_INVALIDO;
 		}
 		CharacterIterator it = new StringCharacterIterator(CPF);
 		int res1, res2, d1Input, d2Input, d1 = 0, d2 = 0;
@@ -46,7 +46,7 @@ public class Validador {
 			d1 = 11 - res1;
 		}
 		if (d1 != d1Input) {
-			return "CPF Inválido";
+			return StatusValidacao.CPF_INVALIDO;
 		}
 		// Calculo segundo digito;
 		peso = 11;
@@ -62,13 +62,13 @@ public class Validador {
 			d2 = 11 - res2;
 		}
 		if (d2 != d2Input) {
-			return "CPF Inválido";
+			return StatusValidacao.CPF_INVALIDO;
 		}
 
-		return "ok";
+		return StatusValidacao.OK;
 	}
 
-	public static String validaCNPJ(String CNPJ) {
+	public String validaCNPJ(String CNPJ) {
 		CNPJ = CNPJ.replace("-", "");
 		CNPJ = CNPJ.replace(".", "");
 		CNPJ = CNPJ.replace("/", "");
@@ -133,7 +133,7 @@ public class Validador {
 		return "ok";
 	}
 
-	public static String validaEmail(String email) {
+	public String validaEmail(String email) {
 		String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(email);
@@ -143,7 +143,7 @@ public class Validador {
 		return "Email Inválido";
 	}
 
-	public static String validaTelefone(Integer telefone) {
+	public String validaTelefone(Integer telefone) {
 		String telefoneStr = String.valueOf(telefone);
 		String regex = "^[1-9][0-9]{7,8}$";
 		Pattern pattern = Pattern.compile(regex);
@@ -155,7 +155,7 @@ public class Validador {
 		return "Número de Telefone Inválido";
 	}
 
-	public static String validaCEP(String CEP) {
+	public String validaCEP(String CEP) {
 		if (CEP.matches("^[0-9]{8}$")) {
 			return "ok";
 		}
@@ -163,7 +163,7 @@ public class Validador {
 
 	}
 
-	public static String validaUF(String UF) {
+	public String validaUF(String UF) {
 		if (UF.length() != 2) {
 			return "UF Inválido";
 		}

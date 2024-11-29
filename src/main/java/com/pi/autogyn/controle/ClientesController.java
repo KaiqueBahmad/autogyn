@@ -24,7 +24,9 @@ public class ClientesController {
 	
 	
 	@PostMapping("/cliente")
-	public ResponseEntity<String> cadastrarCliente(@RequestBody CadastrarClienteDTO novoCliente) throws SQLException {
+	public ResponseEntity<?> cadastrarCliente(@RequestBody CadastrarClienteDTO novoCliente) throws SQLException {
+		String statusValidade = "a";
+		
 		Long idCliente = ClienteService.inserirCliente(novoCliente);
 		if (idCliente == null) {
 			return ResponseEntity.badRequest().body("Cliente não criado.");
