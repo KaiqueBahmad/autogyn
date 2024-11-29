@@ -47,13 +47,13 @@
                         <!-- popular com clientes reais -->
                         <div class="clienteSelect">
                             <select name="proprietario" id="proprietario" required>
-                                <option value="" disabled selected hidden>Selecione um Proprietário</option>
+                                <!-- <option value="" disabled selected hidden>Selecione um Proprietário</option>
                                 <option value="joao_silva">João Silva</option>
                                 <option value="ana_pereira">Ana Pereira</option>
                                 <option value="maria_souza">Maria Souza</option>
                                 <option value="carlos_oliveira">Carlos Oliveira</option>
                                 <option value="lucas_ferreira">Lucas Ferreira</option>
-                                <option value="paula_martins">Paula Martins</option>
+                                <option value="paula_martins">Paula Martins</option> -->
                             </select>
                         </div>
 
@@ -184,6 +184,7 @@
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () =>{
+            getClientes()
             getMarcas()
             getAcessorios()
         });
@@ -288,8 +289,7 @@
             const select = document.getElementById('proprietario');
             select.innerHTML = '';
 
-            // mudar endpoint
-            fetch('/veiculo/marca')
+            fetch('/cliente')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erro na resposta da rede');
@@ -305,15 +305,15 @@
                     defaultOption.hidden = true;
                     select.appendChild(defaultOption);
                     
-                    data.forEach(marca => {
+                    data.forEach(cliente => {
                         const option = document.createElement('option');
-                        option.value = marca.id;
+                        option.value = cliente.id;
 
                         try {
-                            const cliente = JSON.parse(marca.nome);
+                            const cliente = JSON.parse(cliente.nome);
                             option.textContent = cliente.marca || "Marca Desconhecida";
                         } catch (e) {
-                            option.textContent = marca.nome || "Marca Desconhecida";
+                            option.textContent = cliente.nome || "Marca Desconhecida";
                         }
                         
                         select.appendChild(option);
@@ -365,7 +365,8 @@
                 });
         }
 
-        // arrumar dps!!!!
+        document.getElementById('marca').addEventListener('change', getModelos)
+
         function getModelos() {
             const selectModelo = document.getElementById('modelo');
             selectModelo.innerHTML = '';
@@ -374,8 +375,7 @@
             
             if (!selectedMarcaId) return;
 
-            // mudar endpoint
-            fetch(`/veiculo/modelo/${selectedMarcaId}`)
+            fetch(`/veiculo/marca/${selectedMarcaId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erro na resposta da rede');
@@ -433,7 +433,6 @@
                         container.innerHTML += acessorioHtml;
                     });
 
-                    // Adiciona evento para atualizar os acessórios selecionados
                     const checkboxes = document.querySelectorAll('.acessorio-checkbox');
                     checkboxes.forEach(checkbox => {
                         checkbox.addEventListener('change', updateSelectedAcessorios);

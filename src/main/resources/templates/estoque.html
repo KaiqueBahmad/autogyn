@@ -41,7 +41,7 @@
                 <!-- verificar o get direitinho -->
                 <!-- arrumar a listagem -->
                 <div class="listaEstoque">
-                    <div class="estoqueIndex">
+                    <!-- <div class="estoqueIndex">
                         <div>
                             <h2>Nome Peça</h2>
                             <span class="linhaDois"></span>
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
     </main>
@@ -142,6 +142,7 @@
         document.addEventListener('DOMContentLoaded', getPecas());
 
         const edicao = document.querySelectorAll('.edit')
+        console.log(edicao)
         const cancelar = document.querySelectorAll('.cancelar')
         const salvar = document.querySelectorAll('.salvar')
         let valores = {
@@ -149,7 +150,9 @@
             valor : 0
         }
         edicao.forEach(editar =>{
+            console.log(editar)
             editar.addEventListener('click', () =>{
+                console.log('aa')
                 for(abrir of editar.parentNode.children){
                     abrir.toggleAttribute('hidden')
                 }
@@ -200,33 +203,33 @@
                 .then(data => {
                     if (!data.length) {
                         container.innerHTML = '<p>Nenhuma peça cadastrada ainda.</p>';
-                    }    
+                    }
                     data.forEach(peca => {
                         const pecaHtml = `
                             <div class="estoqueIndex">
                                 <div>
-                                    <h2>${peca.nome}</h2>
+                                    <h2>${peca.descricao}</h2> <!-- Alterado para 'descricao' -->
                                     <span class="linhaDois"></span>
                                 </div>
                                 <div class="estoquePeca">
                                     <div>
                                         <p>Código</p>
-                                        <h3>${peca.codigo}</h3>
+                                        <h3>${peca.codigo}</h3> <!-- Correção para usar 'codigo' -->
                                     </div>
                                     <div>
                                         <p>Sku</p>
-                                        <h3>${peca.sku}</h3>
+                                        <h3>${peca.sku}</h3> <!-- Correção para usar 'sku' -->
                                     </div>
                                     <div>
-                                        <p>Quantidade no estoque</p>
+                                        <p>Número no estoque</p>
                                         <h3>
-                                            <input type="number" value="${peca.quantidade}" class="inputSecreto" disabled>
+                                            <input type="number" value="${peca.quantidadeEstoque}" class="inputSecreto" disabled> <!-- Correção para 'quantidadeEstoque' -->
                                         </h3>
                                     </div>
                                     <div>
                                         <p>Valor Unitário</p>
                                         <h3>R$ 
-                                            <input type="number" value="${peca.valorUnitario}" class="inputSecreto" disabled>
+                                            <input type="number" value="${peca.valorUnitario}" class="inputSecreto" disabled> <!-- Correção para 'valorUnitario' -->
                                         </h3>
                                     </div>
                                     <div>
@@ -245,6 +248,7 @@
                     document.querySelector('.listaEstoque').innerHTML = '<p>Erro ao carregar a lista de peças.</p>';
                 });
         }
+
     </script>
 </body>
 </html>
