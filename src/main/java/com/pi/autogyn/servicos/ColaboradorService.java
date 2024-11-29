@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.ColaboradorDao;
 import com.pi.autogyn.persistencia.entidades.Colaborador;
+import com.pi.autogyn.servicos.dto.CadastrarColaboradorDTO;
 import com.pi.autogyn.servicos.dto.ColaboradorDTO;
 
 public class ColaboradorService {
@@ -16,4 +17,9 @@ public class ColaboradorService {
 		}
 		return lista;
 	}
+	
+	public static String incluirColaborador(CadastrarColaboradorDTO novoColaborador) throws SQLException {
+		return ColaboradorDao.insert(novoColaborador.getCpf(), novoColaborador.getNome());
+	}
+	
 }
