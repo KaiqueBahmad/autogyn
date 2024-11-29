@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.pi.autogyn.persistencia.dao.PecaDao;
 import com.pi.autogyn.persistencia.entidades.Peca;
+import com.pi.autogyn.servicos.dto.AtualizarPecaDTO;
 import com.pi.autogyn.servicos.dto.CadastrarPecaDTO;
 import com.pi.autogyn.servicos.dto.PecaListaDTO;
 
@@ -37,6 +38,11 @@ public class PecaService {
 	public static boolean addNoEstoque(Long idPeca, Integer quantidade) throws SQLException {
 		return PecaDao.addQuantidade(idPeca, quantidade);
 		
+	}
+
+	public static String atualizarPeca(Long idPeca, AtualizarPecaDTO atualizarPeca) throws SQLException {
+		
+		return PecaDao.update(idPeca, atualizarPeca);
 	}
 	
 }
