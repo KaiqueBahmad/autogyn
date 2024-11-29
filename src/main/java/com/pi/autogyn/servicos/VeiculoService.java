@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.pi.autogyn.controle.ModeloDTO;
 import com.pi.autogyn.persistencia.dao.AcessorioDao;
 import com.pi.autogyn.persistencia.dao.MarcaDao;
 import com.pi.autogyn.persistencia.dao.ModeloDao;
@@ -16,6 +15,7 @@ import com.pi.autogyn.persistencia.entidades.Veiculo;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
+import com.pi.autogyn.servicos.dto.ModeloDTO;
 import com.pi.autogyn.servicos.dto.NovoModeloDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 

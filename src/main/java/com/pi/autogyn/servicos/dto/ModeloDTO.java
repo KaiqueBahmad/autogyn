@@ -1,4 +1,4 @@
-package com.pi.autogyn.controle;
+package com.pi.autogyn.servicos.dto;
 
 import com.pi.autogyn.persistencia.entidades.Modelo;
 

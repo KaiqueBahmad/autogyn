@@ -1,4 +1,4 @@
-package com.pi.autogyn.controle;
+package com.pi.autogyn.servicos;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
