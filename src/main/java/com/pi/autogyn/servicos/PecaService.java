@@ -26,5 +26,17 @@ public class PecaService {
 		}
 		return pecas;
 	}
+
+	public static Peca findById(Long idPeca) throws SQLException {
+		if (idPeca == null) {
+			return null;
+		}
+		return PecaDao.getById(idPeca);
+	}
+
+	public static boolean addNoEstoque(Long idPeca, Integer quantidade) throws SQLException {
+		return PecaDao.addQuantidade(idPeca, quantidade);
+		
+	}
 	
 }

@@ -48,6 +48,32 @@ public class PecaDao {
 		}
 	}
 	
+	public static boolean addQuantidade(Long idPeca, Integer adicionar) throws SQLException {
+	    String sql = "UPDATE pecas SET quantidade_estoque = quantidade_estoque + ? WHERE id_peca = ?";
+
+	    String sqlSelect = "SELECT quantidade_estoque FROM pecas WHERE id_peca = ?";
+        PreparedStatement selectStmt = conn.prepareStatement(sqlSelect);
+        selectStmt.setLong(1, idPeca);
+        ResultSet rs = selectStmt.executeQuery();
+        
+        if (!rs.next()) {
+            return false;
+        }
+        
+        int qtdAtual = rs.getInt("quantidade_estoque");
+        if (qtdAtual + adicionar < 0) {
+            return false; // Cannot have negative stock
+        }
+        
+        // Proceed with update
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, adicionar);
+        stmt.setLong(2, idPeca);
+        
+        int rowsAffected = stmt.executeUpdate();
+        return rowsAffected > 0;
+	}
+	
 	public static Peca getById(Long idPeca) throws SQLException {
 		String sql = "select * from pecas where id_peca = "+idPeca+";";
 		ResultSet rs = QueryUtils.exec(conn, sql);
@@ -61,5 +87,7 @@ public class PecaDao {
 //		System.out.println(getAll());
 		System.out.println(getById(1L));
 	}
+
+
 	
 }
