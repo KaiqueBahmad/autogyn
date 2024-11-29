@@ -42,4 +42,21 @@ public class ColaboradorDao {
 		System.out.println(getAll());
 	}
 	
+	public static String insert(String cpf, String nome) throws SQLException {
+	    String sql = "INSERT INTO colaborador (cpf, nome) VALUES (?, ?)";
+	    
+        if (getById(cpf) != null) {
+            return "CPF já utilizado";
+        }
+        
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, cpf);
+        stmt.setString(2, nome);
+        
+        int rowsAffected = stmt.executeUpdate();
+        if (rowsAffected > 0) {
+        	return null;
+        }
+        return "Colaborador não criado";
+	}
 }

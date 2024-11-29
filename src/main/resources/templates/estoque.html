@@ -28,20 +28,19 @@
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
                     <li><a href="cadastroSerPe">Serviços | Peças</a></li>
-                    <li><a href="cadastroColab">Colaborador</a></li>
+                    <li><a href="cadastroColab">Colaborador</a></li>                  
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
                 </ul>
                 <a href="estoque" class="selecionado"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
     
+        <!-- VERIFICAR O PATCH -->
         <section class="estoqueLista">
             <div>
                 <h1>Peças no estoque</h1>
-                <!-- verificar o get direitinho -->
-                <!-- arrumar a listagem -->
                 <div class="listaEstoque">
-                    <!-- <div class="estoqueIndex">
+                    <div class="estoqueIndex" id="0">
                         <div>
                             <h2>Nome Peça</h2>
                             <span class="linhaDois"></span>
@@ -63,14 +62,9 @@
                                 <p>Valor Unitário</p>
                                 <h3>R$100,00</h3>
                             </div>
-                            <div>
-                                <img src="/img/editar.svg" alt="" width="20" class="edit">
-                                <img src="/img/excluir.svg" alt="" width="24" hidden>
-                                <img src="/img/check.svg" alt="" width="24" hidden>
-                            </div>
                         </div>
                     </div>
-                    <div class="estoqueIndex">
+                    <div class="estoqueIndex" id="1">
                         <div>
                             <h2>Nome Peça</h2>
                             <span class="linhaDois"></span>
@@ -92,14 +86,9 @@
                                 <p>Valor Unitário</p>
                                 <h3>R$100,00</h3>
                             </div>
-                            <div>
-                                <img src="/img/editar.svg" alt="" width="20" class="edit">
-                                <img src="/img/excluir.svg" alt="" width="24" hidden>
-                                <img src="/img/check.svg" alt="" width="24" hidden>
-                            </div>
                         </div>
                     </div>
-                    <div class="estoqueIndex">
+                    <div class="estoqueIndex" id="2">
                         <div>
                             <h2>Nome Peça</h2>
                             <span class="linhaDois"></span>
@@ -115,84 +104,67 @@
                             </div>
                             <div>
                                 <p>Quantidade no estoque</p>
-                                <h3>
-                                    <input type="number" value="10" class="inputSecreto" disabled>
-                                </h3>
+                                <h3>10</h3>
                             </div>
                             <div>
                                 <p>Valor Unitário</p>
-                                <h3>R$
-                                    <input type="number" value="100" class="inputSecreto" disabled>
-                                </h3>
-                            </div>
-                            <div>
-                                <img src="/img/editar.svg" alt="" width="20" class="edit">
-                                <img src="/img/excluir.svg" alt="" width="24" hidden class="cancelar">
-                                <img src="/img/check.svg" alt="" width="24" hidden class="salvar">
+                                <h3>R$100,00</h3>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
+
+            <form class="edicaoEstoque" style="display: none;" id="estoque-form">
+                <h1>Peça: Nome peça</h1>
+                <div>
+                    <label for="novaQntEstoque">Alterar quantidade no estoque</label>
+                    <div>
+                        <input type="number" id="antigaQntEstoque" value="50" disabled>
+                        <input type="number" id="novaQntEstoque" name="quantidadeEstoque" placeholder="-10">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="novoValorUnit">Alterar valor unitario</label>
+                    <div>
+                        <input type="text" id="antigoValorUnit" value="R$ 120,00" disabled>
+                        <input type="number" id="novoValorUnit" name="valorUnitario" placeholder="100,00">
+                    </div>
+                </div>
+                <div>
+                    <button type="button">Cancelar</button>
+                    <button>Atualizar</button>
+                </div>
+            </form>
         </section>
     </main>
 
     <script src="script.js"></script>
     <script>    
-        document.addEventListener('DOMContentLoaded', getPecas());
+        // document.addEventListener('DOMContentLoaded', getPecas());
 
-        const edicao = document.querySelectorAll('.edit')
-        console.log(edicao)
-        const cancelar = document.querySelectorAll('.cancelar')
-        const salvar = document.querySelectorAll('.salvar')
-        let valores = {
-            estoque : 0,
-            valor : 0
-        }
-        edicao.forEach(editar =>{
-            console.log(editar)
-            editar.addEventListener('click', () =>{
-                console.log('aa')
-                for(abrir of editar.parentNode.children){
-                    abrir.toggleAttribute('hidden')
-                }
-                valores.estoque = editar.parentNode.parentNode.children[2].children[1].children[0].value
-                valores.valor = editar.parentNode.parentNode.children[3].children[1].children[0].value
-                console.log(valores)
-                editar.parentNode.parentNode.children[2].children[1].children[0].toggleAttribute('disabled')
-                editar.parentNode.parentNode.children[3].children[1].children[0].toggleAttribute('disabled')
+        const estoque = document.querySelectorAll('.estoqueIndex')
+        const edicaoEstoque = document.querySelector('.edicaoEstoque')
+        estoque.forEach(aberta =>{
+            aberta.addEventListener('click', () =>{
+                edicaoEstoque.removeAttribute("style")
+                aberta.parentNode.parentNode.setAttribute('style', 'display: none')
+                getPecaAlter(aberta.id)
             })
         })
 
-        cancelar.forEach(cancel =>{
-            cancel.addEventListener('click', () =>{
-                for(fechar of cancel.parentNode.children){
-                    fechar.toggleAttribute('hidden')
-                }
-                cancel.parentNode.parentNode.children[2].children[1].children[0].value = valores.estoque
-                cancel.parentNode.parentNode.children[3].children[1].children[0].value = valores.valor
-                cancel.parentNode.parentNode.children[2].children[1].children[0].toggleAttribute('disabled')
-                cancel.parentNode.parentNode.children[3].children[1].children[0].toggleAttribute('disabled')
+        edicaoEstoque.parentNode.children[1].children[3].children[0].addEventListener('click', () =>{
+            estoque.forEach(aberta =>{
+                aberta.parentNode.parentNode.removeAttribute('style')
             })
-        })
-
-        salvar.forEach(salvo =>{
-            salvo.addEventListener('click', () =>{
-                for(fechar of salvo.parentNode.children){
-                    fechar.toggleAttribute('hidden')
-                }
-                salvo.parentNode.parentNode.children[2].children[1].children[0].value = valores.estoque
-                salvo.parentNode.parentNode.children[3].children[1].children[0].value = valores.valor
-                salvo.parentNode.parentNode.children[2].children[1].children[0].toggleAttribute('disabled')
-                salvo.parentNode.parentNode.children[3].children[1].children[0].toggleAttribute('disabled')
-
-                // mandar o patch e dar get nas peças dnv
-            })
+            edicaoEstoque.setAttribute('style', 'display: none')
         })
 
         function getPecas() {
             const container = document.querySelector('.listaEstoque');
             container.innerHTML = '';
+            
             fetch('/peca')
                 .then(response => {
                     if (!response.ok) {
@@ -204,38 +176,30 @@
                     if (!data.length) {
                         container.innerHTML = '<p>Nenhuma peça cadastrada ainda.</p>';
                     }
+                    
                     data.forEach(peca => {
                         const pecaHtml = `
-                            <div class="estoqueIndex">
+                            <div class="estoqueIndex" id="${peca.id}">
                                 <div>
-                                    <h2>${peca.descricao}</h2> <!-- Alterado para 'descricao' -->
+                                    <h2>${peca.descricao}</h2>
                                     <span class="linhaDois"></span>
                                 </div>
                                 <div class="estoquePeca">
                                     <div>
                                         <p>Código</p>
-                                        <h3>${peca.codigo}</h3> <!-- Correção para usar 'codigo' -->
+                                        <h3>${peca.codigo}</h3>
                                     </div>
                                     <div>
                                         <p>Sku</p>
-                                        <h3>${peca.sku}</h3> <!-- Correção para usar 'sku' -->
+                                        <h3>${peca.sku}</h3>
                                     </div>
                                     <div>
-                                        <p>Número no estoque</p>
-                                        <h3>
-                                            <input type="number" value="${peca.quantidadeEstoque}" class="inputSecreto" disabled> <!-- Correção para 'quantidadeEstoque' -->
-                                        </h3>
+                                        <p>Quantidade no estoque</p>
+                                        <h3>${peca.quantidadeEstoque}</h3>
                                     </div>
                                     <div>
                                         <p>Valor Unitário</p>
-                                        <h3>R$ 
-                                            <input type="number" value="${peca.valorUnitario}" class="inputSecreto" disabled> <!-- Correção para 'valorUnitario' -->
-                                        </h3>
-                                    </div>
-                                    <div>
-                                        <img src="/img/editar.svg" alt="Editar" width="20" class="edit">
-                                        <img src="/img/excluir.svg" alt="Excluir" width="24" hidden class="cancelar">
-                                        <img src="/img/check.svg" alt="Salvar" width="24" hidden class="salvar">
+                                        <h3>R$ ${peca.valorUnitario.toFixed(2).replace('.', ',')}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -245,10 +209,51 @@
                 })
                 .catch(error => {
                     console.error('Erro ao buscar a lista de peças:', error);
-                    document.querySelector('.listaEstoque').innerHTML = '<p>Erro ao carregar a lista de peças.</p>';
+                    container.innerHTML = '<p>Erro ao carregar a lista de peças.</p>';
                 });
         }
 
+        function getPecaAlter(idPeca) {
+            const edicaoEstoque = document.querySelector('.edicaoEstoque');
+            edicaoEstoque.children[0].classList.remove(...edicaoEstoque.children[0].classList);
+            edicaoEstoque.children[0].classList.add(idPeca);
+            console.log(edicaoEstoque);
+        }
+
+        document.getElementById('estoque-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const edicaoEstoque = document.querySelector('.edicaoEstoque');
+
+            const formData = new FormData(this);
+
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+
+            const jsonData = JSON.stringify(formDataObj);
+
+            fetch(`/peca/${edicaoEstoque.children[0].classList[0]}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Peça alterada com sucesso!');
+                    getPecas();
+                    this.reset();
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Erro de rede. Tente novamente mais tarde.');
+            });
+        });
     </script>
 </body>
 </html>

@@ -122,7 +122,6 @@ section.veiculoCadAt, section.veiculoMarMo, section.veiculoAcess, section.cadast
     &>div{
         width: 100%;
     }
-    /* justify-content: space-around; */
 
     & p{
         color: var(--cinza);
@@ -359,6 +358,31 @@ section.veiculoMarMo{
 }
 
 section.veiculoLista, section.osLista, section.estoqueLista{
+    &.osLista{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        & form{
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            padding: 20px;
+
+            &>div, &>div>div{
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+
+                &>div>div h1{
+                    text-align: left;
+                }
+            }
+        }
+    }
+
     &>div{
         display: flex;
         flex-direction: column;
@@ -381,11 +405,11 @@ section.veiculoLista, section.osLista, section.estoqueLista{
             gap: 5px;
         }
 
-        &.listaOs>div{
+        &.listaOs>div, &.listaEstoque>div{
             padding: 5px;
         }
 
-        &.listaOs>div:hover{
+        &.listaOs>div:hover, &.listaEstoque>div:hover{
             cursor: pointer;
             border-radius: 8px;
             background-color: var(--meioBranco);
@@ -398,7 +422,7 @@ section.veiculoLista, section.osLista, section.estoqueLista{
             gap: 5px;
         }
 
-        & .responsaveis, .estoquePeca{
+        & .responsaveis{
             display: grid;
             grid-template-columns: repeat(4, 1fr) 0.5fr;
             gap: 10px;
@@ -412,7 +436,7 @@ section.veiculoLista, section.osLista, section.estoqueLista{
             }
         }
 
-        & .ordemServico{
+        & .ordemServico, .estoquePeca{
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 10px;
@@ -425,20 +449,13 @@ section.veiculoLista, section.osLista, section.estoqueLista{
             }
         }
 
-        & .estoquePeca div:last-child{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-
-            & img{
-                cursor: pointer;
-            }
+        .estoquePeca{
+            grid-template-columns: 1fr 1fr 1fr 1fr;
         }
 
     }
 
-    & .edicaoOs{
+    & .edicaoOs, .edicaoEstoque{
         display: flex;
         flex-direction: column;
         gap: 30px;
@@ -447,12 +464,12 @@ section.veiculoLista, section.osLista, section.estoqueLista{
         padding: 20px;
     }
 
-    & .edicaoOs>div{
+    & .edicaoOs>div, .edicaoEstoque>div{
         display: flex;
         flex-direction: column;
         /* gap: 30px; */
     }
-    & .edicaoOs>div:last-child{
+    & .edicaoOs>div:last-child, .edicaoEstoque>div:last-child{
         display: flex;
         flex-direction: row;
         gap: 30px;

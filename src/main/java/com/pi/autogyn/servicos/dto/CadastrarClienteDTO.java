@@ -12,10 +12,10 @@ public class CadastrarClienteDTO {
 	private String inscricao_estadual;
 	private String nomeContato;
 	
-	private int ddd;
-	private int ddd2;
-	private int telefone;
-	private int telefone2;	
+	private Integer ddd;
+	private Integer ddd2;
+	private Integer telefone;
+	private Integer telefone2;	
 	private String cep;
 	private String cidade;
 	private String uf;
@@ -42,28 +42,28 @@ public class CadastrarClienteDTO {
 	public void setPJ(boolean isPJ) {
 		this.isPJ = isPJ;
 	}
-	public int getDdd() {
+	public Integer getDdd() {
 		return ddd;
 	}
-	public void setDdd(int ddd) {
+	public void setDdd(Integer ddd) {
 		this.ddd = ddd;
 	}
-	public int getDdd2() {
+	public Integer getDdd2() {
 		return ddd2;
 	}
-	public void setDdd2(int ddd2) {
+	public void setDdd2(Integer ddd2) {
 		this.ddd2 = ddd2;
 	}
-	public int getTelefone() {
+	public Integer getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(int telefone) {
+	public void setTelefone(Integer telefone) {
 		this.telefone = telefone;
 	}
-	public int getTelefone2() {
+	public Integer getTelefone2() {
 		return telefone2;
 	}
-	public void setTelefone2(int telefone2) {
+	public void setTelefone2(Integer telefone2) {
 		this.telefone2 = telefone2;
 	}
 	public String getCep() {
@@ -126,6 +126,7 @@ public class CadastrarClienteDTO {
 	public void setNomeContato(String nomeContato) {
 		this.nomeContato = nomeContato;
 	}
+
 	
 	
 	

@@ -28,7 +28,7 @@
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs">
                     <li><a href="cadastroSerPe">Serviços | Peças</a></li>
-                    <li><a href="cadastroColab" class="selecionado">Colaborador</a></li>
+                    <li><a href="cadastroColab" class="selecionado">Colaborador</a></li>               
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
                 </ul>
                 <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
@@ -41,18 +41,19 @@
                     <h1>Cadastro de colaborador</h1>
                     <p>Preencha os dados do colaborador para cadastro</p>
                 </div>
+                <!-- TESTAR O POST -->
                 <form id="colab-form">
                     <div class="conteudo">
                         <div>
                             <div>
                                 <label for="marca">Nome</label>
-                                <input type="text" id="marca" placeholder="Colaborador" required>
+                                <input type="text" id="marca" name="nome" placeholder="Colaborador" required>
                             </div>
                         </div>
                         <div>
                             <div>
                                 <label for="marca">Cpf</label>
-                                <input type="text" id="marca" placeholder="12345678902" required>
+                                <input type="text" id="marca" name="cpf" placeholder="12345678902" required>
                             </div>
                         </div>
                     </div>
@@ -64,10 +65,10 @@
             <div>
                 <h1>Colaboradores Cadastrados</h1>
                 <div class="listaColab">
-                    <!-- fazer listagem -->
+                    <!-- TESTAR GET -->
+                    <!-- <h3>Colaborador | 123.456.789-02</h3>
                     <h3>Colaborador | 123.456.789-02</h3>
-                    <h3>Colaborador | 123.456.789-02</h3>
-                    <h3>Colaborador | 123.456.789-02</h3>
+                    <h3>Colaborador | 123.456.789-02</h3> -->
                 </div>
             </div>
         </section>
@@ -75,9 +76,7 @@
 
     <script src="script.js"></script>
     <script>
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     getColab();
-        // });
+        document.addEventListener('DOMContentLoaded', getColab());
 
         document.getElementById('colab-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -91,8 +90,7 @@
 
             const jsonData = JSON.stringify(formDataObj);
 
-            // mudar endpoint
-            fetch('/veiculo/marca', {
+            fetch('/colaborador', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -114,47 +112,38 @@
             });
         });
 
-        // function getColab() {
-        //     const container = document.querySelector('.listaColab');
-        //     container.innerHTML = '';
+        function getColab() {
+            const container = document.querySelector('.listaColab');
+            container.innerHTML = '';
 
-        //     // mudar endpoint
-        //     fetch('/veiculo/marca/lista-cadastro')
-        //         .then(response => {
-        //             if (!response.ok) {
-        //                 throw new Error('Erro na resposta da rede');
-        //             }
-        //             return response.json();
-        //         })
-        //         .then(data => {
-        //             if (!data.length) {
-        //                 container.innerHTML = '<p>Nenhum colaborador cadastrado ainda.</p>';
-        //             }
-        //             // mudar html
-        //             data.forEach(item => {
-        //                 const marcaHtml = `
-        //                     <div>
-        //                         <h2>${item.nomeMarca}</h2>
-        //                         <div>
-        //                             <p>Modelo:</p>
-        //                             <span class="linhaDois"></span>
-        //                         </div>
-        //                         <div class="modelos">
-        //                             ${item.nomeModelos.length === 0
-        //                                 ? '<p>Nenhum modelo disponível.</p>'
-        //                                 : item.nomeModelos.map(modelo => `<h3>${modelo}</h3>`).join('')
-        //                             }
-        //                         </div>
-        //                     </div>
-        //                 `;
-        //                 container.innerHTML += marcaHtml;
-        //             });
-        //         })
-        //         .catch(error => {
-        //             console.error('Erro ao buscar a lista de colaborador:', error);
-        //             container.innerHTML = '<p>Erro ao carregar a lista de colaborador.</p>';
-        //         });
-        // }
+            fetch('/colaborador')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhum colaborador cadastrado ainda.</p>';
+                    }
+                    data.forEach(item => {
+                        const colabHtml = `
+                            <h3>Colaborador | ${formatCPF(item.cpf)}</h3>
+                        `;
+                        container.innerHTML += colabHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de colaboradores:', error);
+                    container.innerHTML = '<p>Erro ao carregar a lista de colaboradores.</p>';
+                });
+        }
+
+        function formatCPF(cpf) {
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+
     </script>
 </body>
 </html>

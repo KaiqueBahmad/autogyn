@@ -17,6 +17,7 @@ import com.pi.autogyn.servicos.dto.CadastrarMarcaDTO;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
+import com.pi.autogyn.servicos.dto.ModeloDTO;
 import com.pi.autogyn.servicos.dto.NovoModeloDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 

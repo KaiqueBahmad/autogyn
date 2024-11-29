@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <main>
         <aside>
@@ -34,14 +38,53 @@
                 <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
             </nav>
         </aside>
-    
-        <!-- clicavel pra editar -->
+
         <section class="osLista">
+            <form id="os-form">
+                <div class="conteudo">
+                    <div>
+                        <div>
+                            <div>
+                                <h1>Cadastrar ordem de serviço</h1>
+                                <p>Preencha os dados da OS para cadastro</p>
+                            </div>
+                            <div class="veiculoSelect">
+                                <select name="veiculo" id="veiculo" required>
+                                    <option value="" disabled selected hidden>Selecione o Veiculo</option>
+                                    <option value="fiat">Fiat</option>
+                                    <option value="ford">Ford</option>
+                                    <option value="chevrolet">Chevrolet</option>
+                                    <option value="volkswagen">Volkswagen</option>
+                                    <option value="toyota">Toyota</option>
+                                    <option value="honda">Honda</option>
+                                    <option value="nissan">Nissan</option>
+                                    <option value="bmw">BMW</option>
+                                    <option value="mercedes_benz">Mercedes-Benz</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="orcamento">Valor do Orçamento</label>
+                                <input type="number" id="orcamento" placeholder="1200" required>
+                            </div>
+                            <span class="linha"></span>
+                            <div>
+                                <!-- SERVICO -> COLABORADOR -->
+                                <!-- PEÇA -> QUANTIDADE -->
+                                <button type="submit">Cadastrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <span class="linhaDois"></span>
+
             <div>
                 <h1>Ordem de Serviço no sistema</h1>
                 <!-- verificar o get direitinho -->
                 <div class="listaOs">
-                    <div class="osIndex">
+                    <div class="osIndex" id="0">
                         <div>
                             <h2>Nome Cliente</h2>
                             <span class="linhaDois"></span>
@@ -78,11 +121,11 @@
                     <div class="select-box">
                         <label for="" class="abrirMultiSelect">Selecione as peças utilizadas</label>
                         <ul>
-                        <li><label><input type="checkbox" value="1"> Opção 1</label></li>
-                        <li><label><input type="checkbox" value="2"> Opção 2</label></li>
-                        <li><label><input type="checkbox" value="3"> Opção 3</label></li>
-                        <li><label><input type="checkbox" value="4"> Opção 4</label></li>
-                        <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                            <li><label><input type="checkbox" value="1"> Opção 1</label></li>
+                            <li><label><input type="checkbox" value="2"> Opção 2</label></li>
+                            <li><label><input type="checkbox" value="3"> Opção 3</label></li>
+                            <li><label><input type="checkbox" value="4"> Opção 4</label></li>
+                            <li><label><input type="checkbox" value="5"> Opção 5</label></li>
                         </ul>
                     </div>
                     <p class="selected-options">Peças:</p>
@@ -92,11 +135,11 @@
                     <div class="select-box">
                         <label for="" class="abrirMultiSelect">Selecione os serviços feitos</label>
                         <ul>
-                        <li><label><input type="checkbox" value="1"> Opção 1</label></li>
-                        <li><label><input type="checkbox" value="2"> Opção 2</label></li>
-                        <li><label><input type="checkbox" value="3"> Opção 3</label></li>
-                        <li><label><input type="checkbox" value="4"> Opção 4</label></li>
-                        <li><label><input type="checkbox" value="5"> Opção 5</label></li>
+                            <li><label><input type="checkbox" value="1"> Opção 1</label></li>
+                            <li><label><input type="checkbox" value="2"> Opção 2</label></li>
+                            <li><label><input type="checkbox" value="3"> Opção 3</label></li>
+                            <li><label><input type="checkbox" value="4"> Opção 4</label></li>
+                            <li><label><input type="checkbox" value="5"> Opção 5</label></li>
                         </ul>
                     </div>
                     <p class="selected-options">Serviços:</p>
@@ -127,56 +170,61 @@
     </main>
 
     <script src="script.js"></script>
-    <script>    
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     // mudar endpoint
-        //     fetch('/ordem-servico')
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             const container = document.querySelector('.listaOs');
-                    
-        //             data.forEach(ordem => {
-        //                 const ordemHtml = `
-        //                     <div>
-        //                         <div>
-        //                             <h2>${ordem.nomeCliente}</h2>
-        //                             <span class="linhaDois"></span>
-        //                         </div>
-        //                         <div class="ordemServico">
-        //                             <div>
-        //                                 <p>Veículo</p>
-        //                                 <h3>${ordem.veiculo}</h3>
-        //                             </div>
-        //                             <div>
-        //                                 <p>Data</p>
-        //                                 <h3>${ordem.data}</h3>
-        //                             </div>
-        //                             <div>
-        //                                 <p>Valor Total</p>
-        //                                 <h3>R$${ordem.valorTotal.toFixed(2)}</h3>
-        //                             </div>
-        //                             <div>
-        //                                 <p>Status</p>
-        //                                 <h3>${ordem.status}</h3>
-        //                             </div>
-        //                         </div>
-        //                     </div>
-        //                 `;
-        //                 container.innerHTML += ordemHtml;
-        //             });
-        //         })
-        //         .catch(error => {
-        //             console.error('Erro ao buscar as ordens de serviço:', error);
-        //             document.querySelector('.listaOs').innerHTML = '<p>Erro ao carregar as ordens de serviço.</p>';
-        //         });
-        // });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.querySelector('.listaOs');
+            container.innerHTML = ''
+
+            // Mudar endpoint
+            fetch('/ordem-servico')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhuma OS cadastrada ainda.</p>';
+                    }
+
+                    data.forEach(ordem => {
+                        const ordemHtml = `
+                            <div class="osIndex" id="${ordem.id}">
+                                <div>
+                                    <h2>${ordem.nomeCliente}</h2>
+                                    <span class="linhaDois"></span>
+                                </div>
+                                <div class="ordemServico">
+                                    <div>
+                                        <p>Veículo</p>
+                                        <h3>${ordem.veiculo}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Data</p>
+                                        <h3>${ordem.data}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Valor Total</p>
+                                        <h3>R$ ${ordem.valorTotal.toFixed(2).replace('.', ',')}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Status</p>
+                                        <h3>${ordem.status}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += ordemHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar as ordens de serviço:', error);
+                    document.querySelector('.listaOs').innerHTML = '<p>Erro ao carregar as ordens de serviço.</p>';
+                });
+        });
 
         // dps arrumar
         const selectBoxes = document.querySelectorAll('.abrirMultiSelect');
         const selectedOptionsDivs = document.querySelectorAll('.selected-options');
 
         selectBoxes.forEach((selecionado, index) => {
-            selecionado.addEventListener('click', function() {
+            selecionado.addEventListener('click', function () {
                 selecionado.parentNode.classList.toggle('open');
             });
         });
@@ -188,7 +236,7 @@
             const selectedOptionsDiv = selectedOptionsDivs[index];
 
             checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
+                checkbox.addEventListener('change', function () {
                     const selected = [];
                     checkboxes.forEach(cb => {
                         if (cb.checked) {
@@ -201,25 +249,33 @@
             });
         });
 
-        // pegar uma informação de qual foi clicado para abrir um editar
         const os = document.querySelectorAll('.osIndex')
         const editorOs = document.querySelector('.edicaoOs')
-        os.forEach(aberta =>{
-            aberta.addEventListener('click', () =>{
+        os.forEach(aberta => {
+            aberta.addEventListener('click', () => {
                 editorOs.removeAttribute("style")
                 aberta.parentNode.parentNode.setAttribute('style', 'display: none')
+                getOsAlter(aberta.id)
             })
         })
 
-        editorOs.parentNode.children[1].children[5].children[0].addEventListener('click', () =>{
-            os.forEach(aberta =>{
+        editorOs.parentNode.children[1].children[5].children[0].addEventListener('click', () => {
+            os.forEach(aberta => {
                 aberta.parentNode.parentNode.removeAttribute('style')
             })
             editorOs.setAttribute('style', 'display: none')
         })
 
-        document.getElementById('edicaoOs-form').addEventListener('submit', function(event) {
+        function getOsAlter(idOs) {
+            const edicaoOs = document.querySelector('.edicaoOs');
+            edicaoOs.children[0].classList.remove(...edicaoOs.children[0].classList);
+            edicaoOs.children[0].classList.add(idOs);
+            console.log(edicaoOs);
+        }
+
+        document.getElementById('edicaoOs-form').addEventListener('submit', function (event) {
             event.preventDefault();
+            const edicaoOs = document.querySelector('.edicaoOs');
 
             const formData = new FormData(this);
 
@@ -230,26 +286,28 @@
 
             const jsonData = JSON.stringify(formDataObj);
 
-            // mudar endpoint
-            fetch('/veiculo/marca', {
-                method: 'POST',
+            // Mudar endpoint
+            fetch(`/ordem-servico/${edicaoOs.children[0].classList[0]}`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: jsonData
             })
-            .then(response => {
-                if (response.ok) {
-                    alert('Os editada com sucesso!');
-                } else {
-                    alert('Houve um erro ao enviar o formulário.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao enviar o formulário:', error);
-                alert('Erro de rede. Tente novamente mais tarde.');
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert('Ordem de serviço editada com sucesso!');
+                    } else {
+                        alert('Houve um erro ao enviar o formulário.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar o formulário:', error);
+                    alert('Erro de rede. Tente novamente mais tarde.');
+                });
         });
+
     </script>
 </body>
+
 </html>
