@@ -1,10 +1,15 @@
 package com.pi.autogyn.servicos;
 
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import org.springframework.http.ResponseEntity;
 
 import com.pi.autogyn.persistencia.dao.AcessorioDao;
+import com.pi.autogyn.persistencia.dao.ClienteDao;
 import com.pi.autogyn.persistencia.dao.MarcaDao;
 import com.pi.autogyn.persistencia.dao.ModeloDao;
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
@@ -12,6 +17,8 @@ import com.pi.autogyn.persistencia.entidades.Acessorio;
 import com.pi.autogyn.persistencia.entidades.Marca;
 import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
+import com.pi.autogyn.servicos.dto.AtualizarVeiculoDTO;
+import com.pi.autogyn.servicos.dto.CadastrarVeiculoDTO;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
@@ -72,6 +79,58 @@ public class VeiculoService {
 			lista.add(new ModeloDTO(modelo));
 		}
 		return lista;
+	}
+
+	public static String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculo) throws SQLException {
+		
+		if (atualizarVeiculo.getDocumentoNovoDono() != null) {
+			if (atualizarVeiculo.getDocumentoNovoDono().length() <= 11) {
+				ClienteDao.getByCNPJ(placa);
+			} else {				
+				ClienteDao.getByCPF(atualizarVeiculo.getDocumentoNovoDono());
+			}
+		}
+		
+		if (atualizarVeiculo.getQuilometragem() != null) {
+			if (atualizarVeiculo.getQuilometragem() < 0) {
+				return "Quilometragem deve ser maior ou igual a zero.";
+			}
+			VeiculoDao.atualizarQuilometragem(placa, atualizarVeiculo.getQuilometragem());
+		}
+		return null;
+	}
+
+	public static String insertVeiculo(CadastrarVeiculoDTO novoVeiculo) throws SQLException {
+		Set<Long> acessoriosExistentes = new HashSet<>();
+		for (Acessorio acessorio: AcessorioDao.getAll()) {
+			acessoriosExistentes.add(acessorio.getId());
+		}
+		for (Long acessorio: novoVeiculo.getAcessorios()) {
+			if (acessorio == null ) {
+				return "Acessorio nulo recebido na requisição";
+			}
+			if (!acessoriosExistentes.contains(acessorio)) {
+				return "Acessorio não encotrado. id="+acessorio;
+			}
+		}
+		String placa;
+		try {
+			placa = VeiculoDao.insert(novoVeiculo);
+		} catch (IllegalStateException e) {
+			return e.getMessage();
+		}
+		for (Long acessorio: new HashSet<Long>(novoVeiculo.getAcessorios())) {
+			try {
+				VeiculoDao.addAcessorio(placa, acessorio);
+			} catch (IllegalStateException e) {
+				System.out.println("ERRO ERRO "+e.getMessage());
+				continue;
+			} catch (SQLException sqlEx) {
+				System.out.println("ERRO ERRO ERRO "+sqlEx.getMessage());
+				continue;
+			}
+		}
+		return null;
 	}
 	
 }
