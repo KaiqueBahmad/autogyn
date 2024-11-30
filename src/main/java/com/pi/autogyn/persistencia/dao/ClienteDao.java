@@ -39,6 +39,30 @@ public class ClienteDao {
 		return null;
 	}
 	
+	public static Cliente getByCPF(String cpf) throws SQLException {
+		String sql = "select * from cliente where cpf = ?;";
+		PreparedStatement statment = conn.prepareStatement(sql);
+		statment.setString(1, cpf);
+		ResultSet rs = statment.executeQuery();
+		if (rs.next()) {
+			return new Cliente(rs);
+		}
+		return null;
+		
+	}
+	
+	public static Cliente getByCNPJ(String cnpj) throws SQLException {
+		String sql = "select * from cliente where cnpj = ?;";
+		PreparedStatement statment = conn.prepareStatement(sql);
+		statment.setString(1, cnpj);
+		ResultSet rs = statment.executeQuery();
+		if (rs.next()) {
+			return new Cliente(rs);
+		}
+		return null;
+	}
+	
+	
 	public static Long insert(Cliente cliente) throws SQLException {
 	    String sql = 
 	        "INSERT INTO cliente (nome, email, logradouro, complemento, numero, " +
@@ -90,71 +114,13 @@ public class ClienteDao {
 	        ResultSet rs = statment.getGeneratedKeys();
 	        if (rs.next()) {
 	            return rs.getLong(1);
-	        }
+	        }	
 	        return null;
 	    }
 	}
 	
 	public static void main(String[] args) throws SQLException {
-		System.out.println(getAll());
-		CadastrarClienteDTO dtoPF = new CadastrarClienteDTO();
-	    dtoPF.setNome("João Silva");
-	    dtoPF.setEmail("joao.silva@email.com");
-	    dtoPF.setPJ(false);
-	    dtoPF.setCpf("12345678900");
-	    dtoPF.setDdd(11);
-	    dtoPF.setTelefone(999887766);
-	    dtoPF.setDdd2(11);
-	    dtoPF.setTelefone2(988776655);
-	    dtoPF.setCep("01234567");
-	    dtoPF.setCidade("São Paulo");
-	    dtoPF.setUf("SP");
-	    dtoPF.setNumero("123");
-	    dtoPF.setLogradouro("Rua das Flores");
-	    dtoPF.setComplemento("Apto 45");
-
-	    Cliente clientePF = new Cliente(dtoPF);
-	    Long idPF = insert(clientePF);
-	    System.out.println("Inserted PF client with ID: " + idPF);
-	    
-	    // Test inserting Pessoa Jurídica
-	    CadastrarClienteDTO dtoPJ = new CadastrarClienteDTO();
-	    dtoPJ.setNome("Tech Solutions LTDA");
-	    dtoPJ.setEmail("contato@techsolutions.com");
-	    dtoPJ.setPJ(true);
-	    dtoPJ.setCnpj("12345678000190");
-	    dtoPJ.setInscricao_estadual("123456789");
-	    dtoPJ.setNomeContato("Maria Souza");
-	    dtoPJ.setDdd(11);
-	    dtoPJ.setTelefone(987654321);
-	    dtoPJ.setCep("04567890");
-	    dtoPJ.setCidade("São Paulo");
-	    dtoPJ.setUf("SP");
-	    dtoPJ.setNumero("1000");
-	    dtoPJ.setLogradouro("Av. Paulista");
-	    dtoPJ.setComplemento("Sala 1502");
-
-	    Cliente clientePJ = new Cliente(dtoPJ);
-	    Long idPJ = insert(clientePJ);
-	    System.out.println("Inserted PJ client with ID: " + idPJ);
-
-	    // Test retrieving and displaying all clients
-	    System.out.println("\nAll clients in database:");
-	    List<Cliente> allClients = getAll();
-	    allClients.forEach(cliente -> System.out.println(
-	        "ID: " + cliente.getId() + 
-	        ", Nome: " + cliente.getNome() + 
-	        ", Tipo: " + (cliente.getPessoaFisica().isPresent() ? "PF" : "PJ")
-	    ));
-
-	    // Test retrieving specific client
-	    System.out.println("\nRetrieving newly inserted clients:");
-	    Cliente retrievedPF = getById(idPF);
-	    Cliente retrievedPJ = getById(idPJ);
-	    
-	    System.out.println("Retrieved PF: " + retrievedPF);
-	    System.out.println("Retrieved PJ: " + retrievedPJ);
-		
+		System.out.println(getByCNPJ("98765432109876"));
 	}
 	
 }

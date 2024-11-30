@@ -13,7 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.servicos.VeiculoService;
+import com.pi.autogyn.servicos.dto.AtualizarVeiculoDTO;
 import com.pi.autogyn.servicos.dto.CadastrarMarcaDTO;
+import com.pi.autogyn.servicos.dto.CadastrarVeiculoDTO;
 import com.pi.autogyn.servicos.dto.MarcaListaCadastroDTO;
 import com.pi.autogyn.servicos.dto.MinimalAcessorioDTO;
 import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
@@ -23,6 +25,22 @@ import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 
 @Controller
 public class VeiculosController {
+	
+	@PostMapping("/veiculo")
+	public ResponseEntity<?> inserirVeiculo(CadastrarVeiculoDTO novoVeiculo) throws SQLException {
+		String statusCadastro = VeiculoService.insertVeiculo(novoVeiculo);
+		if (statusCadastro != null) {
+			return ResponseEntity.badRequest().body(statusCadastro);
+		}
+		return ResponseEntity.ok("Veículo Criado com Sucesos");
+		
+	}
+	
+	@PostMapping("/veiculo/{placa}")
+	public ResponseEntity<?> atualizarVeiculo(@PathVariable String placa, AtualizarVeiculoDTO atualizarVeiculo) throws SQLException {
+		VeiculoService.atualizarVeiculo(placa, atualizarVeiculo);
+		return null;
+	}
 	
 	@GetMapping("/veiculo/lista-cadastro")
 	public ResponseEntity<List<VeiculoListaCadastradosDto>> veiculosCadastrados() throws SQLException {
