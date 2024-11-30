@@ -40,8 +40,8 @@
         </aside>
 
         <section class="osLista">
-            <form id="os-form">
-                <div class="conteudo">
+            <form id="os-form" class="">
+                <div class="conteudoOS">
                     <div>
                         <div>
                             <div>
@@ -50,29 +50,41 @@
                             </div>
                             <div class="veiculoSelect">
                                 <select name="veiculo" id="veiculo" required>
-                                    <option value="" disabled selected hidden>Selecione o Veiculo</option>
-                                    <option value="fiat">Fiat</option>
-                                    <option value="ford">Ford</option>
-                                    <option value="chevrolet">Chevrolet</option>
-                                    <option value="volkswagen">Volkswagen</option>
-                                    <option value="toyota">Toyota</option>
-                                    <option value="honda">Honda</option>
-                                    <option value="nissan">Nissan</option>
-                                    <option value="bmw">BMW</option>
-                                    <option value="mercedes_benz">Mercedes-Benz</option>
-                                    <option value="audi">Audi</option>
+                                    <!-- populado pelo back -->
                                 </select>
                             </div>
                             <div>
                                 <label for="orcamento">Valor do Orçamento</label>
                                 <input type="number" id="orcamento" placeholder="1200" required>
                             </div>
-                            <span class="linha"></span>
-                            <div>
-                                <!-- SERVICO -> COLABORADOR -->
-                                <!-- PEÇA -> QUANTIDADE -->
-                                <button type="submit">Cadastrar</button>
+                        </div>
+                        <span class="linha"></span>
+                        <div>
+                            <div class="selecaoServicos">
+                                <div class="select-box">
+                                    <label for="servicos" class="abrirMultiSelect">Selecione os serviços</label>
+                                    <ul id="servicos">
+                                        <!-- populado pelo back -->
+                                    </ul>
+                                </div>
+                                <div class="selected-options service">
+                                    <!-- populado pelo back -->
+                                </div>
                             </div>
+
+                            <div class="selecaoPecas">
+                                <div class="select-box">
+                                    <label for="pecas" class="abrirMultiSelect">Selecione as peças</label>
+                                    <ul id="pecas">
+                                        <!-- populado pelo back -->
+                                    </ul>
+                                </div>
+                                <div class="selected-options pecas">
+                                    <!-- populado pelo back -->
+                                </div>
+                            </div>
+
+                            <button type="submit">Cadastrar</button>
                         </div>
                     </div>
                 </div>
@@ -117,7 +129,7 @@
             <!-- fzr o fetch do form -->
             <form class="edicaoOs" style="display: none;" id="edicaoOs-form">
                 <h1>Ordem de Serviço: Cliente tal</h1>
-                <div class="selecaoAcess">
+                <!-- <div class="selecaoAcess">
                     <div class="select-box">
                         <label for="" class="abrirMultiSelect">Selecione as peças utilizadas</label>
                         <ul>
@@ -154,7 +166,7 @@
                         <option value="volkswagen">Finalização</option>
                         <option value="volkswagen">Pago</option>
                     </select>
-                </div>
+                </div> -->
 
                 <div>
                     <label for="pagamento">Valor pago</label>
@@ -171,55 +183,14 @@
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const container = document.querySelector('.listaOs');
-            container.innerHTML = ''
-
-            // Mudar endpoint
-            fetch('/ordem-servico')
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.length) {
-                        container.innerHTML = '<p>Nenhuma OS cadastrada ainda.</p>';
-                    }
-
-                    data.forEach(ordem => {
-                        const ordemHtml = `
-                            <div class="osIndex" id="${ordem.id}">
-                                <div>
-                                    <h2>${ordem.nomeCliente}</h2>
-                                    <span class="linhaDois"></span>
-                                </div>
-                                <div class="ordemServico">
-                                    <div>
-                                        <p>Veículo</p>
-                                        <h3>${ordem.veiculo}</h3>
-                                    </div>
-                                    <div>
-                                        <p>Data</p>
-                                        <h3>${ordem.data}</h3>
-                                    </div>
-                                    <div>
-                                        <p>Valor Total</p>
-                                        <h3>R$ ${ordem.valorTotal.toFixed(2).replace('.', ',')}</h3>
-                                    </div>
-                                    <div>
-                                        <p>Status</p>
-                                        <h3>${ordem.status}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        container.innerHTML += ordemHtml;
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar as ordens de serviço:', error);
-                    document.querySelector('.listaOs').innerHTML = '<p>Erro ao carregar as ordens de serviço.</p>';
-                });
+        document.addEventListener('DOMContentLoaded',() => {
+            getVeiculos()
+            getServicos()
+            getPecas()
+            // getOs()
         });
 
-        // dps arrumar
+        // ARRUMAR O DE PATCH
         const selectBoxes = document.querySelectorAll('.abrirMultiSelect');
         const selectedOptionsDivs = document.querySelectorAll('.selected-options');
 
@@ -243,11 +214,74 @@
                             selected.push(cb.parentElement.textContent.trim());
                         }
                     });
-
-                    selectedOptionsDiv.textContent = `Acessórios: ${selected.join(', ')}`;
                 });
             });
         });
+
+        function updateSelectedServicos() {
+            const selectedServicesDiv = document.querySelector('.selected-options.service');
+            const selectedCheckboxes = document.querySelectorAll('.servico-checkbox:checked');
+            const selectedServicos = [];
+
+            selectedServicesDiv.innerHTML = ''; 
+
+            selectedCheckboxes.forEach(checkbox => {
+                const serviceName = checkbox.parentElement.textContent.trim();
+
+                if (!selectedServicos.includes(serviceName)) {
+                    selectedServicos.push(serviceName);
+
+                    const serviceDiv = document.createElement('div');
+                    serviceDiv.classList.add('service-item');
+
+                    const serviceText = document.createElement('p');
+                    serviceText.textContent = serviceName;
+
+                    const collaboratorSelect = document.createElement('select');
+                    collaboratorSelect.classList.add('colaborator-select');
+                    collaboratorSelect.setAttribute('required', 'true');
+
+                    getColaboradores(collaboratorSelect);
+
+                    serviceDiv.appendChild(serviceText);
+                    serviceDiv.appendChild(collaboratorSelect);
+                    selectedServicesDiv.appendChild(serviceDiv);
+                }
+            });
+        }
+
+        function updateSelectedPecas() {
+            const selectedPecasDiv = document.querySelector('.selected-options.pecas');
+            const selectedCheckboxes = document.querySelectorAll('.peca-checkbox:checked');
+            const selectedPecas = [];
+
+            selectedPecasDiv.innerHTML = '';
+
+            selectedCheckboxes.forEach(checkbox => {
+                const pecaName = checkbox.parentElement.textContent.trim();
+
+                if (!selectedPecas.includes(pecaName)) {
+                    selectedPecas.push(pecaName);
+
+                    const pecaDiv = document.createElement('div');
+                    pecaDiv.classList.add('peca-item');
+
+                    const pecaText = document.createElement('p');
+                    pecaText.textContent = pecaName;
+
+                    const quantidadeInput = document.createElement('input');
+                    quantidadeInput.type = 'number';
+                    quantidadeInput.classList.add('peca-quantidade');
+                    quantidadeInput.min = 1;
+                    quantidadeInput.value = 1;
+                    quantidadeInput.setAttribute('required', 'true');
+
+                    pecaDiv.appendChild(pecaText);
+                    pecaDiv.appendChild(quantidadeInput);
+                    selectedPecasDiv.appendChild(pecaDiv);
+                }
+            });
+        }
 
         const os = document.querySelectorAll('.osIndex')
         const editorOs = document.querySelector('.edicaoOs')
@@ -259,18 +293,18 @@
             })
         })
 
-        editorOs.parentNode.children[1].children[5].children[0].addEventListener('click', () => {
+        editorOs.parentNode.children[3].children[5].children[0].addEventListener('click', () => {
             os.forEach(aberta => {
                 aberta.parentNode.parentNode.removeAttribute('style')
             })
             editorOs.setAttribute('style', 'display: none')
         })
 
+        // NEM VAI EXISTIR
         function getOsAlter(idOs) {
             const edicaoOs = document.querySelector('.edicaoOs');
             edicaoOs.children[0].classList.remove(...edicaoOs.children[0].classList);
             edicaoOs.children[0].classList.add(idOs);
-            console.log(edicaoOs);
         }
 
         document.getElementById('edicaoOs-form').addEventListener('submit', function (event) {
@@ -306,6 +340,210 @@
                     alert('Erro de rede. Tente novamente mais tarde.');
                 });
         });
+
+        function getVeiculos() {
+            const container = document.getElementById('veiculo');
+            container.innerHTML = '';
+
+            fetch('/veiculo/lista-cadastro')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhum veículo cadastrado ainda.</p>';
+                        return
+                    }
+
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Selecione o Veículo";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    defaultOption.hidden = true;
+                    container.appendChild(defaultOption);
+
+                    data.forEach(veiculo => {
+                        const option = document.createElement('option');
+                        option.value = veiculo.id;
+                        option.textContent = `${veiculo.modelo} (${veiculo.marca}) ${veiculo.anoFabricacao}`;
+                        container.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de veículos:', error);
+                    document.querySelector('.veiculoSelect').innerHTML = '<p>Erro ao carregar a lista de veículos.</p>';
+                });
+        }
+
+        function getServicos() {
+            const container = document.querySelector('#servicos');
+            container.innerHTML = ''; 
+
+            fetch('/servico/formatado')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhum serviço cadastrado ainda.</p>';
+                        return;
+                    }
+
+                    data.forEach(servico => {
+                        const servicoHtml = `
+                            <li>
+                                <label>
+                                    <input type="checkbox" value="${servico.id}" class="servico-checkbox"> ${servico.formatado}
+                                </label>
+                            </li>
+                        `;
+                        container.innerHTML += servicoHtml;
+                    });
+
+                    const checkboxes = document.querySelectorAll('.servico-checkbox');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.addEventListener('change', updateSelectedServicos);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de serviços:', error);
+                    container.innerHTML = '<p>Erro ao carregar a lista de serviços.</p>';
+                });
+        }
+
+        function getPecas() {
+            const container = document.querySelector('#pecas');
+            container.innerHTML = '';
+
+            fetch('/peca')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta da rede');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data.length) {
+                        container.innerHTML = '<p>Nenhuma peça cadastrada ainda.</p>';
+                        return;
+                    }
+
+                    data.forEach(peca => {
+                        const pecaHtml = `
+                            <li>
+                                <label>
+                                    <input type="checkbox" value="${peca.id}" class="peca-checkbox"> ${peca.descricao}
+                                </label>
+                            </li>
+                        `;
+                        container.innerHTML += pecaHtml;
+                    });
+
+                    const checkboxes = document.querySelectorAll('.peca-checkbox');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.addEventListener('change', updateSelectedPecas);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a lista de peças:', error);
+                    container.innerHTML = '<p>Erro ao carregar a lista de peças.</p>';
+                });
+        }
+
+        function getColaboradores(selectElement) {
+            fetch('/colaborador') 
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar a lista de colaboradores.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Selecione o Colaborador";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    defaultOption.hidden = true;
+                    selectElement.appendChild(defaultOption);
+
+                    if (data.length === 0) {
+                        selectElement.innerHTML += '<option value="">Nenhum colaborador disponível</option>';
+                        return;
+                    }
+
+                    data.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id; 
+                        option.textContent = `${item.nome} | ${formatCPF(item.cpf)}`;
+                        selectElement.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    selectElement.innerHTML = '<option value="">Erro ao carregar colaboradores</option>';
+                });
+        }
+
+        function formatCPF(cpf) {
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+        
+        // TEM Q FAZER
+        // function getOs(){
+        //     const container = document.querySelector('.listaOs');
+        //     container.innerHTML = ''
+
+        //     // Mudar endpoint
+        //     fetch('/ordem-servico')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (!data.length) {
+        //                 container.innerHTML = '<p>Nenhuma OS cadastrada ainda.</p>';
+        //             }
+
+        //             data.forEach(ordem => {
+        //                 const ordemHtml = `
+        //                     <div class="osIndex" id="${ordem.id}">
+        //                         <div>
+        //                             <h2>${ordem.nomeCliente}</h2>
+        //                             <span class="linhaDois"></span>
+        //                         </div>
+        //                         <div class="ordemServico">
+        //                             <div>
+        //                                 <p>Veículo</p>
+        //                                 <h3>${ordem.veiculo}</h3>
+        //                             </div>
+        //                             <div>
+        //                                 <p>Data</p>
+        //                                 <h3>${ordem.data}</h3>
+        //                             </div>
+        //                             <div>
+        //                                 <p>Valor Total</p>
+        //                                 <h3>R$ ${ordem.valorTotal.toFixed(2).replace('.', ',')}</h3>
+        //                             </div>
+        //                             <div>
+        //                                 <p>Status</p>
+        //                                 <h3>${ordem.status}</h3>
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 `;
+        //                 container.innerHTML += ordemHtml;
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Erro ao buscar as ordens de serviço:', error);
+        //             document.querySelector('.listaOs').innerHTML = '<p>Erro ao carregar as ordens de serviço.</p>';
+        //         });
+        // }
 
     </script>
 </body>

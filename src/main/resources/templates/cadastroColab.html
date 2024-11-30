@@ -83,19 +83,9 @@
 
             const formData = new FormData(this);
 
-            const formDataObj = {};
-            formData.forEach((value, key) => {
-                formDataObj[key] = value;
-            });
-
-            const jsonData = JSON.stringify(formDataObj);
-
             fetch('/colaborador', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: jsonData
+                body: formData
             })
             .then(response => {
                 if (response.ok) {

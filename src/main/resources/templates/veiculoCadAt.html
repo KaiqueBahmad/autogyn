@@ -28,7 +28,7 @@
                 <a class="menu abrirOs" id="os"><img src="/img/ordem.svg" alt="" width="20"> Ordem de Serviço</a>
                 <ul class="abrirOs" hidden>
                     <li><a href="cadastroSerPe">Serviços | Peças</a></li>
-                    <li><a href="cadastroColab">Colaborador</a></li>                    
+                    <li><a href="cadastroColab">Colaborador</a></li>
                     <li><a href="gerencOs">Gerenciamento de OS</a></li>
                 </ul>
                 <a href="estoque"><img src="/img/estoque.svg" alt="" width="20">Estoque</a>
@@ -44,76 +44,49 @@
                 <!-- BOTAR OS NAME -->
                 <form id="cadastro-form">
                     <div class="conteudo">
-                        <!-- popular com clientes reais -->
                         <div class="clienteSelect">
                             <select name="proprietario" id="proprietario" required>
-                                <!-- <option value="" disabled selected hidden>Selecione um Proprietário</option>
-                                <option value="joao_silva">João Silva</option>
-                                <option value="ana_pereira">Ana Pereira</option>
-                                <option value="maria_souza">Maria Souza</option>
-                                <option value="carlos_oliveira">Carlos Oliveira</option>
-                                <option value="lucas_ferreira">Lucas Ferreira</option>
-                                <option value="paula_martins">Paula Martins</option> -->
+                                <!-- populado pelo back -->
                             </select>
                         </div>
 
                         <div>
                             <div>
                                 <label for="placa">Placa</label>
-                                <input type="text" id="placa" placeholder="ABCD1234" required>
+                                <input type="text" id="placa" name="placa" placeholder="ABCD1234" required>
                             </div>
                             <div class="juntos">
                                 <div>
                                     <label for="anoFabricado">Ano de fabricação</label>
-                                    <input type="number" id="anoFabricado" placeholder="2023" required>
+                                    <input type="number" id="anoFabricado" name="ano_fabricacao" placeholder="2023" required>
                                 </div>
                                 <div>
                                     <label for="anoModelo">Ano do modelo</label>
-                                    <input type="number" id="anoModelo" placeholder="2023" required>
+                                    <input type="number" id="anoModelo" name="ano_modelo" placeholder="2023" required>
                                 </div>
                             </div>
                             <div class="marcaSelect">
                                 <select name="marca" id="marca" required>
-                                    <!-- <option value="" disabled selected hidden>Selecione a Marca</option>
-                                    <option value="fiat">Fiat</option>
-                                    <option value="ford">Ford</option>
-                                    <option value="chevrolet">Chevrolet</option>
-                                    <option value="volkswagen">Volkswagen</option>
-                                    <option value="toyota">Toyota</option>
-                                    <option value="honda">Honda</option>
-                                    <option value="nissan">Nissan</option>
-                                    <option value="bmw">BMW</option>
-                                    <option value="mercedes_benz">Mercedes-Benz</option>
-                                    <option value="audi">Audi</option> -->
+                                    <!-- populado pelo back -->
                                 </select>
                             </div>
         
                             <div class="modeloSelect">
                                 <select name="modelo" id="modelo" required>
-                                    <!-- <option value="" disabled selected hidden>Selecione o Modelo</option>
-                                    <option value="fiat">Fiat</option>
-                                    <option value="ford">Ford</option>
-                                    <option value="chevrolet">Chevrolet</option>
-                                    <option value="volkswagen">Volkswagen</option>
-                                    <option value="toyota">Toyota</option>
-                                    <option value="honda">Honda</option>
-                                    <option value="nissan">Nissan</option>
-                                    <option value="bmw">BMW</option>
-                                    <option value="mercedes_benz">Mercedes-Benz</option>
-                                    <option value="audi">Audi</option> -->
+                                    <!-- populado pelo back (depende de marca) -->
                                 </select>
                             </div>
                             <div>
                                 <label for="km">Quilometragem</label>
-                                <input type="number" id="km" placeholder="50000" required>
+                                <input type="number" id="km" name="quilometragem" placeholder="50000" required>
                             </div>
                             <div>
                                 <label for="chassi">Número do chassi</label>
-                                <input type="text" id="chassi" placeholder="4455QW456UUHG4" required>
+                                <input type="text" id="chassi" name="numero_chassi" placeholder="4455QW456UUHG4" required>
                             </div>
                             <div>
                                 <label for="numPatrimonio">Número do patrimônio</label>
-                                <input type="number" id="numPatrimonio" placeholder="1568" required>
+                                <input type="number" id="numPatrimonio" name="numero_patrimonio" placeholder="1568" required>
                             </div>
                         </div>
 
@@ -201,8 +174,7 @@
 
             const jsonData = JSON.stringify(formDataObj);
 
-            // mudar endpoint
-            fetch('/veiculo/marca', {
+            fetch('/veiculo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -304,18 +276,13 @@
                     defaultOption.selected = true;
                     defaultOption.hidden = true;
                     select.appendChild(defaultOption);
-                    
+
                     data.forEach(cliente => {
                         const option = document.createElement('option');
                         option.value = cliente.id;
 
-                        try {
-                            const cliente = JSON.parse(cliente.nome);
-                            option.textContent = cliente.marca || "Marca Desconhecida";
-                        } catch (e) {
-                            option.textContent = cliente.nome || "Marca Desconhecida";
-                        }
-                        
+                        option.textContent = cliente.nomeFormatado || "Nome Desconhecido";
+
                         select.appendChild(option);
                     });
                 })

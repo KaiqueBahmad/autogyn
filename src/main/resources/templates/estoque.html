@@ -35,83 +35,12 @@
             </nav>
         </aside>
     
-        <!-- VERIFICAR O PATCH -->
+        <!-- VERIFICAR O PATCH DPS DE CRIADO O GET/ID -->
         <section class="estoqueLista">
             <div>
                 <h1>Peças no estoque</h1>
                 <div class="listaEstoque">
-                    <div class="estoqueIndex" id="0">
-                        <div>
-                            <h2>Nome Peça</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="estoquePeca">
-                            <div>
-                                <p>Codigo</p>
-                                <h3>123</h3>
-                            </div>
-                            <div>
-                                <p>Sku</p>
-                                <h3>456</h3>
-                            </div>
-                            <div>
-                                <p>Quantidade no estoque</p>
-                                <h3>10</h3>
-                            </div>
-                            <div>
-                                <p>Valor Unitário</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="estoqueIndex" id="1">
-                        <div>
-                            <h2>Nome Peça</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="estoquePeca">
-                            <div>
-                                <p>Codigo</p>
-                                <h3>123</h3>
-                            </div>
-                            <div>
-                                <p>Sku</p>
-                                <h3>456</h3>
-                            </div>
-                            <div>
-                                <p>Quantidade no estoque</p>
-                                <h3>10</h3>
-                            </div>
-                            <div>
-                                <p>Valor Unitário</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="estoqueIndex" id="2">
-                        <div>
-                            <h2>Nome Peça</h2>
-                            <span class="linhaDois"></span>
-                        </div>
-                        <div class="estoquePeca">
-                            <div>
-                                <p>Codigo</p>
-                                <h3>123</h3>
-                            </div>
-                            <div>
-                                <p>Sku</p>
-                                <h3>456</h3>
-                            </div>
-                            <div>
-                                <p>Quantidade no estoque</p>
-                                <h3>10</h3>
-                            </div>
-                            <div>
-                                <p>Valor Unitário</p>
-                                <h3>R$100,00</h3>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- populado pelo back -->
                 </div>
             </div>
 
@@ -142,24 +71,7 @@
 
     <script src="script.js"></script>
     <script>    
-        // document.addEventListener('DOMContentLoaded', getPecas());
-
-        const estoque = document.querySelectorAll('.estoqueIndex')
-        const edicaoEstoque = document.querySelector('.edicaoEstoque')
-        estoque.forEach(aberta =>{
-            aberta.addEventListener('click', () =>{
-                edicaoEstoque.removeAttribute("style")
-                aberta.parentNode.parentNode.setAttribute('style', 'display: none')
-                getPecaAlter(aberta.id)
-            })
-        })
-
-        edicaoEstoque.parentNode.children[1].children[3].children[0].addEventListener('click', () =>{
-            estoque.forEach(aberta =>{
-                aberta.parentNode.parentNode.removeAttribute('style')
-            })
-            edicaoEstoque.setAttribute('style', 'display: none')
-        })
+        document.addEventListener('DOMContentLoaded', getPecas());
 
         function getPecas() {
             const container = document.querySelector('.listaEstoque');
@@ -206,6 +118,25 @@
                         `;
                         container.innerHTML += pecaHtml;
                     });
+
+                    const estoque = document.querySelectorAll('.estoqueIndex')
+                    const edicaoEstoque = document.querySelector('.edicaoEstoque')
+                    console.log(estoque)
+                    estoque.forEach(aberta =>{
+                        aberta.addEventListener('click', () =>{
+                            edicaoEstoque.removeAttribute("style")
+                            aberta.parentNode.parentNode.setAttribute('style', 'display: none')
+                            // GET PEÇA/ID e add infos
+                            getPecaAlter(aberta.id)
+                        })
+                    })
+
+                    edicaoEstoque.parentNode.children[1].children[3].children[0].addEventListener('click', () =>{
+                        estoque.forEach(aberta =>{
+                            aberta.parentNode.parentNode.removeAttribute('style')
+                        })
+                        edicaoEstoque.setAttribute('style', 'display: none')
+                    })
                 })
                 .catch(error => {
                     console.error('Erro ao buscar a lista de peças:', error);

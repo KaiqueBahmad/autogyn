@@ -216,7 +216,7 @@ section.cadastroServico{
     }
 }
 
-.selecaoAcess{
+.selecaoAcess, .selecaoServicos, .selecaoPecas{
     display: flex;
     flex-direction: column;
     position: relative;
@@ -226,16 +226,35 @@ section.cadastroServico{
         display: none;
     }
 
+    & .colaborator-select{
+        display: unset;
+    }
+
     &>div{
         position: relative;
         width: 100%;
         padding: 10px;
         border: 1px solid var(--borda);
         border-radius: 5px;
-
+        
         & label{
             cursor: pointer;
         }
+    }
+    
+    &>div.selected-options{
+        padding: 0;
+        border: none;
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & select{
+            width: 100%;
+        }
+
     }
 
     .select-box ul {
@@ -363,23 +382,8 @@ section.veiculoLista, section.osLista, section.estoqueLista{
         flex-direction: column;
         gap: 30px;
 
-        & form{
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            border: 1px solid var(--borda);
-            border-radius: 8px;
-            padding: 20px;
-
-            &>div, &>div>div{
-                display: flex;
-                flex-direction: column;
-                gap: 30px;
-
-                &>div>div h1{
-                    text-align: left;
-                }
-            }
+        & form:first-child h1{
+            text-align: unset;
         }
     }
 
@@ -438,7 +442,7 @@ section.veiculoLista, section.osLista, section.estoqueLista{
 
         & .ordemServico, .estoquePeca{
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(4, auto);
             gap: 10px;
 
             & h3{
@@ -448,11 +452,6 @@ section.veiculoLista, section.osLista, section.estoqueLista{
                 background-color: var(--meioBranco);
             }
         }
-
-        .estoquePeca{
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-
     }
 
     & .edicaoOs, .edicaoEstoque{
@@ -497,7 +496,7 @@ section.veiculoLista, section.osLista, section.estoqueLista{
     }
 }
 
-.conteudoCli>div{
+.conteudoCli>div, .conteudoOS>div{
     display: flex;
     flex-direction: row;
     gap: 20px;
