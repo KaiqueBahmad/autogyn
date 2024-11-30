@@ -8,7 +8,6 @@ public class CadastrarVeiculoDTO {
 	private Long id_cliente;
 	private Integer ano_fabricacao;
 	private Integer ano_modelo;
-	private Long id_marca;
 	private Long id_modelo;
 	private Integer quilometragem;
 	private String numero_chassi;
@@ -21,7 +20,7 @@ public class CadastrarVeiculoDTO {
 	@Override
 	public String toString() {
 		return "CadastrarVeiculoDTO [placa=" + placa + ", id_cliente=" + id_cliente + ", ano_fabricacao="
-				+ ano_fabricacao + ", ano_modelo=" + ano_modelo + ", id_marca=" + id_marca + ", id_modelo=" + id_modelo
+				+ ano_fabricacao + ", ano_modelo=" + ano_modelo + ", id_modelo=" + id_modelo
 				+ ", quilometragem=" + quilometragem + ", numero_chassi=" + numero_chassi + ", numero_patrimonio="
 				+ numero_patrimonio + ", acessorios=" + acessorios + "]";
 	}
@@ -56,14 +55,6 @@ public class CadastrarVeiculoDTO {
 
 	public void setAno_modelo(Integer ano_modelo) {
 		this.ano_modelo = ano_modelo;
-	}
-
-	public Long getId_marca() {
-		return id_marca;
-	}
-
-	public void setId_marca(Long id_marca) {
-		this.id_marca = id_marca;
 	}
 
 	public Long getId_modelo() {

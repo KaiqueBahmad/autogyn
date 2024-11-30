@@ -14,7 +14,7 @@ public class Veiculo {
 	private String placa;
 	private int km;
 	private int anoFabricacao;
-	private int numPatrimonio;
+	private String numPatrimonio;
 	private int numChassi;
 	private int anoModelo;
 	private Modelo modelo;
@@ -27,7 +27,7 @@ public class Veiculo {
 		this.anoFabricacao = rs.getInt("ano_fabricacao");
 		this.numChassi = rs.getInt("num_chassi");
 		this.km = rs.getInt("km");
-		this.numPatrimonio = rs.getInt("num_patrimonio");
+		this.numPatrimonio = rs.getString("num_patrimonio");
 		this.anoModelo = rs.getInt("ano_modelo");
 		this.modelo_id = rs.getLong("id_modelo");	this.lazyload = true;
 	}
@@ -98,13 +98,6 @@ public class Veiculo {
 		this.anoFabricacao = anoFabricacao;
 	}
 
-	public int getNumPatrimonio() {
-		return numPatrimonio;
-	}
-
-	public void setNumPatrimonio(int numPatrimonio) {
-		this.numPatrimonio = numPatrimonio;
-	}
 
 	public int getNumChassi() {
 		return numChassi;
@@ -159,6 +152,22 @@ public class Veiculo {
 	        }
 	    }
 	    return proprietarioMaisRecente;
+	}
+
+	public String getNumPatrimonio() {
+		return numPatrimonio;
+	}
+
+	public void setNumPatrimonio(String numPatrimonio) {
+		this.numPatrimonio = numPatrimonio;
+	}
+
+	public void setAcessorios(List<Acessorio> acessorios) {
+		this.acessorios = acessorios;
+	}
+
+	public void setPropriedades(List<Propriedade> propriedades) {
+		this.propriedades = propriedades;
 	}
 
 	

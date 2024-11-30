@@ -50,7 +50,7 @@ public class VeiculoDao {
 	    try (PreparedStatement statement = conn.prepareStatement(sql)) {
 	        statement.setString(1, novoVeiculo.getPlaca());
 	        statement.setInt(2, novoVeiculo.getAno_fabricacao());
-	        statement.setInt(3, Integer.parseInt(novoVeiculo.getNumero_chassi()));
+	        statement.setString(3, novoVeiculo.getNumero_chassi());
 	        statement.setInt(4, novoVeiculo.getQuilometragem());
 	        statement.setInt(5, novoVeiculo.getNumero_patrimonio());
 	        statement.setInt(6, novoVeiculo.getAno_modelo());
