@@ -183,4 +183,20 @@ public class OSDao {
 		
 	}
 
+	public static String pagar(Long idOs, Double valorPago) throws SQLException {
+	    String sql = "UPDATE ordem_servico SET valor_pago = ? WHERE id_os = ?";
+	    
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    stmt.setDouble(1, valorPago);
+	    stmt.setLong(2, idOs);
+	    
+	    int rowsAffected = stmt.executeUpdate();
+	    
+	    if (rowsAffected > 0) {
+	        return null;
+	    } else {
+	        return "Ordem de serviço não encontrada";
+	    }
+	}
+
 }

@@ -83,5 +83,27 @@ public class OSService {
 		return null;
 		
 	}
+
+	public static String pagarOS(Long idOs, Double valorPago) throws SQLException {
+		if (OSDao.getById(idOs) == null) {
+			return "OS não encontrada";
+		}
+		
+		if (valorPago == null) {
+			return "Valor pago não pode ser nulo";
+			
+		}
+		if (valorPago <= 0) {
+			return "Valor pago deve ser maior do que zero";
+		}
+		
+		String status1 = OSDao.pagar(idOs, valorPago);
+		if (status1 != null) {
+			return status1;
+		}
+		
+		return OSDao.mudarEtapa(idOs, "Pago");
+		
+	}
 	
 }

@@ -83,7 +83,7 @@ public class OSController {
 	}
 	
 	@PostMapping("/os/{idOs}/cancelar")
-	public ResponseEntity<?> cancelarOs(@PathVariable Long idOs) throws SQLException {
+	public ResponseEntity<?> cancelarOs(@PathVariable Long idOs, @RequestBody Map<String, Boolean> request) throws SQLException {
 		if (OSDao.getById(idOs).getEtapa() == Etapa.CANCELADO) {
 			return null;
 		}
@@ -93,6 +93,21 @@ public class OSController {
 		 }
 		 return ResponseEntity.ok("OS cancelada");
 	}
-	
+
+	@PostMapping("/os/{idOs}/pagamento")
+	public ResponseEntity<?> pagarOS(@PathVariable Long idOs, @RequestBody Map<String, String> request) throws SQLException { 
+		Double valorPago;
+		try {
+			valorPago = Double.parseDouble(request.get("valorPago"));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Mande o atributo double 'valorPago' no json");
+		}
+		String status = OSService.pagarOS(idOs, valorPago);
+		if (status != null) {
+			return ResponseEntity.badRequest().body(status);
+		}
+		return ResponseEntity.ok("Pagamento de OS registrado");
+		
+	}
 	
 }
