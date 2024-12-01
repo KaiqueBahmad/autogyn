@@ -25,7 +25,8 @@ public enum StatusValidacao {
 	SEM_ID_PECA("Sem ID de peça"),
 	PECA_NAO_ENCONTRADA("Peça não encontrada"),
 	QUANTIDADE_SERVICO_NULA("Quantidade de serviço não inserida"),
-	QUANTIDADE_SERVICO_NEGATIVA("Insira uma quantidade positiva e maior que zero de Serviços");
+	QUANTIDADE_SERVICO_NEGATIVA("Insira uma quantidade positiva e maior que zero de Serviços"),
+	SEM_ESTOQUE("Sem estoque para criar a OS");
 	
 	private String mensagem;
 	private StatusValidacao(String msg) {

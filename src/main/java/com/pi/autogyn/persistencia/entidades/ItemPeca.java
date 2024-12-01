@@ -55,5 +55,61 @@ public class ItemPeca {
 		}
 		return this.peca;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public double getValor_total() {
+		return valor_total;
+	}
+
+	public void setValor_total(double valor_total) {
+		this.valor_total = valor_total;
+	}
+
+	public double getValor_unitario() {
+		return valor_unitario;
+	}
+
+	public void setValor_unitario(double valor_unitario) {
+		this.valor_unitario = valor_unitario;
+	}
+
+	public long getIdOs() {
+		return idOs;
+	}
+
+	public void setIdOs(long idOs) {
+		this.idOs = idOs;
+	}
+
+	public long getIdPeca() {
+		return idPeca;
+	}
+
+	public void setIdPeca(long idPeca) {
+		this.idPeca = idPeca;
+	}
+
+	public void setOs(OS os) {
+		this.os = os;
+	}
+
+	public void setPeca(Peca peca) {
+		this.peca = peca;
+	}
 	
 }

@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.pi.autogyn.persistencia.dao.OSDao;
+import com.pi.autogyn.persistencia.dao.PecaDao;
 import com.pi.autogyn.persistencia.dao.ServicoDao;
 import com.pi.autogyn.persistencia.entidades.Etapa;
+import com.pi.autogyn.persistencia.entidades.ItemPeca;
 import com.pi.autogyn.persistencia.entidades.OS;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
 import com.pi.autogyn.servicos.dto.CadastrarServicoDTO;
@@ -29,7 +31,20 @@ public class OSService {
 	}
 	
 	public static Long criarOS(CadastrarOSDTO novaOS) throws SQLException {
-		return OSDao.criarOS(novaOS);
+		Long idOs = OSDao.criarOS(novaOS);
+		
+		if (idOs != null && idOs > 0) {
+			retirarEstoque(idOs);
+		}
+		
+		return idOs;
+	}
+
+	private static void retirarEstoque(Long idOs) throws SQLException {
+		OS os = OSDao.getById(idOs);
+		for (ItemPeca item: os.getItensPeca()) {
+			PecaDao.addQuantidade(item.getPeca().getId(), -item.getQuantidade());
+		}
 	}
 
 	public static String aprovarOS(Long id) throws SQLException {

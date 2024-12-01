@@ -9,6 +9,7 @@ import com.pi.autogyn.persistencia.dao.ColaboradorDao;
 import com.pi.autogyn.persistencia.dao.PecaDao;
 import com.pi.autogyn.persistencia.dao.ServicoDao;
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
+import com.pi.autogyn.persistencia.entidades.Peca;
 import com.pi.autogyn.servicos.dto.CadastrarAcessorioDTO;
 import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
@@ -100,8 +101,13 @@ public class GatewayValidacao {
 					erros.add(StatusValidacao.SEM_ID_PECA);
 					break;
 				}
-				if (PecaDao.getById(pecaQuantidade.getId_peca()) == null) {
+				Peca peca = PecaDao.getById(pecaQuantidade.getId_peca());
+				if (peca == null) {
 					erros.add(StatusValidacao.PECA_NAO_ENCONTRADA);
+					break;
+				}
+				if (peca.getQuantidadeEstoque() < pecaQuantidade.getQuantidade()) {
+					erros.add(StatusValidacao.SEM_ESTOQUE);
 					break;
 				}
 			}

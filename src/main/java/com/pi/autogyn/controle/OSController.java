@@ -78,7 +78,6 @@ public class OSController {
 			return ResponseEntity.badRequest().body(new MensagemErro(erros));
 		}
 		Long idOS= OSService.criarOS(novaOS);
-		System.out.println(idOS);
 		return ResponseEntity.ok(OSDao.getById(idOS).getValor_total());
 	}
 	
