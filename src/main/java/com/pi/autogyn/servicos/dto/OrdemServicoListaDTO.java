@@ -13,6 +13,7 @@ public class OrdemServicoListaDTO {
 	public String data;
 	public String valor;
 	public String status;
+	public String cliente;
 	
 	public OrdemServicoListaDTO(OS os) {
 		this.id = os.getId();
@@ -33,6 +34,23 @@ public class OrdemServicoListaDTO {
 	    NumberFormat formatador = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 	    this.valor = formatador.format(os.getValor_total());
 	    this.status = os.getEtapa().valor();
+	    if (os.getCliente().getPessoaFisica().isPresent()) {
+	    	this.cliente = String.format(
+				"[%s] %s",
+				os.getCliente().getPessoaFisica().get().getCpf(),
+				os.getCliente().getNome()
+			);
+	    } else if (os.getCliente().getPessoaJuridica().isPresent()) {
+	    	this.cliente = String.format(
+				"[%s] %s",
+				os.getCliente().getPessoaJuridica().get().getCnpj(),
+				os.getCliente().getNome()
+			);
+	    } else if (os.getCliente() != null) {
+	    	this.cliente = os.getCliente().getNome();
+	    } else {
+	    	this.cliente = "[Cliente não encontrado]";
+	    }
 	}
 	
 }
