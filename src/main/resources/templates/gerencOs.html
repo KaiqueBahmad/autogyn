@@ -94,7 +94,7 @@
 
             <div>
                 <h1>Ordem de Serviço no sistema</h1>
-                <!-- verificar o get direitinho -->
+                
                 <div class="listaOs">
                     <div class="osIndex" id="0">
                         <div>
@@ -121,6 +121,56 @@
                         </div>
                     </div>
                 </div>
+                
+                <script>
+                function getOSs() {
+                    fetch('/os/lista-cadastrados')
+                        .then(response => response.json())
+                        .then(data => {
+                            const listaOs = document.querySelector('.listaOs');
+                            listaOs.innerHTML = ''; // Clear existing content
+                            
+                            data.forEach((os, index) => {
+                                // Extract client name by removing the CPF part
+                                const clientName = os.cliente.split('] ')[1];
+                                
+                                const osDiv = `
+                                    <div class="osIndex" id="${index}">
+                                        <div>
+                                            <h2>${clientName}</h2>
+                                            <span class="linhaDois"></span>
+                                        </div>
+                                        <div class="ordemServico">
+                                            <div>
+                                                <p>Veiculo</p>
+                                                <h3>${os.veiculo}</h3>
+                                            </div>
+                                            <div>
+                                                <p>Data</p>
+                                                <h3>${os.data}</h3>
+                                            </div>
+                                            <div>
+                                                <p>Valor Total</p>
+                                                <h3>${os.valor}</h3>
+                                            </div>
+                                            <div>
+                                                <p>Status</p>
+                                                <h3>${os.status}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                                listaOs.innerHTML += osDiv;
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching OS data:', error);
+                        });
+                }
+
+                getOSs();
+                </script>
+                
             </div>
 
             <!-- em orçamento add peças e serviço -->
@@ -129,44 +179,6 @@
             <!-- fzr o fetch do form -->
             <form class="edicaoOs" style="display: none;" id="edicaoOs-form">
                 <h1>Ordem de Serviço: Cliente tal</h1>
-                <!-- <div class="selecaoAcess">
-                    <div class="select-box">
-                        <label for="" class="abrirMultiSelect">Selecione as peças utilizadas</label>
-                        <ul>
-                            <li><label><input type="checkbox" value="1"> Opção 1</label></li>
-                            <li><label><input type="checkbox" value="2"> Opção 2</label></li>
-                            <li><label><input type="checkbox" value="3"> Opção 3</label></li>
-                            <li><label><input type="checkbox" value="4"> Opção 4</label></li>
-                            <li><label><input type="checkbox" value="5"> Opção 5</label></li>
-                        </ul>
-                    </div>
-                    <p class="selected-options">Peças:</p>
-                </div>
-
-                <div class="selecaoAcess">
-                    <div class="select-box">
-                        <label for="" class="abrirMultiSelect">Selecione os serviços feitos</label>
-                        <ul>
-                            <li><label><input type="checkbox" value="1"> Opção 1</label></li>
-                            <li><label><input type="checkbox" value="2"> Opção 2</label></li>
-                            <li><label><input type="checkbox" value="3"> Opção 3</label></li>
-                            <li><label><input type="checkbox" value="4"> Opção 4</label></li>
-                            <li><label><input type="checkbox" value="5"> Opção 5</label></li>
-                        </ul>
-                    </div>
-                    <p class="selected-options">Serviços:</p>
-                </div>
-
-                <div>
-                    <select name="modelo" id="modelo" required>
-                        <option value="" disabled selected hidden>Status Atual</option>
-                        <option value="fiat">Orçamento</option>
-                        <option value="ford">Aprovação</option>
-                        <option value="chevrolet">Execução</option>
-                        <option value="volkswagen">Finalização</option>
-                        <option value="volkswagen">Pago</option>
-                    </select>
-                </div> -->
 
                 <div>
                     <label for="pagamento">Valor pago</label>
@@ -183,11 +195,12 @@
 
     <script src="script.js"></script>
     <script>
+    
         document.addEventListener('DOMContentLoaded',() => {
             getVeiculos()
             getServicos()
             getPecas()
-            // getOs()
+            getOSs()
         });
 
         // ARRUMAR O DE PATCH
@@ -507,7 +520,6 @@
             return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
         }
         
-        // TEM Q FAZER
         // function getOs(){
         //     const container = document.querySelector('.listaOs');
         //     container.innerHTML = ''
