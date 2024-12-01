@@ -144,7 +144,7 @@
                                 throw new Error('Data received is not an array');
                             }
 
-                            listaOs.innerHTML = ''; // Clear loading message
+                            listaOs.innerHTML = '';
 
                             if (data.length === 0) {
                                 listaOs.innerHTML = '<div class="no-data">Nenhuma ordem de serviço encontrada</div>';
@@ -152,10 +152,10 @@
                             }
 
                             data.forEach((os, index) => {
-                                if (!os) return; // Skip if os is undefined
+                                if (!os) return;
 
                                 const osDiv = `
-                                    <div class="osIndex" id="${index}">
+                                    <div class="osIndex" id="os-${os.id}">
                                         <div>
                                             <h2>${os.cliente || 'Cliente não informado'}</h2>
                                             <span class="linhaDois"></span>
@@ -182,6 +182,23 @@
                                 `;
                                 listaOs.innerHTML += osDiv;
                             });
+
+                            // Add event listeners after all items are added
+                            data.forEach(os => {
+                                if (!os) return;
+                                
+                                const osElement = document.getElementById(`os-${os.id}`);
+                                if (osElement) {
+                                    osElement.addEventListener('click', () => {
+                                        // You can replace this with your desired action
+                                        window.location.href = `/os/detalhes/${os.id}`;
+                                    });
+
+                                    // Add hover effect with CSS
+                                    osElement.style.cursor = 'pointer';
+                                    osElement.style.transition = 'background-color 0.3s';
+                                }
+                            });
                         })
                         .catch(error => {
                             console.error('Error fetching OS data:', error);
@@ -193,7 +210,7 @@
                             `;
                         });
                 }
-
+                
                 document.addEventListener('DOMContentLoaded', getOSs);
                 </script>
                 
