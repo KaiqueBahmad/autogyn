@@ -6,17 +6,21 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.service.annotation.PatchExchange;
 
 import com.pi.autogyn.persistencia.dao.OSDao;
 import com.pi.autogyn.servicos.OSService;
 import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
+import com.pi.autogyn.servicos.dto.OSDTO;
 import com.pi.autogyn.servicos.dto.OrdemServicoListaDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
 import com.pi.autogyn.validacoes.GatewayValidacao;
 import com.pi.autogyn.validacoes.MensagemErro;
 import com.pi.autogyn.validacoes.StatusValidacao;
+
 
 @Controller
 public class OSController {
@@ -26,6 +30,11 @@ public class OSController {
 	@GetMapping("/os/lista-cadastrados")
 	public ResponseEntity<List<OrdemServicoListaDTO>> listaOs() throws SQLException {
 		return ResponseEntity.ok(OSService.listarOSCadastradas());
+	}
+	
+	@GetMapping("/os/{id}")
+	public ResponseEntity<OSDTO> getOs(@PathVariable Long id) throws SQLException {
+		return ResponseEntity.ok(OSService.getOs(id));
 	}
 	
 	@PostMapping("/os")

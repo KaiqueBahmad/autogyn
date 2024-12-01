@@ -41,6 +41,9 @@ public class ItemServico {
 		this.lazyload = ligado;
 	}
 	
+	
+	
+	
 	public Servico getServico() {
 		if (this.servico == null && lazyload) {
 			try {
@@ -61,6 +64,78 @@ public class ItemServico {
 			}
 		}
 		return this.colaborador;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public double getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(double valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
+
+	public long getIdServico() {
+		return idServico;
+	}
+
+	public void setIdServico(long idServico) {
+		this.idServico = idServico;
+	}
+
+	public String getCpfColaborador() {
+		return cpfColaborador;
+	}
+
+	public void setCpfColaborador(String cpfColaborador) {
+		this.cpfColaborador = cpfColaborador;
+	}
+
+	public void setServico(Servico servico) {
+		this.servico = servico;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 	
 }
