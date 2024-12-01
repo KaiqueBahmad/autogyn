@@ -612,6 +612,13 @@ form{
     }
 }
 
+.infosServico{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
 input, select{
     border-radius: 5px;
     border: 1px solid var(--borda);

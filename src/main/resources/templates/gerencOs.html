@@ -240,11 +240,22 @@
                     const collaboratorSelect = document.createElement('select');
                     collaboratorSelect.classList.add('colaborator-select');
                     collaboratorSelect.setAttribute('required', 'true');
-
                     getColaboradores(collaboratorSelect);
 
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.classList.add('service-quantity');
+                    quantityInput.min = 1;
+                    quantityInput.value = 1;
+                    quantityInput.setAttribute('required', 'true');
+
+                    const quantityWrapper = document.createElement('div');
+                    quantityWrapper.classList.add('infosServico');
+                    quantityWrapper.appendChild(collaboratorSelect);
+                    quantityWrapper.appendChild(quantityInput);
+
                     serviceDiv.appendChild(serviceText);
-                    serviceDiv.appendChild(collaboratorSelect);
+                    serviceDiv.appendChild(quantityWrapper);
                     selectedServicesDiv.appendChild(serviceDiv);
                 }
             });

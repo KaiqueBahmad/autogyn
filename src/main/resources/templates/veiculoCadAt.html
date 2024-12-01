@@ -45,7 +45,7 @@
                 <form id="cadastro-form">
                     <div class="conteudo">
                         <div class="clienteSelect">
-                            <select name="proprietario" id="proprietario" required>
+                            <select name="id_cliente" id="id_cliente" required>
                                 <!-- populado pelo back -->
                             </select>
                         </div>
@@ -66,13 +66,13 @@
                                 </div>
                             </div>
                             <div class="marcaSelect">
-                                <select name="marca" id="marca" required>
+                                <select name="id_marca" id="id_marca" required>
                                     <!-- populado pelo back -->
                                 </select>
                             </div>
         
                             <div class="modeloSelect">
-                                <select name="modelo" id="modelo" required>
+                                <select name="id_modelo" id="id_modelo" required>
                                     <!-- populado pelo back (depende de marca) -->
                                 </select>
                             </div>
@@ -156,6 +156,7 @@
 
     <script src="script.js"></script>
     <script>
+
         document.addEventListener('DOMContentLoaded', () =>{
             getClientes()
             getMarcas()
@@ -167,19 +168,29 @@
 
             const formData = new FormData(this);
 
-            const formDataObj = {};
-            formData.forEach((value, key) => {
-                formDataObj[key] = value;
+            const selectedAcessoriosIds = getSelectedAcessoriosIds();
+            
+            selectedAcessoriosIds.forEach(id => {
+                formData.append('acessorios[]', id);
             });
 
-            const jsonData = JSON.stringify(formDataObj);
+            // const formDataObj = {};
+            // formData.forEach((value, key) => {
+            //     formDataObj[key] = value;
+            // });
+
+            // const selectedAcessoriosIds = getSelectedAcessoriosIds();
+    
+            // formDataObj.acessorios = selectedAcessoriosIds; 
+
+            // const jsonData = JSON.stringify(formDataObj);
 
             fetch('/veiculo', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: jsonData
+                // headers: {
+                //     'Content-Type': 'application/json'
+                // },
+                body: formData
             })
             .then(response => {
                 if (response.ok) {
@@ -193,6 +204,17 @@
                 alert('Erro de rede. Tente novamente mais tarde.');
             });
         });
+
+        function getSelectedAcessoriosIds() {
+            const selectedCheckboxes = document.querySelectorAll('.acessorio-checkbox:checked');
+            const selectedAcessoriosIds = [];
+
+            selectedCheckboxes.forEach(checkbox => {
+                selectedAcessoriosIds.push(checkbox.value);
+            });
+
+            return selectedAcessoriosIds;
+        }
 
         const selectBoxes = document.querySelectorAll('.abrirMultiSelect');
         const selectedOptionsDivs = document.querySelectorAll('.selected-options');
@@ -258,7 +280,7 @@
 
         // arrumar o get e fazer o da de atualizar
         function getClientes() {
-            const select = document.getElementById('proprietario');
+            const select = document.getElementById('id_cliente');
             select.innerHTML = '';
 
             fetch('/cliente')
@@ -293,7 +315,7 @@
         }
 
         function getMarcas() {
-            const selectMarca = document.getElementById('marca');
+            const selectMarca = document.getElementById('id_marca');
             selectMarca.innerHTML = '';
 
             fetch('/veiculo/marca')
@@ -332,13 +354,13 @@
                 });
         }
 
-        document.getElementById('marca').addEventListener('change', getModelos)
+        document.getElementById('id_marca').addEventListener('change', getModelos)
 
         function getModelos() {
-            const selectModelo = document.getElementById('modelo');
+            const selectModelo = document.getElementById('id_modelo');
             selectModelo.innerHTML = '';
 
-            const selectedMarcaId = document.getElementById('marca').value;
+            const selectedMarcaId = document.getElementById('id_marca').value;
             
             if (!selectedMarcaId) return;
 
