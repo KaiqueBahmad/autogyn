@@ -4,9 +4,12 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.pi.autogyn.persistencia.dao.OSDao;
 import com.pi.autogyn.persistencia.dao.ServicoDao;
 import com.pi.autogyn.persistencia.entidades.OS;
+import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
 import com.pi.autogyn.servicos.dto.CadastrarServicoDTO;
 import com.pi.autogyn.servicos.dto.OrdemServicoListaDTO;
 
@@ -17,5 +20,10 @@ public class OSService {
 			lista.add(new OrdemServicoListaDTO(os));
 		}
 		return lista;
+	}
+
+	public static String criarOS(CadastrarOSDTO novaOS) {
+		OSDao.criarOS(novaOS);
+		return null;
 	}
 }
