@@ -22,8 +22,7 @@ public class OSService {
 		return lista;
 	}
 
-	public static String criarOS(CadastrarOSDTO novaOS) {
-		OSDao.criarOS(novaOS);
-		return null;
+	public static Long criarOS(CadastrarOSDTO novaOS) throws SQLException {
+		return OSDao.criarOS(novaOS);
 	}
 }

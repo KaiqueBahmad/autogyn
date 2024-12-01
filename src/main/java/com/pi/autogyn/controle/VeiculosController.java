@@ -32,14 +32,20 @@ public class VeiculosController {
 		if (statusCadastro != null) {
 			return ResponseEntity.badRequest().body(statusCadastro);
 		}
+
 		return ResponseEntity.ok("Veículo Criado com Sucesos");
-		
 	}
 	
 	@PostMapping("/veiculo/{placa}")
 	public ResponseEntity<?> atualizarVeiculo(@PathVariable String placa, AtualizarVeiculoDTO atualizarVeiculo) throws SQLException {
-		VeiculoService.atualizarVeiculo(placa, atualizarVeiculo);
-		return null;
+		String status = VeiculoService.atualizarVeiculo(placa, atualizarVeiculo);
+		if (atualizarVeiculo.getId_novo_proprietario() == null && atualizarVeiculo.getQuilometragem() == null) {
+			return ResponseEntity.badRequest().body("Nenhum parametro foi recebido");
+		}
+		if (status != null) {
+			return ResponseEntity.badRequest().body(status);
+		}
+		return ResponseEntity.ok("Operação realizada");
 	}
 	
 	@GetMapping("/veiculo/lista-cadastro")

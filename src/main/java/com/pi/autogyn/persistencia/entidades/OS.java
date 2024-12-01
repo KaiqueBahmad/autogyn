@@ -29,7 +29,7 @@ public class OS {
 	public OS(ResultSet source) throws SQLException {
 		this.id = source.getLong("id_os");
 		this.data = source.getDate("data");
-		this.valor_pago = source.getDouble("valor_total");
+		this.valor_total = source.getDouble("valor_total");
 		this.valor_pago = source.getDouble("valor_pago");
 		this.etapa = Etapa.valueOf(source.getString("etapa").toUpperCase());
 		this.veiculoPlaca = source.getString("placa");
