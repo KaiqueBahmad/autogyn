@@ -54,7 +54,7 @@ public class Cliente {
 	    this.telefone.setDdd(dto.getDdd());
 	    this.telefone.setTelefone(dto.getTelefone());
 	    
-	    if (dto.getDdd2() != 0 && dto.getTelefone2() != 0) {
+	    if (dto.getDdd2() != null && dto.getDdd2() != 0 && dto.getTelefone2() != 0) {
 	        Telefone tel2 = new Telefone();
 	        tel2.setDdd(dto.getDdd2());
 	        tel2.setTelefone(dto.getTelefone2());
