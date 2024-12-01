@@ -10,13 +10,7 @@ import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
 import com.pi.autogyn.servicos.dto.ClienteDTO;
 
 public class ClienteService {
-	public static Long inserirCliente(CadastrarClienteDTO novoCliente) throws SQLException {
-	    if (novoCliente.getDdd() < 1 || novoCliente.getDdd() > 999) {
-            return null; // Retorna null se o DDD estiver fora do range
-        }
-	    if (novoCliente.getDdd2() != null && novoCliente.getDdd2() < 1 || novoCliente.getDdd2() > 999) {
-            return null; // Retorna null se o DDD estiver fora do range
-        }
+	public static Long inserirCliente(CadastrarClienteDTO novoCliente) throws SQLException {    
 		return ClienteDao.insert(new Cliente(novoCliente));
 	}
 	
