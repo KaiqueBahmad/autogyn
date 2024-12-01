@@ -14,6 +14,7 @@ import com.pi.autogyn.persistencia.dao.MarcaDao;
 import com.pi.autogyn.persistencia.dao.ModeloDao;
 import com.pi.autogyn.persistencia.dao.VeiculoDao;
 import com.pi.autogyn.persistencia.entidades.Acessorio;
+import com.pi.autogyn.persistencia.entidades.Cliente;
 import com.pi.autogyn.persistencia.entidades.Marca;
 import com.pi.autogyn.persistencia.entidades.Modelo;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
@@ -82,13 +83,17 @@ public class VeiculoService {
 	}
 
 	public static String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculo) throws SQLException {
-		
-		if (atualizarVeiculo.getDocumentoNovoDono() != null) {
-			if (atualizarVeiculo.getDocumentoNovoDono().length() <= 11) {
-				ClienteDao.getByCNPJ(placa);
-			} else {				
-				ClienteDao.getByCPF(atualizarVeiculo.getDocumentoNovoDono());
+		Veiculo veiculo = VeiculoDao.getByPlaca(placa);
+		if (veiculo == null) {
+			return "Veiculo não encontrado";
+		}
+		if (atualizarVeiculo.getId_novo_proprietario() != null) {
+			Cliente cliente = ClienteDao.getById(atualizarVeiculo.getId_novo_proprietario());
+			if (cliente == null) {
+				return "Cliente (Novo proprietário) não encontrado.";
 			}
+			
+			VeiculoDao.trocarProprietario(veiculo.getPlaca(), cliente.getId());
 		}
 		
 		if (atualizarVeiculo.getQuilometragem() != null) {

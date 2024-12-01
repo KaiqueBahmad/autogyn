@@ -11,6 +11,7 @@ import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 import com.pi.autogyn.servicos.dto.CadastrarVeiculoDTO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -89,9 +90,55 @@ public class VeiculoDao {
 		}
 	}
 
-	public static void atualizarQuilometragem(String placa, Integer quilometragem) {
-		// TODO Auto-generated method stub
-		
+	public static void trocarProprietario(String placa, Long idNovoProprietario) throws SQLException {
+	    String sqlUpdateAntigo = "UPDATE propriedade SET data_fim = ? WHERE placa = ? AND data_fim IS NULL";
+	    String sqlNovoProprietario = "INSERT INTO propriedade (data_inicio, data_fim, placa, id_cliente) VALUES (?, ?, ?, ?)";
+	    
+	    Date dataAtual = new Date(System.currentTimeMillis());
+	    conn.setAutoCommit(false);
+	    try {
+	        PreparedStatement stmtUpdateAntigo = conn.prepareStatement(sqlUpdateAntigo);
+	        stmtUpdateAntigo.setDate(1, dataAtual);
+	        stmtUpdateAntigo.setString(2, placa);
+	        stmtUpdateAntigo.executeUpdate();
+	        
+	        PreparedStatement stmtNovoProprietario = conn.prepareStatement(sqlNovoProprietario);
+	        stmtNovoProprietario.setDate(1, dataAtual);
+	        stmtNovoProprietario.setNull(2, java.sql.Types.DATE); 
+	        stmtNovoProprietario.setString(3, placa);
+	        stmtNovoProprietario.setLong(4, idNovoProprietario);
+	        stmtNovoProprietario.executeUpdate();
+	        conn.commit();
+	    } catch (SQLException e) {
+	        conn.rollback();
+	        throw e;
+	    } finally {
+	        conn.setAutoCommit(true);
+	    }
+	}
+	
+	
+	public static void atualizarQuilometragem(String placa, Integer quilometragem) throws SQLException {
+	    String sqlUpdate = "UPDATE veiculo SET quilometragem = ? WHERE placa = ?";
+	    
+	    Veiculo veiculo = getByPlaca(placa);
+        int quilometragemAtual = veiculo.getKm();
+
+		//eu ia colocar mas talvez a pessoa insira uma quilometragem errada
+		//if (quilometragem < quilometragemAtual) {
+		//    throw new IllegalArgumentException(
+		//        "Nova quilometragem (" + quilometragem + ") não pode ser menor que a atual (" + quilometragemAtual + ")"
+		//    );
+		//}
+        
+        PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
+        stmtUpdate.setInt(1, quilometragem);
+        stmtUpdate.setString(2, placa);
+        int rowsAffected = stmtUpdate.executeUpdate();
+        
+        if (rowsAffected == 0) {
+            throw new SQLException("Falha ao atualizar quilometragem. Veículo não encontrado.");
+        }
 	}
 
 	public static void addAcessorio(String placa, Long acessorio) throws IllegalStateException, SQLException {
@@ -115,5 +162,6 @@ public class VeiculoDao {
 	        throw new IllegalStateException("Erro ao adicionar acessório ao veículo: " + e.getMessage());
 	    }
 	}
+
 	
 }
