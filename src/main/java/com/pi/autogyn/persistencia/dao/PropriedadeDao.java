@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PropriedadeDao {
-	private static Connection conn = ConexaoBD.getInstance();
+	private static Connection conn = (new ConexaoBD()).getInstance();
 	
 	public static List<Propriedade> getAll() throws SQLException {
         String sql = "select * from propriedade;";

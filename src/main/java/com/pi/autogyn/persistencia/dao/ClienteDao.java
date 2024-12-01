@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.sql.Types;
 
 public class ClienteDao {
-	private static Connection conn = ConexaoBD.getInstance();
+	private static Connection conn = (new ConexaoBD()).getInstance();
 	
 	public static List<Cliente> getAll() throws SQLException {
         String sql = "select * from cliente;";

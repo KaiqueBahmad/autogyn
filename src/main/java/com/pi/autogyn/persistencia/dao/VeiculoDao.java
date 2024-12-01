@@ -19,7 +19,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 public class VeiculoDao {
-	private static Connection conn = ConexaoBD.getInstance();
+	private static Connection conn = (new ConexaoBD()).getInstance();
 	
 	public static List<Veiculo> getAll() throws SQLException {
         String sql = "select * from veiculo;";

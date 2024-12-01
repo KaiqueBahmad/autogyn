@@ -12,7 +12,7 @@ import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
 
 public class AcessorioDao {
-	private static Connection conn = ConexaoBD.getInstance();
+	private static Connection conn = (new ConexaoBD()).getInstance();
 	
 	public static List<Acessorio> getAll() throws SQLException {
         String sql = "select * from acessorio;";

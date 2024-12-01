@@ -8,12 +8,14 @@ import java.util.Locale;
 import com.pi.autogyn.persistencia.entidades.OS;
 
 public class OrdemServicoListaDTO {
+	public Long id;
 	public String veiculo;
 	public String data;
 	public String valor;
 	public String status;
 	
 	public OrdemServicoListaDTO(OS os) {
+		this.id = os.getId();
 		this.veiculo = String.format(
 			"%s (%s) %d",
 			os.getVeiculo().getModelo().getNome(),

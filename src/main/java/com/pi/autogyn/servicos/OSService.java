@@ -23,7 +23,6 @@ public class OSService {
 	}
 
 	public static Long criarOS(CadastrarOSDTO novaOS) throws SQLException {
-		OSDao.criarOS(novaOS);
-		return null;
+		return OSDao.criarOS(novaOS);
 	}
 }

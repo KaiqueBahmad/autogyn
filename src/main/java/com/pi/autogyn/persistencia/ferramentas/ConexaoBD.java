@@ -9,12 +9,12 @@ public class ConexaoBD {
 	private static String url = "jdbc:postgresql://localhost:5432/pi";
 	private static String user = "postgres";
 	private static String password = "postgres";
-	private static Connection connection = null;
+	private Connection connection = null;
 	
-	public static Connection getInstance() {
+	public Connection getInstance() {
 		if (connection == null) {
 			try {
-				ConexaoBD.createConnection();				
+				this.createConnection();				
 			} catch (Exception e) {
 				e.getStackTrace();
 				return connection;
@@ -23,15 +23,16 @@ public class ConexaoBD {
 		return connection;
 	}
 	
-	public static void createConnection() throws SQLException {
+	public void createConnection() throws SQLException {
 		Properties props = new Properties();
 		props.setProperty("user", user);
 		props.setProperty("password", password);
-		connection = DriverManager.getConnection(url, props);
+		this.connection = DriverManager.getConnection(url, props);
 	}
 	
 	public static void main(String[] args) throws SQLException {
-		createConnection();
+		ConexaoBD conexao = new ConexaoBD();
+		conexao.createConnection();
 	}
 	
 }

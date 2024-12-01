@@ -20,7 +20,7 @@ import com.pi.autogyn.servicos.dto.ColaboradorServicoDTO;
 import com.pi.autogyn.servicos.dto.PecaQuantidadeDTO;
 
 public class OSDao {
-	private static Connection conn = ConexaoBD.getInstance();
+	private static Connection conn = (new ConexaoBD()).getInstance();
 	
 	public static List<OS> getAll() throws SQLException {
         String sql = "select * from ordem_servico;";
@@ -41,7 +41,8 @@ public class OSDao {
 		return null;
 	}
 
-	public static void criarOS(CadastrarOSDTO novaOS) throws SQLException {
+	public static Long criarOS(CadastrarOSDTO novaOS) throws SQLException {
+		Long idOS = null;
 	    try {
 	        conn.setAutoCommit(false);
 	        
@@ -59,16 +60,16 @@ public class OSDao {
 	        psOS.setDate(1, new Date(System.currentTimeMillis()));
 	        psOS.setDouble(2, valor_total_os);
 	        psOS.setString(3, novaOS.getPlaca());
-	        psOS.setLong(5, VeiculoDao.getByPlaca(novaOS.getPlaca()).getProprietarioMaisRecente().getId());	        
+	        psOS.setLong(4, VeiculoDao.getByPlaca(novaOS.getPlaca()).getProprietarioMaisRecente().getId());	        
 	        
 	        ResultSet rsOS = psOS.executeQuery();
 	        if (!rsOS.next()) {
 	            throw new SQLException("Failed to create ordem_servico record");
 	        }
-	        long idOS = rsOS.getLong("id_os");
+	        idOS = rsOS.getLong("id_os");
 	        
 	        if (novaOS.getServicos() != null) {
-	            String sqlServico = "INSERT INTO os_servico (id_os, id_servico, cpf_colaborador, ,valor_unitario, data_inicio, quantidade, valor_total) " +
+	            String sqlServico = "INSERT INTO item_servico (id_os, id_servico, cpf_colaborador ,valor_unitario, data_inicio, quantidade, valor_total) " +
 	                              "VALUES (?, ?, ?, ?, ?, ?, ?);";
 	            PreparedStatement psServico = conn.prepareStatement(sqlServico);
 	            for (ColaboradorServicoDTO servico : novaOS.getServicos()) {
@@ -86,7 +87,7 @@ public class OSDao {
 	        
 	        if (novaOS.getPecas() != null) {
 	            String sqlPeca = "INSERT INTO item_peca (id_os, id_peca, quantidade, valor_total, valor_unitario) " +
-	                           "VALUES (?, ?, ?, ?);";
+	                           "VALUES (?, ?, ?, ?, ?);";
 	            PreparedStatement psPeca = conn.prepareStatement(sqlPeca);
 	            for (PecaQuantidadeDTO peca : novaOS.getPecas()) {
 	            	Double valor_unitario = PecaDao.getById(peca.getId_peca()).getValorUnitario();
@@ -101,24 +102,19 @@ public class OSDao {
 
 	        conn.commit();
 	    } catch (SQLException e) {
+	    	e.printStackTrace();
 	        if (conn != null) {
 	            try {
 	                conn.rollback();
+	                return null;
 	            } catch (SQLException ex) {
 	                throw new SQLException("Error rolling back transaction", ex);
 	            }
 	        }
 	        throw e;
-	    } finally {
-	        if (conn != null) {
-	            try {
-	                conn.setAutoCommit(true);
-	                conn.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
 	    }
+	    conn.setAutoCommit(true);
+	    return idOS;	
 	}
 	
 	public static void main(String[] args) throws SQLException {
