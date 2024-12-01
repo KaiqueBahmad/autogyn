@@ -11,6 +11,7 @@ import com.pi.autogyn.persistencia.dao.ServicoDao;
 import com.pi.autogyn.persistencia.entidades.OS;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
 import com.pi.autogyn.servicos.dto.CadastrarServicoDTO;
+import com.pi.autogyn.servicos.dto.OSDTO;
 import com.pi.autogyn.servicos.dto.OrdemServicoListaDTO;
 
 public class OSService {
@@ -22,6 +23,10 @@ public class OSService {
 		return lista;
 	}
 
+	public static OSDTO getOs(Long idOs) throws SQLException {
+		return new OSDTO(OSDao.getById(idOs));
+	}
+	
 	public static Long criarOS(CadastrarOSDTO novaOS) throws SQLException {
 		return OSDao.criarOS(novaOS);
 	}
