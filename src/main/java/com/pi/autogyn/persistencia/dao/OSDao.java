@@ -10,6 +10,7 @@ import com.pi.autogyn.persistencia.entidades.OS;
 import com.pi.autogyn.persistencia.entidades.Propriedade;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
+import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
 
 public class OSDao {
 	private static Connection conn = ConexaoBD.getInstance();
@@ -35,5 +36,9 @@ public class OSDao {
 	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
+	}
+
+	public static void criarOS(CadastrarOSDTO novaOS) {
+		
 	}
 }
