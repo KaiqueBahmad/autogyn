@@ -31,7 +31,11 @@ public class OS {
 		this.data = source.getDate("data");
 		this.valor_total = source.getDouble("valor_total");
 		this.valor_pago = source.getDouble("valor_pago");
-		this.etapa = Etapa.valueOf(source.getString("etapa").toUpperCase());
+		if (source.getString("etapa") != null) {
+			this.etapa = Etapa.valueOf(source.getString("etapa").toUpperCase());
+		} else {
+			this.etapa = Etapa.CANCELADO;
+		}
 		this.veiculoPlaca = source.getString("placa");
 		this.idCliente = source.getLong("id_cliente");	this.lazyload = true;
 	}

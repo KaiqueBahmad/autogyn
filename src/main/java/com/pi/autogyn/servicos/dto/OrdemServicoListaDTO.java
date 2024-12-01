@@ -51,6 +51,7 @@ public class OrdemServicoListaDTO {
 	    } else {
 	    	this.cliente = "[Cliente não encontrado]";
 	    }
+	    this.cliente = String.format("(%d) ", os.getId()) + this.cliente;
 	}
 	
 }

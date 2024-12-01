@@ -39,5 +39,35 @@ public class ItemServicoDao {
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
 	}
+
+	public static String terminarServico(Long idServico) throws SQLException {
+	    String sql = "UPDATE item_servico SET data_fim = CURRENT_DATE WHERE id_servico = ?";
+	    
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    stmt.setLong(1, idServico);
+	    
+	    int rowsAffected = stmt.executeUpdate();
+	    
+	    if (rowsAffected > 0) {
+	        return null;
+	    } else {
+	        return "Serviço não encontrado ou já finalizado";
+	    }
+	}
+
+	public static String retomarServico(Long idServico) throws SQLException {
+	    String sql = "UPDATE item_servico SET data_fim = NULL WHERE id_servico = ?";
+	    
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    stmt.setLong(1, idServico);
+	    
+	    int rowsAffected = stmt.executeUpdate();
+	    
+	    if (rowsAffected > 0) {
+	        return null;
+	    } else {
+	        return "Serviço não encontrado ou já em andamento";
+	    }
+	}
 	
 }

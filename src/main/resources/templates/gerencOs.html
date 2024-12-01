@@ -91,8 +91,12 @@
             </form>
             
             <span class="linhaDois"></span>
+			
+			<div id="edicaoOs" style="display:none">
+				
+			</div>
 
-            <div>
+            <div id="sectionListaOs">
                 <h1>Ordem de Serviço no sistema</h1>
                 
                 <div class="listaOs">
@@ -123,6 +127,206 @@
                 </div>
                 
                 <script>
+                
+                function populateEditForm(osId) {
+                    const listaOs = document.querySelector('#sectionListaOs');
+                    const edicaoOs = document.querySelector('#edicaoOs');
+
+                    listaOs.style.display = 'none';
+                    edicaoOs.style.display = 'block';
+
+                    fetch(`/os/${osId}`)
+                        .then(response => response.json())
+                        .then(osData => {
+                            const clienteInfo = osData.cliente.match(/\[(.*?)\] (.*)/);
+                            const cpf = clienteInfo ? clienteInfo[1] : '';
+                            const nome = clienteInfo ? clienteInfo[2] : '';
+
+                            // Função auxiliar para criar botões de ação baseado na etapa
+                            const getActionButtons = (etapa) => {
+                            	let buttons = '';
+                            	if (etapa != 'CANCELADO') {
+	                                 buttons += `<button type="button" class="btn-cancelar-os">Cancelar OS</button>`;
+                            	}
+                                
+                                switch(etapa) {
+                                    case 'ORCAMENTO':
+                                        buttons += `<button type="button" class="btn-aprovar">Aprovar Orçamento</button>`;
+                                        break;
+                                    case 'APROVADO':
+                                        buttons += `<button type="button" class="btn-iniciar">Iniciar Execução</button>`;
+                                        break;
+                                    case 'FINALIZADO':
+                                        buttons += `
+                                            <div class="form-group">
+                                                <label>Valor Pago</label>
+                                                <input type="number" step="0.01" id="valorPago">
+                                                <button type="button" class="btn-registrar-pagamento">Registrar Pagamento</button>
+                                            </div>
+                                        `;
+                                        break;
+                                }
+                                return buttons;
+                            };
+
+                            edicaoOs.innerHTML = `
+                                <div class="form-header">
+                                    <h2>Editar Ordem de Serviço #${osData.id}</h2>
+                                    <button type="button" id="btnVoltar">Voltar</button>
+                                </div>
+                                <form id="formEdicaoOs">
+                                    <div class="form-group">
+                                        <label>CPF do Cliente</label>
+                                        <input type="text" id="cpfCliente" value="${cpf}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nome do Cliente</label>
+                                        <input type="text" id="nomeCliente" value="${nome}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor Total</label>
+                                        <input type="number" step="0.01" id="valorTotal" value="${osData.valor_total}" ${osData.etapa !== 'ORCAMENTO' ? 'readonly' : ''}>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Etapa Atual</label>
+                                        <input type="text" value="${osData.etapa}" readonly>
+                                    </div>
+                                    <div class="servicos-section">
+                                        <h3>Serviços</h3>
+                                        <div id="listaServicos">
+                                            ${osData.servicos.map(servico => `
+                                                <div class="servico-item" data-id="${servico.id}">
+                                                    <div class="form-group">
+                                                        <label>Nome do Serviço</label>
+                                                        <input type="text" value="${servico.nome}" ${osData.etapa !== 'ORCAMENTO' ? 'readonly' : ''}>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Data Início</label>
+                                                        <input type="text" value="${servico.inicio}" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Data Fim</label>
+                                                        <input type="text" value="${servico.fim || ''}" readonly>
+                                                    </div>
+                                                    ${osData.etapa === 'EXECUCAO' ? `
+                                                        <div class="form-group">
+                                                            <label>Status</label>
+                                                            <input type="checkbox" class="servico-status" 
+                                                                   ${servico.terminado ? 'checked' : ''} 
+                                                                   data-servico-id="${servico.id}">
+                                                            Terminado
+                                                        </div>
+                                                    ` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        ${getActionButtons(osData.etapa)}
+                                    </div>
+                                </form>
+                            `;
+
+                            // Event Handlers
+                            const voltarParaLista = () => {
+                                edicaoOs.style.display = 'none';
+                                listaOs.style.display = 'block';
+                            };
+
+                            document.querySelector('#btnVoltar').addEventListener('click', voltarParaLista);
+
+                            // Botão Cancelar OS
+                            document.querySelector('.btn-cancelar-os')?.addEventListener('click', () => {
+                                if (confirm('Tem certeza que deseja cancelar esta OS?')) {
+                                    // Implementar chamada para cancelar OS
+                                    fetch(`/os/${osId}/cancelar`, { method: 'POST' })
+                                        .then(response => {
+                                            if (!response.ok) throw new Error('Falha ao cancelar OS');
+                                            alert('OS cancelada com sucesso!');
+                                            voltarParaLista();
+                                            getOSs();
+                                        })
+                                        .catch(error => alert('Erro ao cancelar OS: ' + error.message));
+                                }
+                            });
+
+                            // Botão Aprovar Orçamento
+                            document.querySelector('.btn-aprovar')?.addEventListener('click', () => {
+                                fetch(`/os/${osId}/aprovar`, { method: 'POST' })
+                                    .then(response => {
+                                        if (!response.ok) throw new Error('Falha ao aprovar OS');
+                                        alert('Orçamento aprovado com sucesso!');
+                                        populateEditForm(osId); // Recarrega o formulário
+                                    })
+                                    .catch(error => alert('Erro ao aprovar orçamento: ' + error.message));
+                            });
+
+                            // Botão Iniciar Execução
+                            document.querySelector('.btn-iniciar')?.addEventListener('click', () => {
+                                fetch(`/os/${osId}/iniciar`, { method: 'POST' })
+                                    .then(response => {
+                                        if (!response.ok) throw new Error('Falha ao iniciar execução');
+                                        alert('Execução iniciada com sucesso!');
+                                        populateEditForm(osId);
+                                    })
+                                    .catch(error => alert('Erro ao iniciar execução: ' + error.message));
+                            });
+
+                            // Checkboxes dos Serviços
+                            document.querySelectorAll('.servico-status').forEach(checkbox => {
+                                checkbox.addEventListener('change', (e) => {
+                                    const servicoId = e.target.dataset.servicoId;
+                                    const terminado = e.target.checked;
+                                    
+                                    fetch(`/os/${osId}/servico/${servicoId}/status`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ terminado })
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) throw new Error('Falha ao atualizar status do serviço');
+                                        // Recarrega o form apenas se todos os serviços estiverem concluídos
+                                        const todosTerminados = Array.from(document.querySelectorAll('.servico-status'))
+                                            .every(cb => cb.checked);
+                                        if (todosTerminados) {
+                                            populateEditForm(osId);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        alert('Erro ao atualizar status: ' + error.message);
+                                        e.target.checked = !terminado; // Reverte o checkbox em caso de erro
+                                    });
+                                });
+                            });
+
+                            // Botão Registrar Pagamento
+                            document.querySelector('.btn-registrar-pagamento')?.addEventListener('click', () => {
+                                const valorPago = document.querySelector('#valorPago').value;
+                                if (!valorPago) {
+                                    alert('Por favor, informe o valor pago');
+                                    return;
+                                }
+
+                                fetch(`/os/${osId}/pagamento`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ valorPago: Number(valorPago) })
+                                })
+                                .then(response => {
+                                    if (!response.ok) throw new Error('Falha ao registrar pagamento');
+                                    alert('Pagamento registrado com sucesso!');
+                                    voltarParaLista();
+                                    getOSs();
+                                })
+                                .catch(error => alert('Erro ao registrar pagamento: ' + error.message));
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching OS details:', error);
+                            edicaoOs.innerHTML = '<div class="error">Erro ao carregar detalhes da OS</div>';
+                        });
+                }
+
                 function getOSs() {
                     const listaOs = document.querySelector('.listaOs');
                     if (!listaOs) {
@@ -183,22 +387,16 @@
                                 listaOs.innerHTML += osDiv;
                             });
 
-                            // Add event listeners after all items are added
                             data.forEach(os => {
-                                if (!os) return;
-                                
-                                const osElement = document.getElementById(`os-${os.id}`);
-                                if (osElement) {
-                                    osElement.addEventListener('click', () => {
-                                        // You can replace this with your desired action
-                                        window.location.href = `/os/detalhes/${os.id}`;
-                                    });
+                            	   if (!os) return;
 
-                                    // Add hover effect with CSS
-                                    osElement.style.cursor = 'pointer';
-                                    osElement.style.transition = 'background-color 0.3s';
-                                }
-                            });
+                            	   const osElement = document.getElementById(`os-${os.id}`);
+                            	   if (osElement) {
+                            	       osElement.addEventListener('click', () => {
+                            	           populateEditForm(os.id);
+                            	       });
+                            	   }
+                            	});
                         })
                         .catch(error => {
                             console.error('Error fetching OS data:', error);

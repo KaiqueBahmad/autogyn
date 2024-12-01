@@ -10,8 +10,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.config.PlaceholderConfigurerSupport;
 
+import com.pi.autogyn.persistencia.entidades.ItemServico;
 import com.pi.autogyn.persistencia.entidades.OS;
 import com.pi.autogyn.persistencia.entidades.Propriedade;
+import com.pi.autogyn.persistencia.entidades.Servico;
 import com.pi.autogyn.persistencia.entidades.Veiculo;
 import com.pi.autogyn.persistencia.ferramentas.ConexaoBD;
 import com.pi.autogyn.persistencia.ferramentas.QueryUtils;
@@ -23,7 +25,7 @@ public class OSDao {
 	private static Connection conn = (new ConexaoBD()).getInstance();
 	
 	public static List<OS> getAll() throws SQLException {
-        String sql = "select * from ordem_servico;";
+        String sql = "select * from ordem_servico ORDER BY id_os;";
         List<OS> oss = new LinkedList<>();
         ResultSet rs = QueryUtils.exec(conn, sql);
         while(rs.next()) {
@@ -119,6 +121,66 @@ public class OSDao {
 	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getAll());
+	}
+
+	public static String mudarEtapa(Long id, String etapa) throws SQLException {
+	    String sql = "UPDATE ordem_servico SET etapa = ? WHERE id_os = ?";
+	    
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    
+	    stmt.setString(1, etapa);
+	    stmt.setLong(2, id);
+	    
+	    int rowsAffected = stmt.executeUpdate();
+	    
+	    if (rowsAffected > 0) {
+	        return null;
+	    } else {
+	        return "Ordem de serviço não encontrada.";
+	    }
+	}
+
+	public static String completarServico(Long idOs, Long idServico, boolean terminar) throws SQLException {
+		OS os = OSDao.getById(idOs);
+		ItemServico itemServico = null;		
+		
+		if (os == null) {
+			return "OS não encontrada";
+		}
+		
+		for (ItemServico item: os.getItensServico()) {
+			if (idServico.equals(item.getServico().getId())) {
+				itemServico = item;
+				break;
+			}
+		}
+		
+		if (itemServico == null) {
+			return "Serviço não encontrado";
+		}
+		
+		if (terminar == (itemServico.getDataFim() != null)) {
+			return null; //nesse caso ja esta no estado que o usuario quer que esteja
+		}
+		
+		if (terminar) {
+			String status = ItemServicoDao.terminarServico(idServico);
+			boolean todasCompletas = true;
+			for (ItemServico item: OSDao.getById(idOs).getItensServico()) {
+				if (item.getDataFim() == null) {
+					todasCompletas = false;
+					break;
+				}
+			}
+			if (todasCompletas) {
+				mudarEtapa(idOs, "Finalizado");
+			}
+			return status;
+		} else if (!terminar) {
+			return ItemServicoDao.retomarServico(idServico);
+		}
+		return "Nenhuma alteração realizada";
+		
 	}
 
 }

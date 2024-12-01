@@ -6,7 +6,8 @@ public enum Etapa {
 	APROVADO("Aprovado"),
 	EXECUCAO("Execucão"),
 	FINALIZADO("Finalizado"),
-	PAGO("Pago");
+	PAGO("Pago"),
+	CANCELADO("Cancelado");
 
 	private String etapa;
 	Etapa(String etapa) {

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.pi.autogyn.persistencia.dao.OSDao;
 import com.pi.autogyn.persistencia.dao.ServicoDao;
+import com.pi.autogyn.persistencia.entidades.Etapa;
 import com.pi.autogyn.persistencia.entidades.OS;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
 import com.pi.autogyn.servicos.dto.CadastrarServicoDTO;
@@ -30,4 +31,24 @@ public class OSService {
 	public static Long criarOS(CadastrarOSDTO novaOS) throws SQLException {
 		return OSDao.criarOS(novaOS);
 	}
+
+	public static String aprovarOS(Long id) throws SQLException {
+		OS os = OSDao.getById(id);
+		if (os.getEtapa() != Etapa.ORCAMENTO) {
+			return "ETAPA deve ser Orçamento para poder ser aprovada. Nao"+os.getEtapa();
+		}
+		if (os.getItensServico() == null || os.getItensServico().size() == 0) {
+			return OSDao.mudarEtapa(id, "Finalizado");
+		}
+		return OSDao.mudarEtapa(id, "Aprovado");
+	}
+	
+	public static String iniciarExecucaoOS(Long id) throws SQLException {
+		OS os = OSDao.getById(id);
+		if (os.getEtapa() != Etapa.APROVADO) {
+			return "ETAPA deve ser 'Aprovada' para poder entrar em execução. Nao"+os.getEtapa();
+		}
+		return OSDao.mudarEtapa(id, "Execucao");
+	}
+	
 }
