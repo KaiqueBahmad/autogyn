@@ -15,7 +15,7 @@ public class Veiculo {
 	private int km;
 	private int anoFabricacao;
 	private String numPatrimonio;
-	private int numChassi;
+	private String numChassi;
 	private int anoModelo;
 	private Modelo modelo;
 	private Long modelo_id;
@@ -25,7 +25,7 @@ public class Veiculo {
 	public Veiculo(ResultSet rs) throws SQLException {
 		this.placa = rs.getString("placa");
 		this.anoFabricacao = rs.getInt("ano_fabricacao");
-		this.numChassi = rs.getInt("num_chassi");
+		this.numChassi = rs.getString("num_chassi");
 		this.km = rs.getInt("km");
 		this.numPatrimonio = rs.getString("num_patrimonio");
 		this.anoModelo = rs.getInt("ano_modelo");
@@ -69,18 +69,6 @@ public class Veiculo {
 		}
 		return this.acessorios;
 	}
-
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Veiculo [placa=" + placa + ", km=" + km + ", anoFabricacao=" + anoFabricacao + ", numPatrimonio="
-				+ numPatrimonio + ", numChassi=" + numChassi + ", anoModelo=" + anoModelo + ", modelo=" + modelo
-				+ ", modelo_id=" + modelo_id + ", acessorios=" + acessorios + ", propriedades=" + getPropriedades() + "]";
-	}
-
-	
 	
 	public int getKm() {
 		return km;
@@ -96,15 +84,6 @@ public class Veiculo {
 
 	public void setAnoFabricacao(int anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
-	}
-
-
-	public int getNumChassi() {
-		return numChassi;
-	}
-
-	public void setNumChassi(int numChassi) {
-		this.numChassi = numChassi;
 	}
 
 	public int getAnoModelo() {
@@ -168,6 +147,14 @@ public class Veiculo {
 
 	public void setPropriedades(List<Propriedade> propriedades) {
 		this.propriedades = propriedades;
+	}
+
+	public String getNumChassi() {
+		return numChassi;
+	}
+
+	public void setNumChassi(String numChassi) {
+		this.numChassi = numChassi;
 	}
 
 	

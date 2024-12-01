@@ -124,38 +124,58 @@
                 
                 <script>
                 function getOSs() {
+                    const listaOs = document.querySelector('.listaOs');
+                    if (!listaOs) {
+                        console.error('Element with class "listaOs" not found');
+                        return;
+                    }
+
+                    listaOs.innerHTML = '<div class="loading">Carregando...</div>';
+
                     fetch('/os/lista-cadastrados')
-                        .then(response => response.json())
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
                         .then(data => {
-                            const listaOs = document.querySelector('.listaOs');
-                            listaOs.innerHTML = ''; // Clear existing content
-                            
+                            if (!Array.isArray(data)) {
+                                throw new Error('Data received is not an array');
+                            }
+
+                            listaOs.innerHTML = ''; // Clear loading message
+
+                            if (data.length === 0) {
+                                listaOs.innerHTML = '<div class="no-data">Nenhuma ordem de serviço encontrada</div>';
+                                return;
+                            }
+
                             data.forEach((os, index) => {
-                                // Extract client name by removing the CPF part
-                                const clientName = os.cliente.split('] ')[1];
-                                
+                                if (!os) return; // Skip if os is undefined
+
                                 const osDiv = `
                                     <div class="osIndex" id="${index}">
                                         <div>
-                                            <h2>${clientName}</h2>
+                                            <h2>${os.cliente || 'Cliente não informado'}</h2>
                                             <span class="linhaDois"></span>
                                         </div>
                                         <div class="ordemServico">
                                             <div>
                                                 <p>Veiculo</p>
-                                                <h3>${os.veiculo}</h3>
+                                                <h3>${os.veiculo || 'Não informado'}</h3>
                                             </div>
                                             <div>
                                                 <p>Data</p>
-                                                <h3>${os.data}</h3>
+                                                <h3>${os.data || 'Não informada'}</h3>
                                             </div>
                                             <div>
                                                 <p>Valor Total</p>
-                                                <h3>${os.valor}</h3>
+                                                <h3>${os.valor || 'R$ 0,00'}</h3>
                                             </div>
                                             <div>
                                                 <p>Status</p>
-                                                <h3>${os.status}</h3>
+                                                <h3>${os.status || 'Não informado'}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -165,10 +185,16 @@
                         })
                         .catch(error => {
                             console.error('Error fetching OS data:', error);
+                            listaOs.innerHTML = `
+                                <div class="error">
+                                    Erro ao carregar ordens de serviço<br>
+                                    <small>${error.message}</small>
+                                </div>
+                            `;
                         });
                 }
 
-                getOSs();
+                document.addEventListener('DOMContentLoaded', getOSs);
                 </script>
                 
             </div>
