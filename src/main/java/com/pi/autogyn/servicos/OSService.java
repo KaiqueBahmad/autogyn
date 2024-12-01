@@ -46,6 +46,14 @@ public class OSService {
 			PecaDao.addQuantidade(item.getPeca().getId(), -item.getQuantidade());
 		}
 	}
+	
+	private static void devolverEstoque(Long idOs) throws SQLException {
+		OS os = OSDao.getById(idOs);
+		for (ItemPeca item: os.getItensPeca()) {
+			PecaDao.addQuantidade(item.getPeca().getId(), item.getQuantidade());
+		}
+	}
+	
 
 	public static String aprovarOS(Long id) throws SQLException {
 		OS os = OSDao.getById(id);
@@ -64,6 +72,16 @@ public class OSService {
 			return "ETAPA deve ser 'Aprovada' para poder entrar em execução. Nao"+os.getEtapa();
 		}
 		return OSDao.mudarEtapa(id, "Execucao");
+	}
+
+	public static String cancelarOS(Long idOs) throws SQLException {
+		String status = OSDao.mudarEtapa(idOs, null);
+		if (status != null) {
+			return status;
+		}
+		devolverEstoque(idOs);
+		return null;
+		
 	}
 	
 }

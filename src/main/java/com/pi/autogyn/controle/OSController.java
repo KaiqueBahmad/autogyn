@@ -14,6 +14,7 @@ import org.springframework.web.service.annotation.PatchExchange;
 
 import com.pi.autogyn.persistencia.dao.OSDao;
 import com.pi.autogyn.persistencia.dao.ServicoDao;
+import com.pi.autogyn.persistencia.entidades.Etapa;
 import com.pi.autogyn.servicos.OSService;
 import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
@@ -80,5 +81,18 @@ public class OSController {
 		Long idOS= OSService.criarOS(novaOS);
 		return ResponseEntity.ok(OSDao.getById(idOS).getValor_total());
 	}
+	
+	@PostMapping("/os/{idOs}/cancelar")
+	public ResponseEntity<?> cancelarOs(@PathVariable Long idOs) throws SQLException {
+		if (OSDao.getById(idOs).getEtapa() == Etapa.CANCELADO) {
+			return null;
+		}
+		 String status = OSService.cancelarOS(idOs);
+		 if (status != null) {
+			 return ResponseEntity.badRequest().body(status);
+		 }
+		 return ResponseEntity.ok("OS cancelada");
+	}
+	
 	
 }
