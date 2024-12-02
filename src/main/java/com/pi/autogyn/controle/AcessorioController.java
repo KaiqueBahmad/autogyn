@@ -10,20 +10,21 @@ import com.pi.autogyn.persistencia.dao.AcessorioDao;
 import com.pi.autogyn.persistencia.dao.ServicoDao;
 import com.pi.autogyn.servicos.dto.AcessorioService;
 import com.pi.autogyn.servicos.dto.CadastrarAcessorioDTO;
+import com.pi.autogyn.validacoes.MensagemErro;
 
 @Controller
 public class AcessorioController {
 	
 	@PostMapping("/acessorio")
-	public ResponseEntity<String> criarAcessorio(CadastrarAcessorioDTO novoAcessorio) throws SQLException {
+	public ResponseEntity<?> criarAcessorio(CadastrarAcessorioDTO novoAcessorio) throws SQLException {
 		if (novoAcessorio == null) {
-			return ResponseEntity.badRequest().body("Envie o campo descricao.");
+			return ResponseEntity.badRequest().body(new MensagemErro("Envie o campo descricao."));
 		}
 		boolean criado = AcessorioService.criarProduto(novoAcessorio.getDescricao());
 		if (criado) {
 			return ResponseEntity.ok("Acessorio criado com sucesso.");
 		} else {
-			return ResponseEntity.badRequest().body("Já existe um acessorio com este nome");
+			return ResponseEntity.badRequest().body(new MensagemErro("Já existe um acessorio com este nome"));
 		}
 	}
 	
