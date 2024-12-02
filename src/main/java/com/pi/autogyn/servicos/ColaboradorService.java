@@ -19,6 +19,7 @@ public class ColaboradorService {
 	}
 	
 	public static String incluirColaborador(CadastrarColaboradorDTO novoColaborador) throws SQLException {
+		
 		return ColaboradorDao.insert(novoColaborador.getCpf(), novoColaborador.getNome());
 	}
 	

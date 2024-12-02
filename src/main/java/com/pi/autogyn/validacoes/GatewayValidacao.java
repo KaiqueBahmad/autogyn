@@ -12,6 +12,7 @@ import com.pi.autogyn.persistencia.dao.VeiculoDao;
 import com.pi.autogyn.persistencia.entidades.Peca;
 import com.pi.autogyn.servicos.dto.CadastrarAcessorioDTO;
 import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
+import com.pi.autogyn.servicos.dto.CadastrarColaboradorDTO;
 import com.pi.autogyn.servicos.dto.CadastrarOSDTO;
 import com.pi.autogyn.servicos.dto.ColaboradorServicoDTO;
 import com.pi.autogyn.servicos.dto.NovoModeloDTO;
@@ -123,6 +124,13 @@ public class GatewayValidacao {
 	private static void removerNulos(List<StatusValidacao> lista) {
 		// remover todos os nulos
 		lista.removeIf(Objects::isNull);
+	}
+
+	public List<StatusValidacao> validar(CadastrarColaboradorDTO novoColaboradorDTO) {
+		List<StatusValidacao> erros = new LinkedList<>();
+		erros.add(this.validador.validaCPF(novoColaboradorDTO.getCpf()));
+		removerNulos(erros);
+		return erros;
 	}
 	
 	
