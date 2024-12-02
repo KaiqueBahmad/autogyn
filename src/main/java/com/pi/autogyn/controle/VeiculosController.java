@@ -22,6 +22,7 @@ import com.pi.autogyn.servicos.dto.MinimalMarcaDTO;
 import com.pi.autogyn.servicos.dto.ModeloDTO;
 import com.pi.autogyn.servicos.dto.NovoModeloDTO;
 import com.pi.autogyn.servicos.dto.VeiculoListaCadastradosDto;
+import com.pi.autogyn.validacoes.MensagemErro;
 
 @Controller
 public class VeiculosController {
@@ -30,7 +31,7 @@ public class VeiculosController {
 	public ResponseEntity<?> inserirVeiculo(CadastrarVeiculoDTO novoVeiculo) throws SQLException {
 		String statusCadastro = VeiculoService.insertVeiculo(novoVeiculo);
 		if (statusCadastro != null) {
-			return ResponseEntity.badRequest().body(statusCadastro);
+			return ResponseEntity.badRequest().body(new MensagemErro(statusCadastro));
 		}
 
 		return ResponseEntity.ok("Veículo Criado com Sucesos");
@@ -40,10 +41,10 @@ public class VeiculosController {
 	public ResponseEntity<?> atualizarVeiculo(@PathVariable String placa, AtualizarVeiculoDTO atualizarVeiculo) throws SQLException {
 		String status = VeiculoService.atualizarVeiculo(placa, atualizarVeiculo);
 		if (atualizarVeiculo.getId_novo_proprietario() == null && atualizarVeiculo.getQuilometragem() == null) {
-			return ResponseEntity.badRequest().body("Nenhum parametro foi recebido");
+			return ResponseEntity.badRequest().body(new MensagemErro("Nenhum parametro foi recebido"));
 		}
 		if (status != null) {
-			return ResponseEntity.badRequest().body(status);
+			return ResponseEntity.badRequest().body(new MensagemErro(status));
 		}
 		return ResponseEntity.ok("Operação realizada");
 	}
@@ -70,7 +71,7 @@ public class VeiculosController {
 	    if (modelos != null) {
 	    	return ResponseEntity.ok(modelos);
 	    } else {
-	    	return ResponseEntity.status(404).body("Marca nao cadastrada.");
+	    	return ResponseEntity.status(404).body(new MensagemErro("Marca nao cadastrada."));
 	    }
 	}	
 	
@@ -80,22 +81,22 @@ public class VeiculosController {
 	}
 	
 	@PostMapping("/veiculo/marca")
-	public ResponseEntity<String> cadastrarMarca(@RequestBody CadastrarMarcaDTO marca) {
+	public ResponseEntity<?> cadastrarMarca(@RequestBody CadastrarMarcaDTO marca) {
 	   try {
 		   VeiculoService.insertMarca(marca.getMarca());
 	       return ResponseEntity.ok("Marca cadastrada com sucesso");
 	   } catch (Exception e) {
-	       return ResponseEntity.badRequest().body("Erro ao cadastrar marca: " + e.getMessage());
+	       return ResponseEntity.badRequest().body(new MensagemErro("Erro ao cadastrar marca: " + e.getMessage()));
 	   }
 	}
 	
 	@PostMapping("/veiculo/marca/modelo")
-	public ResponseEntity<String> cadastrarModelo(@RequestBody NovoModeloDTO novoModelo) {
+	public ResponseEntity<?> cadastrarModelo(@RequestBody NovoModeloDTO novoModelo) {
 		try {
 				VeiculoService.insertModelo(novoModelo);
 		       return ResponseEntity.ok("Modelo cadastrado com sucesso");
 		   } catch (Exception e) {
-		       return ResponseEntity.badRequest().body("Erro ao cadastrar modelo: " + e.getMessage());
+		       return ResponseEntity.badRequest().body(new MensagemErro("Erro ao cadastrar modelo: " + e.getMessage()));
 		   }
 	}
 	

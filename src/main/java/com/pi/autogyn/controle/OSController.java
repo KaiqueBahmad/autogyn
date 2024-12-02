@@ -45,7 +45,7 @@ public class OSController {
 	public ResponseEntity<?> aprovarOs(@PathVariable Long id) throws SQLException {
 		String status = OSService.aprovarOS(id);
 		if (status != null) {
-			return ResponseEntity.badRequest().body(status);
+			return ResponseEntity.badRequest().body(new MensagemErro(status));
 		}
 		return ResponseEntity.ok("Status mudado para aprovado");
 	}
@@ -54,7 +54,7 @@ public class OSController {
 	public ResponseEntity<?> iniciarOS(@PathVariable Long id) throws SQLException {
 		String status = OSService.iniciarExecucaoOS(id);
 		if (status != null) {
-			return ResponseEntity.badRequest().body(status);
+			return ResponseEntity.badRequest().body(new MensagemErro(status));
 		}
 		return ResponseEntity.ok("Status mudado para em execução");
 	}
@@ -62,12 +62,12 @@ public class OSController {
 	@PostMapping("/os/{idOs}/servico/{idServico}/status")
 	public ResponseEntity<?> completarServico(@PathVariable Long idOs, @PathVariable Long idServico,  @RequestBody Map<String, Boolean> request) throws SQLException {
 		if (!request.containsKey("terminado")) {
-			return ResponseEntity.badRequest().body("Mande o atributo 'terminado'");
+			return ResponseEntity.badRequest().body(new MensagemErro("Mande o atributo 'terminado'"));
 		}
 		boolean terminar = request.get("terminado");
 		String status = OSDao.completarServico(idOs, idServico, terminar);
 		if (status != null) {
-			return ResponseEntity.badRequest().body(status);
+			return ResponseEntity.badRequest().body(new MensagemErro(status));
 		}
 		return ResponseEntity.ok("Status alterado");
 	}
@@ -89,7 +89,7 @@ public class OSController {
 		}
 		 String status = OSService.cancelarOS(idOs);
 		 if (status != null) {
-			 return ResponseEntity.badRequest().body(status);
+			 return ResponseEntity.badRequest().body(new MensagemErro(status));
 		 }
 		 return ResponseEntity.ok("OS cancelada");
 	}
@@ -100,11 +100,11 @@ public class OSController {
 		try {
 			valorPago = Double.parseDouble(request.get("valorPago"));
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Mande o atributo double 'valorPago' no json");
+			return ResponseEntity.badRequest().body(new MensagemErro("Mande o atributo double 'valorPago' no json"));
 		}
 		String status = OSService.pagarOS(idOs, valorPago);
 		if (status != null) {
-			return ResponseEntity.badRequest().body(status);
+			return ResponseEntity.badRequest().body(new MensagemErro(status));
 		}
 		return ResponseEntity.ok("Pagamento de OS registrado");
 		

@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.pi.autogyn.servicos.ServicoService;
 import com.pi.autogyn.servicos.dto.CadastrarServicoDTO;
 import com.pi.autogyn.servicos.dto.ServicoFormatadoDTO;
+import com.pi.autogyn.validacoes.MensagemErro;
 
 @Controller
 public class ServicoController {
 	@PostMapping("/servico")
-	public ResponseEntity<String> criarServico(CadastrarServicoDTO servico) {
+	public ResponseEntity<?> criarServico(CadastrarServicoDTO servico) {
 		if (servico.getDescricao() == null || servico.getValor() == null) {
 			return ResponseEntity.badRequest().body(
-				"Campos obrigatórios não estão presentes: ['descricao' ou 'valor']"
+				new MensagemErro("Campos obrigatórios não estão presentes: ['descricao' ou 'valor']")
 			);
 		}
 		try {
@@ -26,7 +27,7 @@ public class ServicoController {
 			if (criado) {
 				return ResponseEntity.ok("Servico cadastrado com sucesso.");
 			} else {
-				return ResponseEntity.badRequest().body("Nome já foi utilizado anteriormente");
+				return ResponseEntity.badRequest().body(new MensagemErro("Nome já foi utilizado anteriormente"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -40,7 +40,7 @@ public class PecaController {
 			return ResponseEntity.badRequest().body(new MensagemErro("Envie o parametro 'quantidade'"));
 		}
 		if (peca.getQuantidadeEstoque() + quantidade < 0) {
-			return ResponseEntity.badRequest().body("Não é possível abaixar o estoque para menos que zero.");
+			return ResponseEntity.badRequest().body(new MensagemErro("Não é possível abaixar o estoque para menos que zero."));
 		}
 		boolean rodou = PecaService.addNoEstoque(idPeca, quantidade);
 		if (!rodou) {
@@ -56,7 +56,7 @@ public class PecaController {
 		if (status == null) {
 			return ResponseEntity.ok("Peça atualizada com sucesso");
 		}
-		return ResponseEntity.badRequest().body(status);
+		return ResponseEntity.badRequest().body(new MensagemErro(status));
 	}
 	
 	
