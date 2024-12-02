@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.pi.autogyn.servicos.ClienteService;
 import com.pi.autogyn.servicos.dto.CadastrarClienteDTO;
 import com.pi.autogyn.servicos.dto.ClienteDTO;
+import com.pi.autogyn.validacoes.GatewayValidacao;
+import com.pi.autogyn.validacoes.MensagemErro;
+import com.pi.autogyn.validacoes.StatusValidacao;
 
 @Controller
 public class ClientesController {
-
+	
+	private static GatewayValidacao validador = new GatewayValidacao();
+	
 	@GetMapping("/cliente")
 	public ResponseEntity<List<ClienteDTO>> listarClientes() throws SQLException {
 		return ResponseEntity.ok(ClienteService.listarTodosFormatados());
@@ -25,11 +30,16 @@ public class ClientesController {
 	
 	@PostMapping("/cliente")
 	public ResponseEntity<?> cadastrarCliente(@RequestBody CadastrarClienteDTO novoCliente) throws SQLException {
-		String statusValidade = "a";
+		List<StatusValidacao> erros = validador.validar(novoCliente);
+		
+		if (erros.size() > 0) {
+			return ResponseEntity.badRequest().body(new MensagemErro(erros));
+		}
 		
 		Long idCliente = ClienteService.inserirCliente(novoCliente);
+		
 		if (idCliente == null) {
-			return ResponseEntity.badRequest().body("Cliente não criado.");
+			return ResponseEntity.badRequest().body(new MensagemErro("Cliente não criado."));
 		}
 		return ResponseEntity.ok("Criado Cliente "+idCliente);
 	}
