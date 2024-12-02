@@ -125,7 +125,11 @@
                     getMarcas()
                     this.reset();
                 } else {
-                    alert('Houve um erro ao enviar o formulário.');
+                    response.json().then(errorData => {
+                        alert(errorData.mensagens);
+                    }).catch(err => {
+                        console.log('Erro ao processar o JSON:', err);
+                    });
                 }
             })
             .catch(error => {
@@ -163,7 +167,11 @@
                         select.selectedIndex = 0;
                     });
                 } else {
-                    alert('Houve um erro ao enviar o formulário.');
+                    response.json().then(errorData => {
+                        alert(errorData.mensagens);
+                    }).catch(err => {
+                        console.log('Erro ao processar o JSON:', err);
+                    });
                 }
             })
             .catch(error => {
